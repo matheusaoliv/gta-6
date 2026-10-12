@@ -720,6 +720,7 @@
   var vwin = $('.vmodal__window', vmodal);
   var lastFocus = null;
   var modalOpen = false;
+  var calOpen = false, closeCal = function () {};
   var player = null;
   var ducked = false;
   var barLink = $('.vmodal__yt', vmodal);
@@ -797,9 +798,30 @@
   /* ---------------------------------------------------------------------
      4. Protagonistas
      --------------------------------------------------------------------- */
+  // Enquadramento: cada foto tem um ponto focal (o rosto, em data-focus) e o object-position é
+  // recalculado para o formato atual do card. No celular o card mostra só ~1/4 da largura da
+  // foto 16:9; no desktop o card muda de largura no hover. O personagem fica sempre no quadro.
+  function frameLead(lead) {
+    var cw = lead.clientWidth, ch = lead.clientHeight;
+    if (!cw || !ch) return;
+    $$('.lead__img[data-focus]', lead).forEach(function (im) {
+      var f = im.dataset.focus.split(' ').map(parseFloat);
+      var ia = (im.naturalWidth || im.width) / (im.naturalHeight || im.height) || 16 / 9;
+      var v = (cw / ch) / ia; // fração da largura (v < 1) ou, invertida, da altura que aparece
+      var px = 0.5, py = 0.5;
+      if (v < 1) { px = clamp((f[0] - v / 2) / (1 - v), 0, 1); py = f[1]; }
+      else if (v > 1) { var vy = 1 / v; py = clamp((f[1] - vy / 2) / (1 - vy), 0, 1); px = f[0]; }
+      im.style.objectPosition = (px * 100).toFixed(1) + '% ' + (py * 100).toFixed(1) + '%';
+    });
+  }
+  var leadRO = window.ResizeObserver ? new ResizeObserver(function (entries) { entries.forEach(function (en) { frameLead(en.target); }); }) : null;
+
   $$('[data-lead]').forEach(function (lead, li) {
     var imgs = $$('.lead__img', lead);
     var dots = $$('.lead__dots button', lead);
+    frameLead(lead);
+    if (leadRO) leadRO.observe(lead);
+    else window.addEventListener('resize', function () { frameLead(lead); });
     var idx = 0, timer = null, inView = false;
     function show(n) {
       idx = (n + imgs.length) % imgs.length;
@@ -1134,14 +1156,15 @@
   /* Teclado global: Esc fecha diálogos, setas navegam no lightbox, Tab fica preso no diálogo */
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      if (modalOpen && !document.fullscreenElement && !(e.target.closest && e.target.closest('.vp__menu'))) closeVideo();
+      if (calOpen) closeCal();
+      else if (modalOpen && !document.fullscreenElement && !(e.target.closest && e.target.closest('.vp__menu'))) closeVideo();
       else if (lbOpen) lbClose();
       else if (menuOpen) closeMenu();
     }
     if (lbOpen && e.key === 'ArrowRight') lbShow(lbIndex + 1, 1);
     if (lbOpen && e.key === 'ArrowLeft') lbShow(lbIndex - 1, -1);
-    if (e.key === 'Tab' && (modalOpen || lbOpen)) {
-      var dlg = modalOpen ? vmodal : lb;
+    if (e.key === 'Tab' && (modalOpen || lbOpen || calOpen)) {
+      var dlg = calOpen ? $('#calSheet') : modalOpen ? vmodal : lb;
       var f = $$('button, a[href], iframe, select, input, [tabindex="0"]', dlg).filter(function (n) { return n.offsetParent !== null && !n.disabled; });
       if (!f.length) return;
       var first = f[0], last = f[f.length - 1];
@@ -1222,48 +1245,87 @@
     gsap.from('.finale .countdown, .finale__note, .finale__actions > *', { y: 30, autoAlpha: 0, duration: 1.2, stagger: 0.08, scrollTrigger: { trigger: '.finale', start: 'top 45%', once: true } });
   }
 
-  $('#addCalendar').addEventListener('click', function () {
-    var stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    var ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Contagem GTA VI (fa)//PT-BR',
-      'CALSCALE:GREGORIAN',
-      'BEGIN:VEVENT',
-      'UID:gtavi-preload-20261112@contagem-fa',
-      'DTSTAMP:' + stamp,
-      'DTSTART;VALUE=DATE:20261112',
-      'DTEND;VALUE=DATE:20261113',
-      'SUMMARY:GTA VI — começa o pré-download',
-      'DESCRIPTION:Pré-download de Grand Theft Auto VI liberado (PS5 e Xbox Series X|S).',
-      'END:VEVENT',
-      'BEGIN:VEVENT',
-      'UID:gtavi-launch-20261119@contagem-fa',
-      'DTSTAMP:' + stamp,
-      'DTSTART;VALUE=DATE:20261119',
-      'DTEND;VALUE=DATE:20261120',
-      'SUMMARY:Lançamento de GTA VI',
-      'DESCRIPTION:Grand Theft Auto VI chega ao PlayStation 5 e Xbox Series X|S. Nos vemos em Leonida!',
-      'URL:https://www.rockstargames.com/VI',
-      'BEGIN:VALARM',
-      'TRIGGER:-PT12H',
-      'ACTION:DISPLAY',
-      'DESCRIPTION:GTA VI chega amanhã!',
-      'END:VALARM',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-    var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'gta-vi-lancamento.ics';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    toast('Arquivo de agenda baixado: pré-download (12/11) e lançamento (19/11).');
-  });
+  /* Agenda: o botão abre opções que de fato levam ao calendário. Baixar um .ics gerado no
+     navegador (o que havia antes) não funciona no celular: no Android o arquivo vai para
+     Downloads e o Google Agenda não importa .ics; no iPhone o Safari só oferece "Adicionar"
+     quando abre um .ics servido pelo site (text/calendar), e não um blob baixado. */
+  (function calendar() {
+    var sheet = $('#calSheet');
+    var panel = $('.calsheet__panel', sheet);
+    var list = $('.calsheet__list', sheet);
+    var site = location.href.split('#')[0].split('?')[0];
+    var events = {
+      launch: { title: 'Lançamento de GTA VI', date: RELEASE, details: 'Grand Theft Auto VI chega ao PlayStation 5 e ao Xbox Series X|S. Nos vemos em Leonida!' },
+      preload: { title: 'GTA VI: começa o pré-download', date: PRELOAD, details: 'Pré-download de Grand Theft Auto VI liberado no PlayStation 5 e no Xbox Series X|S.' }
+    };
+    function ymd(d, sep) { return d.getFullYear() + sep + pad(d.getMonth() + 1) + sep + pad(d.getDate()); }
+    function nextDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1); }
+    function q(o) { return Object.keys(o).map(function (k) { return k + '=' + encodeURIComponent(o[k]); }).join('&'); }
+    var links = {
+      google: function (ev) {
+        return 'https://calendar.google.com/calendar/render?' + q({ action: 'TEMPLATE', text: ev.title, dates: ymd(ev.date, '') + '/' + ymd(nextDay(ev.date), ''), details: ev.details + '\n\nContagem: ' + site }).replace('%2F', '/');
+      },
+      outlook: function (ev) {
+        return 'https://outlook.live.com/calendar/0/action/compose?' + q({ path: '/calendar/action/compose', rru: 'addevent', allday: 'true', startdt: ymd(ev.date, '-'), enddt: ymd(nextDay(ev.date), '-'), subject: ev.title, body: ev.details + '\n\nContagem: ' + site });
+      }
+    };
+    $$('[data-cal="google"] a, [data-cal="outlook"] a', sheet).forEach(function (a) {
+      a.href = links[a.closest('[data-cal]').dataset.cal](events[a.dataset.event]);
+    });
+
+    // a opção do aparelho de quem está vendo vem primeiro
+    var ua = navigator.userAgent;
+    var apple = /iPhone|iPad|iPod|Macintosh/.test(ua);
+    var android = /Android/.test(ua);
+    var order = apple ? ['apple', 'google', 'outlook', 'ics'] : android ? ['google', 'ics', 'outlook', 'apple'] : ['google', 'outlook', 'apple', 'ics'];
+    order.forEach(function (k, i) {
+      var el = $('[data-cal="' + k + '"]', list);
+      el.classList.toggle('is-suggested', i === 0);
+      list.appendChild(el);
+    });
+
+    var last = null;
+    function open() {
+      if (calOpen) return;
+      calOpen = true;
+      last = document.activeElement;
+      sheet.hidden = false;
+      root.classList.add('is-modal-open');
+      if (lenis) lenis.stop();
+      if (!REDUCE) {
+        gsap.fromTo('.calsheet__backdrop', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 });
+        // opacity (e não autoAlpha): os itens precisam aceitar foco já no primeiro quadro
+        gsap.fromTo(panel, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'expo.out' });
+        gsap.fromTo($$('.calopt', list), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, delay: 0.12, ease: 'expo.out' });
+      }
+      var first = $('.calopt.is-suggested', list);
+      (first.matches('a') ? first : $('a', first)).focus({ preventScroll: true });
+    }
+    function close() {
+      if (!calOpen) return;
+      calOpen = false;
+      var done = function () {
+        sheet.hidden = true;
+        root.classList.remove('is-modal-open');
+        if (lenis) lenis.start();
+        if (last) last.focus({ preventScroll: true });
+      };
+      if (REDUCE) return done();
+      gsap.to(panel, { y: 40, opacity: 0, duration: 0.3, ease: 'power2.in' });
+      gsap.to('.calsheet__backdrop', { autoAlpha: 0, duration: 0.35, onComplete: done });
+    }
+    closeCal = close;
+    $('#addCalendar').addEventListener('click', open);
+    sheet.addEventListener('click', function (e) {
+      if (e.target.closest('[data-cal-close]')) { close(); return; }
+      var a = e.target.closest('a[href]');
+      if (!a) return;
+      var kind = a.closest('[data-cal]').dataset.cal;
+      if (kind === 'ics') toast('Arquivo salvo: abra o gta-vi.ics para adicionar os dois eventos.');
+      else if (kind === 'apple' && !apple) toast('Abra o gta-vi.ics no Calendário para adicionar os dois eventos.');
+      setTimeout(close, 350);
+    });
+  })();
 
   $('#shareBtn').addEventListener('click', function () {
     var p = getParts(new Date());

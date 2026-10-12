@@ -48,7 +48,7 @@ Também tem:
 - **Contagem:** dígitos que giram como num caça-níquel, e a contagem acompanha você no menu e no título da aba.
 - **Trailers:** os três vídeos oficiais tocam num player próprio, dentro de um modal. A rádio pausa sozinha e volta quando você fecha.
 - **Galeria:** 24 capturas oficiais em esteiras infinitas que reagem ao scroll, com arraste e lightbox (teclado e swipe).
-- **Agenda e compartilhamento:** um botão baixa um arquivo `.ics` com o pré-download (12/11) e o lançamento (19/11), e outro compartilha a contagem.
+- **Agenda e compartilhamento:** o botão de agenda abre as opções Google Agenda, Calendário da Apple, Outlook e arquivo `.ics`, com o pré-download (12/11) e o lançamento (19/11). A opção do seu aparelho aparece primeiro. Outro botão compartilha a contagem.
 - **Detalhes:** player fixo da rádio, cursor personalizado, botões magnéticos e grão de filme.
 
 <div align="center">
@@ -172,7 +172,8 @@ Quase todo o conteúdo editável está em [`assets/js/data.js`](assets/js/data.j
 
 - **Datas:** `release` (padrão: meia-noite de 19/11/2026 no fuso do visitante,
   porque o horário oficial de liberação ainda não foi anunciado), `preload` e
-  `trailer1`.
+  `trailer1`. Os links do Google Agenda e do Outlook seguem essas datas; se
+  mudá-las, atualize também o [`assets/gta-vi.ics`](assets/gta-vi.ics).
 - **Rádios:** `stations`, com a URL de cada prévia e os tempos das faixas.
 - **Vídeos:** `videos`, com as fontes por qualidade, legendas e links.
 - **Lugares:** `places`, com os textos das regiões.
@@ -185,6 +186,7 @@ Quase todo o conteúdo editável está em [`assets/js/data.js`](assets/js/data.j
 index.html                 # estrutura e conteúdo das seções
 assets/
   css/main.css             # tokens de design, layout e componentes
+  gta-vi.ics               # os dois eventos para o Calendário da Apple e outros apps
   js/data.js               # datas, rádios, vídeos e lugares
   js/main.js               # contagem, scroll (Lenis + ScrollTrigger), seções, modais, cursor
   js/player.js             # verificação de idade e player de vídeo

@@ -1730,6 +1730,115 @@ html:not(.js) .dive__mask, html:not(.js) .dive__intro { display: none; }
 .footer__bottom a { display: inline-block; padding: 12px 0; margin: -12px 0; }
 
 /* =========================================================================
+   AGENDA
+   ========================================================================= */
+.calsheet {
+  position: fixed;
+  inset: 0;
+  z-index: 965;
+  display: grid;
+  place-items: end center;
+  padding: 10px;
+}
+.calsheet[hidden] { display: none; }
+.calsheet__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(8, 3, 15, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.calsheet__panel {
+  position: relative;
+  width: min(100%, 540px);
+  max-height: calc(100svh - 20px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 22px 20px calc(20px + env(safe-area-inset-bottom));
+  border-radius: 28px;
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(255, 79, 154, 0.22), transparent 60%),
+    linear-gradient(180deg, #24093a 0%, #12061f 100%);
+  border: 1px solid var(--line);
+  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.9);
+}
+@media (min-width: 641px) {
+  .calsheet { place-items: center; padding: 24px; }
+  .calsheet__panel { padding: 28px; }
+}
+.calsheet__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.calsheet__title {
+  margin-top: 10px;
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: clamp(32px, 7vw, 44px);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+.calsheet__events { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.calsheet__events li {
+  display: grid; gap: 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255, 244, 234, 0.05);
+  border: 1px solid var(--line);
+}
+.calsheet__events strong { font-family: var(--f-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.calsheet__events span { font-weight: 800; font-size: 15px; }
+.calsheet__list { display: grid; gap: 8px; }
+.calopt {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 68px;
+  padding: 11px 12px;
+  border-radius: 18px;
+  background: rgba(255, 244, 234, 0.04);
+  border: 1px solid var(--line);
+  transition: background-color 0.25s, border-color 0.25s;
+}
+a.calopt:hover { background: rgba(255, 244, 234, 0.09); }
+.calopt.is-suggested { background: rgba(255, 79, 154, 0.09); border-color: rgba(255, 79, 154, 0.5); }
+.calopt__badge {
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 13px;
+  font-family: var(--f-display); font-weight: 900; font-size: 22px;
+  color: #1a0624;
+  background: var(--sun-x);
+}
+.calopt__badge svg { width: 22px; height: 22px; fill: currentColor; }
+.calopt[data-cal="apple"] .calopt__badge { background: var(--paper); }
+.calopt[data-cal="outlook"] .calopt__badge { background: #7fd8ff; }
+.calopt[data-cal="ics"] .calopt__badge { background: rgba(255, 244, 234, 0.1); color: var(--paper); border: 1px solid rgba(255, 244, 234, 0.2); }
+.calopt__text { display: grid; gap: 2px; }
+.calopt__text strong { font-weight: 800; font-size: 15px; }
+.calopt__text small { font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+.calopt__go { padding-right: 6px; font-size: 20px; color: var(--muted); transition: transform 0.3s var(--ease-out), color 0.25s; }
+a.calopt:hover .calopt__go { color: var(--paper); transform: translateX(3px); }
+.calopt__acts { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.calopt__pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 40px; padding: 0 14px;
+  border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  white-space: nowrap;
+  background: rgba(255, 244, 234, 0.08);
+  border: 1px solid rgba(255, 244, 234, 0.22);
+  transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+}
+.calopt__pill:hover { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+.calopt__pill--main { background: var(--sun-x); border-color: transparent; color: #1a0624; }
+.calopt__pill--main:hover { background: var(--sun-x); color: #1a0624; filter: brightness(1.08); }
+.calsheet__note { margin-top: 14px; font-size: 12.5px; line-height: 1.5; color: var(--faint); }
+/* celular: os botões de evento descem para uma linha própria, largos e fáceis de tocar */
+@media (max-width: 480px) {
+  .calopt { grid-template-columns: 44px minmax(0, 1fr); }
+  .calopt__acts { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; }
+  .calopt__go { display: none; }
+}
+
+/* =========================================================================
    DOCK DA RÁDIO
    ========================================================================= */
 .dock {

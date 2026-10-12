@@ -259,10 +259,10 @@
       <div class="leads__grid">
         <article class="lead" data-lead>
           <div class="lead__media">
-            <img class="lead__img is-active" src="assets/img/cast/jason-portrait.webp" alt="Jason Duval à noite, em frente a um hotel art déco com néon" width="1920" height="1080" loading="lazy" decoding="async">
-            <img class="lead__img" src="assets/img/cast/jason-1.webp" alt="Jason encostado em uma moto esportiva sob palmeiras" width="1920" height="1080" loading="lazy" decoding="async">
-            <img class="lead__img" src="assets/img/cast/jason-2.webp" alt="Jason caminhando à noite em uma rua iluminada de Vice City" width="1920" height="1080" loading="lazy" decoding="async">
-            <img class="lead__img" src="assets/img/cast/jason-3.webp" alt="Jason atrás de uma grade iluminada por luzes de viatura" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img is-active" src="assets/img/cast/jason-portrait.webp" data-focus="0.66 0.25" style="object-position: 72% 25%" alt="Jason Duval à noite, em frente a um hotel art déco com néon" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/jason-1.webp" data-focus="0.7 0.2" style="object-position: 77% 20%" alt="Jason encostado em uma moto esportiva sob palmeiras" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/jason-2.webp" data-focus="0.35 0.18" style="object-position: 30% 18%" alt="Jason encostado em uma árvore, olhando o celular, diante de um hotel iluminado de Vice City" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/jason-3.webp" data-focus="0.49 0.38" style="object-position: 49% 38%" alt="Jason atrás de uma grade iluminada por luzes de viatura" width="1920" height="1080" loading="lazy" decoding="async">
           </div>
           <div class="lead__shade" aria-hidden="true"></div>
           <div class="lead__body">
@@ -280,10 +280,10 @@
 
         <article class="lead lead--right" data-lead>
           <div class="lead__media">
-            <img class="lead__img is-active" src="assets/img/cast/lucia-portrait.webp" alt="Lucia Caminos dentro de um carro com luzes de néon ao fundo" width="1920" height="1080" loading="lazy" decoding="async">
-            <img class="lead__img" src="assets/img/cast/lucia-1.webp" alt="Lucia apoiada na borda de uma piscina com um drinque" width="1920" height="1080" loading="lazy" decoding="async">
-            <img class="lead__img" src="assets/img/cast/lucia-2.webp" alt="Lucia dançando em uma boate iluminada" width="1920" height="1080" loading="lazy" decoding="async">
-            <img class="lead__img" src="assets/img/cast/lucia-3.webp" alt="Lucia com luvas de boxe em um pátio de treino" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img is-active" src="assets/img/cast/lucia-portrait.webp" data-focus="0.55 0.22" style="object-position: 57% 22%" alt="Lucia Caminos dentro de um carro com luzes de néon ao fundo" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/lucia-1.webp" data-focus="0.49 0.27" style="object-position: 49% 27%" alt="Lucia apoiada na borda de uma piscina com um drinque" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/lucia-2.webp" data-focus="0.55 0.26" style="object-position: 57% 26%" alt="Lucia dançando em uma boate iluminada" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/lucia-3.webp" data-focus="0.49 0.17" style="object-position: 49% 17%" alt="Lucia com luvas de boxe em um pátio de treino" width="1920" height="1080" loading="lazy" decoding="async">
           </div>
           <div class="lead__shade" aria-hidden="true"></div>
           <div class="lead__body">
@@ -601,6 +601,53 @@
     </div>
     <span class="dock__progress" aria-hidden="true"><span></span></span>
   </aside>
+
+  <!-- ============ AGENDA ============ -->
+  <div class="calsheet" id="calSheet" hidden>
+    <div class="calsheet__backdrop" data-cal-close></div>
+    <div class="calsheet__panel" role="dialog" aria-modal="true" aria-labelledby="calTitle">
+      <div class="calsheet__head">
+        <div>
+          <p class="kicker">Nos vemos em Leonida</p>
+          <h2 class="calsheet__title" id="calTitle">Adicionar à agenda</h2>
+        </div>
+        <button class="vmodal__close" type="button" data-cal-close aria-label="Fechar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7l-1.4-1.4L9.2 12 2.9 5.7l1.4-1.4 6.3 6.3 6.3-6.3z"/></svg></button>
+      </div>
+      <ul class="calsheet__events">
+        <li><strong>Lançamento · qui</strong><span>19 de novembro</span></li>
+        <li><strong>Pré-download · qui</strong><span>12 de novembro</span></li>
+      </ul>
+      <div class="calsheet__list">
+        <div class="calopt" data-cal="google">
+          <span class="calopt__badge" aria-hidden="true">G</span>
+          <span class="calopt__text"><strong>Google Agenda</strong><small>Android, Chrome e web</small></span>
+          <span class="calopt__acts">
+            <a class="calopt__pill calopt__pill--main" data-event="launch" target="_blank" rel="noopener" href="#" aria-label="Adicionar o lançamento no Google Agenda">Lançamento</a>
+            <a class="calopt__pill" data-event="preload" target="_blank" rel="noopener" href="#" aria-label="Adicionar o pré-download no Google Agenda">Pré-download</a>
+          </span>
+        </div>
+        <a class="calopt" data-cal="apple" href="assets/gta-vi.ics">
+          <span class="calopt__badge" aria-hidden="true">A</span>
+          <span class="calopt__text"><strong>Calendário da Apple</strong><small>iPhone, iPad e Mac · os dois eventos</small></span>
+          <span class="calopt__go" aria-hidden="true">→</span>
+        </a>
+        <div class="calopt" data-cal="outlook">
+          <span class="calopt__badge" aria-hidden="true">O</span>
+          <span class="calopt__text"><strong>Outlook</strong><small>Outlook.com e Microsoft 365</small></span>
+          <span class="calopt__acts">
+            <a class="calopt__pill calopt__pill--main" data-event="launch" target="_blank" rel="noopener" href="#" aria-label="Adicionar o lançamento no Outlook">Lançamento</a>
+            <a class="calopt__pill" data-event="preload" target="_blank" rel="noopener" href="#" aria-label="Adicionar o pré-download no Outlook">Pré-download</a>
+          </span>
+        </div>
+        <a class="calopt" data-cal="ics" href="assets/gta-vi.ics" download="gta-vi.ics">
+          <span class="calopt__badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 3h2v9.2l3.3-3.3 1.4 1.4L12 16l-5.7-5.7 1.4-1.4 3.3 3.3V3zM5 19h14v2H5z"/></svg></span>
+          <span class="calopt__text"><strong>Arquivo .ics</strong><small>Samsung, Thunderbird e outros · os dois eventos</small></span>
+          <span class="calopt__go" aria-hidden="true">↓</span>
+        </a>
+      </div>
+      <p class="calsheet__note">Eventos de dia inteiro, no seu fuso horário. O lançamento já vem com lembrete na véspera no Calendário da Apple e no arquivo .ics. O horário exato de liberação ainda não foi anunciado.</p>
+    </div>
+  </div>
 
   <!-- ============ MODAL DE VÍDEO ============ -->
   <div class="vmodal" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="vmodalTitle" hidden>

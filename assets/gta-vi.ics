@@ -1,0 +1,34 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//GTA VI Contagem Regressiva (fan)//PT-BR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:GTA VI
+BEGIN:VEVENT
+UID:gtavi-preload-20261112@matheusaoliv.github.io
+DTSTAMP:20261012T000000Z
+DTSTART;VALUE=DATE:20261112
+DTEND;VALUE=DATE:20261113
+SUMMARY:GTA VI: começa o pré-download
+DESCRIPTION:Pré-download de Grand Theft Auto VI liberado no PlayStation 5 
+ e no Xbox Series X|S. Contagem: https://matheusaoliv.github.io/gta-6/
+URL:https://matheusaoliv.github.io/gta-6/
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:gtavi-launch-20261119@matheusaoliv.github.io
+DTSTAMP:20261012T000000Z
+DTSTART;VALUE=DATE:20261119
+DTEND;VALUE=DATE:20261120
+SUMMARY:Lançamento de GTA VI
+DESCRIPTION:Grand Theft Auto VI chega ao PlayStation 5 e ao Xbox Series X|S
+ . Nos vemos em Leonida! Contagem: https://matheusaoliv.github.io/gta-6/
+URL:https://matheusaoliv.github.io/gta-6/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT12H
+ACTION:DISPLAY
+DESCRIPTION:GTA VI chega amanhã!
+END:VALARM
+END:VEVENT
+END:VCALENDAR
