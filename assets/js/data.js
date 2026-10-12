@@ -119,6 +119,47 @@
       }
     ],
 
+    // Vídeos. O "An Extended Look" é servido em MP4 (H.264) pelo CDN de vídeo
+    // da própria Rockstar, com legendas oficiais. Os trailers 1 e 2 só existem
+    // no YouTube (embed bloqueado pelo dono, erro 150) e em downloads 4K em
+    // MPEG-4 Part 2, codec que nenhum navegador reproduz.
+    videos: {
+      'extended-look': {
+        title: 'Grand Theft Auto VI: An Extended Look',
+        meta: '27 de agosto de 2026 · gameplay capturada no PS5',
+        poster: 'assets/img/trailers/extended-look.webp',
+        sources: [
+          { label: '4K', height: 2160, src: 'https://videos-rockstargames-com.akamaized.net/v4/rk721912/flv/en-us-2160p.mp4' },
+          { label: '1080p', height: 1080, src: 'https://videos-rockstargames-com.akamaized.net/v4/rk721912/flv/en-us-1080p.mp4' },
+          { label: '720p', height: 720, src: 'https://videos-rockstargames-com.akamaized.net/v4/rk721912/flv/en-us-720p.mp4' },
+          { label: '360p', height: 360, src: 'https://videos-rockstargames-com.akamaized.net/v4/rk721912/flv/en-us-360p.mp4' }
+        ],
+        captions: [
+          { lang: 'pt-BR', label: 'Português (Brasil)', src: 'https://videos-rockstargames-com.akamaized.net/v4/rk721912/cap/pt-br.vtt' },
+          { lang: 'en', label: 'English', src: 'https://videos-rockstargames-com.akamaized.net/v4/rk721912/cap/en-us.vtt' },
+          { lang: 'es', label: 'Español (México)', src: 'https://videos-rockstargames-com.akamaized.net/v4/rk721912/cap/es-mx.vtt' }
+        ],
+        links: [
+          { label: 'Netflix', href: 'https://www.netflix.com/GTAVI' },
+          { label: 'YouTube', href: 'https://www.youtube.com/watch?v=tJbzMqJGH4k' }
+        ]
+      },
+      'trailer-2': {
+        title: 'Grand Theft Auto VI — Trailer 2',
+        meta: '6 de maio de 2025 · “Hot Together” — The Pointer Sisters',
+        poster: 'assets/img/trailers/trailer-2.webp',
+        youtube: 'VQRLujxTm3c',
+        download: { href: 'https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_2/GTAVI_Trailer_2.mp4', size: '1,3 GB' }
+      },
+      'trailer-1': {
+        title: 'Grand Theft Auto VI — Trailer 1',
+        meta: 'Dezembro de 2023 · “Love Is a Long Road” — Tom Petty',
+        poster: 'assets/img/trailers/trailer-1.webp',
+        youtube: 'QdBZY2fkU-0',
+        download: { href: 'https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4', size: '713 MB' }
+      }
+    },
+
     places: [
       { key: 'vice-city', name: 'Vice City', desc: 'Praias, néon e excesso. A capital do glamour de Leonida, onde todo mundo quer ficar famoso — ou rico — antes do pôr do sol.' },
       { key: 'leonida-keys', name: 'Leonida Keys', desc: 'Um colar de ilhas tropicais ligadas por pontes, onde barcos, pescaria e contrabando fazem parte da paisagem.' },

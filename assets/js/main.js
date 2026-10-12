@@ -664,42 +664,42 @@
   var vwin = $('.vmodal__window', vmodal);
   var lastFocus = null;
   var modalOpen = false;
-  function openVideo(id, title, fromEl) {
+  var player = null;
+  var ducked = false;
+  var barLink = $('.vmodal__yt', vmodal);
+
+  // Monta o conteúdo do modal: verificação de idade -> player ou painel do YouTube
+  function stageVideo(key) {
+    var cfg = DATA.videos[key];
+    if (player) { player.destroy(); player = null; }
+    vframe.innerHTML = '';
+    $('#vmodalTitle').textContent = cfg.title;
+    var link = cfg.youtube ? { label: 'Abrir no YouTube ↗', href: 'https://www.youtube.com/watch?v=' + cfg.youtube } : { label: 'Ver no site oficial ↗', href: 'https://www.rockstargames.com/VI/an-extended-look' };
+    barLink.textContent = link.label;
+    barLink.href = link.href;
+    if (!ViMedia.ageOk()) {
+      ViMedia.renderAgeGate(vframe, cfg, { onPass: function () { stageVideo(key); } });
+      return;
+    }
+    if (cfg.sources) {
+      if (!ducked) { Radio.duck(); ducked = true; }
+      player = ViMedia.mountPlayer(vframe, cfg, { key: key, autoplay: true });
+    } else {
+      ViMedia.renderYoutubeOnly(vframe, cfg, {
+        onSwitch: function (k) { stageVideo(k); },
+        onPopup: function () { Radio.pause(); }
+      });
+    }
+  }
+
+  function openVideo(key, fromEl) {
+    if (!DATA.videos[key]) return;
     lastFocus = document.activeElement;
     modalOpen = true;
-    $('#vmodalTitle').textContent = title;
-    $('.vmodal__yt', vmodal).href = 'https://www.youtube.com/watch?v=' + id;
     vmodal.hidden = false;
     root.classList.add('is-modal-open');
     if (lenis) lenis.stop();
-    if (fromEl.dataset.embed === 'age') {
-      // vídeo com restrição de idade: o YouTube não permite incorporar
-      var gateEl = document.createElement('div');
-      gateEl.className = 'agegate';
-      gateEl.innerHTML =
-        '<img class="agegate__bg" alt="" src="' + fromEl.dataset.poster + '">' +
-        '<div class="agegate__body">' +
-          '<span class="tag tag--hot">Classificação Mature 17+</span>' +
-          '<p class="agegate__title">Este vídeo pede verificação de idade</p>' +
-          '<p class="agegate__text">O YouTube só exibe o <strong>An Extended Look</strong> para contas com idade confirmada, então ele não pode tocar aqui dentro. Escolha onde assistir:</p>' +
-          '<div class="agegate__actions">' +
-            '<a class="btn btn--sun" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=' + id + '"><span class="btn__label">Assistir no YouTube ↗</span></a>' +
-            '<a class="btn btn--glass" target="_blank" rel="noopener" href="https://www.netflix.com/GTAVI"><span class="btn__label">Na Netflix ↗</span></a>' +
-            '<a class="btn btn--ghost" target="_blank" rel="noopener" href="https://www.rockstargames.com/VI/an-extended-look"><span class="btn__label">Versão em alta qualidade ↗</span></a>' +
-          '</div>' +
-        '</div>';
-      vframe.appendChild(gateEl);
-      Radio._wasPlaying = false;
-    } else {
-      Radio.duck();
-      var src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1&hl=pt-BR&cc_lang_pref=pt';
-      var iframe = document.createElement('iframe');
-      iframe.title = title;
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
-      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-      iframe.src = src;
-      vframe.appendChild(iframe);
-    }
+    stageVideo(key);
     if (REDUCE) { gsap.set(vmodal, { autoAlpha: 1 }); }
     else {
       var r = fromEl.getBoundingClientRect();
@@ -711,17 +711,18 @@
         scale: r.width / w.width, autoAlpha: 0.4
       }, { x: 0, y: 0, scale: 1, autoAlpha: 1, duration: 0.9, ease: 'expo.out' });
     }
-    $('.vmodal__close', vmodal).focus({ preventScroll: true });
+    if (!vframe.contains(document.activeElement)) $('.vmodal__close', vmodal).focus({ preventScroll: true });
   }
   function closeVideo() {
     if (!modalOpen) return;
     modalOpen = false;
+    if (player) { player.destroy(); player = null; }
     var finish = function () {
       vframe.innerHTML = '';
       vmodal.hidden = true;
       root.classList.remove('is-modal-open');
       if (lenis) lenis.start();
-      Radio.unduck();
+      if (ducked) { Radio.unduck(); ducked = false; }
       if (lastFocus) lastFocus.focus({ preventScroll: true });
     };
     if (REDUCE) return finish();
@@ -732,7 +733,7 @@
     a.addEventListener('click', function (e) {
       if (e.metaKey || e.ctrlKey || e.shiftKey) return;
       e.preventDefault();
-      openVideo(a.dataset.video, a.dataset.title, a);
+      openVideo(a.dataset.video, a);
     });
   });
   vmodal.addEventListener('click', function (e) { if (e.target.closest('[data-close]')) closeVideo(); });
@@ -1069,7 +1070,7 @@
   /* Teclado global: Esc fecha diálogos, setas navegam no lightbox, Tab fica preso no diálogo */
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      if (modalOpen) closeVideo();
+      if (modalOpen && !document.fullscreenElement && !(e.target.closest && e.target.closest('.vp__menu'))) closeVideo();
       else if (lbOpen) lbClose();
       else if (menuOpen) closeMenu();
     }
@@ -1077,7 +1078,7 @@
     if (lbOpen && e.key === 'ArrowLeft') lbShow(lbIndex - 1, -1);
     if (e.key === 'Tab' && (modalOpen || lbOpen)) {
       var dlg = modalOpen ? vmodal : lb;
-      var f = $$('button, a[href], iframe', dlg).filter(function (n) { return n.offsetParent !== null; });
+      var f = $$('button, a[href], iframe, select, input, [tabindex="0"]', dlg).filter(function (n) { return n.offsetParent !== null && !n.disabled; });
       if (!f.length) return;
       var first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
