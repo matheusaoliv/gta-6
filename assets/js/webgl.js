@@ -26,12 +26,14 @@
     '  vec2 i = floor(p); vec2 f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);',
     '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);',
     '}',
-    'float fbm(vec2 p){ float v = 0.0; float a = 0.5; for (int i = 0; i < 4; i++){ v += a * noise(p); p *= 2.03; a *= 0.5; } return v; }',
+    'float fbm(vec2 p){ float v = 0.0; float a = 0.5; for (int i = 0; i < 3; i++){ v += a * noise(p); p *= 2.03; a *= 0.5; } return v; }',
 
     'vec2 cover(vec2 uv){',
     '  float rs = uRes.x / uRes.y; float ri = uImg.x / uImg.y;',
     '  vec2 s = rs > ri ? vec2(1.0, ri / rs) : vec2(rs / ri, 1.0);',
-    '  return uv * s + (1.0 - s) * uFocus;',
+    '  vec2 c = uv * s + (1.0 - s) * uFocus;',
+    // a textura sobe sem UNPACK_FLIP_Y (upload mais barato); o flip acontece aqui
+    '  return vec2(c.x, 1.0 - c.y);',
     '}',
 
     'void main(){',
@@ -41,8 +43,10 @@
     '  p -= uMouse * 0.014 / zoom;',
     // miragem de calor: mais forte no céu e no horizonte
     '  float shimmerMask = smoothstep(0.25, 0.6, uv.y) * (1.0 - smoothstep(0.85, 1.0, uv.y));',
-    '  vec2 w = vec2(fbm(p * vec2(4.0, 14.0) + vec2(0.0, -uTime * 0.45)), fbm(p * vec2(5.0, 9.0) + vec2(uTime * 0.2, 0.0))) - 0.5;',
-    '  p += w * 0.0045 * shimmerMask;',
+    '  if (shimmerMask > 0.001) {',
+    '    vec2 w = vec2(fbm(p * vec2(4.0, 14.0) + vec2(0.0, -uTime * 0.45)), fbm(p * vec2(5.0, 9.0) + vec2(uTime * 0.2, 0.0))) - 0.5;',
+    '    p += w * 0.0045 * shimmerMask;',
+    '  }',
     // aberração cromática
     '  vec2 dir = uv - 0.5;',
     '  float ca = 0.0012 + 0.008 * (1.0 - uReveal) + 0.012 * uScroll + length(uMouse) * 0.0015;',
@@ -98,6 +102,7 @@
     this.running = false;
     this.visible = true;
     this.start = performance.now();
+    this.coarse = window.matchMedia('(pointer: coarse)').matches;
     this._raf = this._raf.bind(this);
     this._resize = this._resize.bind(this);
 
@@ -143,7 +148,7 @@
     var gl = this.gl;
     this.img = img;
     gl.bindTexture(gl.TEXTURE_2D, this.tex);
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -151,12 +156,18 @@
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     this.imgW = img.naturalWidth || img.width;
     this.imgH = img.naturalHeight || img.height;
+    // ImageBitmap já foi para a GPU; libera a cópia decodificada
+    if (typeof img.close === 'function') img.close();
   };
 
   HeroGL.prototype._resize = function () {
-    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    var w = Math.max(1, Math.round(this.canvas.clientWidth * dpr));
-    var h = Math.max(1, Math.round(this.canvas.clientHeight * dpr));
+    // teto de densidade e de pixels totais: o shader roda em cada pixel, a cada quadro
+    var cw = this.canvas.clientWidth, ch = this.canvas.clientHeight;
+    var dpr = Math.min(window.devicePixelRatio || 1, this.coarse ? 1.25 : 1.5);
+    var budget = this.coarse ? 900000 : 3000000;
+    if (cw * ch * dpr * dpr > budget) dpr = Math.sqrt(budget / Math.max(1, cw * ch));
+    var w = Math.max(1, Math.round(cw * dpr));
+    var h = Math.max(1, Math.round(ch * dpr));
     if (this.canvas.width !== w || this.canvas.height !== h) {
       this.canvas.width = w;
       this.canvas.height = h;

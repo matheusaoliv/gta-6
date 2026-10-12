@@ -148,15 +148,18 @@
         title: 'Grand Theft Auto VI — Trailer 2',
         meta: '6 de maio de 2025 · “Hot Together” — The Pointer Sisters',
         poster: 'assets/img/trailers/trailer-2.webp',
+        // convertido do download oficial em 4K (MPEG-4 Part 2) para H.264, que todo navegador toca
+        sources: [{ label: '1080p', height: 1080, src: 'assets/video/gtavi-trailer-2-1080p.mp4' }],
         youtube: 'VQRLujxTm3c',
-        download: { href: 'https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_2/GTAVI_Trailer_2.mp4', size: '1,3 GB' }
+        links: [{ label: 'YouTube', href: 'https://www.youtube.com/watch?v=VQRLujxTm3c' }]
       },
       'trailer-1': {
         title: 'Grand Theft Auto VI — Trailer 1',
         meta: 'Dezembro de 2023 · “Love Is a Long Road” — Tom Petty',
         poster: 'assets/img/trailers/trailer-1.webp',
+        sources: [{ label: '1080p', height: 1080, src: 'assets/video/gtavi-trailer-1-1080p.mp4' }],
         youtube: 'QdBZY2fkU-0',
-        download: { href: 'https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_1/GTAVI_Trailer_1.mp4', size: '713 MB' }
+        links: [{ label: 'YouTube', href: 'https://www.youtube.com/watch?v=QdBZY2fkU-0' }]
       }
     },
 

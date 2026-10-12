@@ -52,6 +52,9 @@
       this.stationsEl = $('.wheel__stations', this.wheel);
       this.hubLogo = $('.hub__logo', this.wheel);
       this.hubHosts = $('.hub__hosts', this.wheel);
+      this.hub = $('.wheel__hub', this.wheel);
+      this.pulse = $('.radio__pulse', this.root);
+      this._bass = -1;
       this.ring = $('.hub__progress-bar', this.wheel);
       this.trackEl = $('.radio__track', this.root);
       this.artistEl = $('.radio__artist', this.root);
@@ -312,8 +315,8 @@
       };
       if (animate && window.gsap && !this.reduce) {
         gsap.timeline()
-          .to([this.hubLogo, this.hubHosts], { autoAlpha: 0, scale: 0.85, filter: 'blur(8px)', duration: 0.22, ease: 'power2.in', onComplete: swap })
-          .to([this.hubLogo, this.hubHosts], { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 0.6, ease: 'back.out(2)' });
+          .to([this.hubLogo, this.hubHosts], { autoAlpha: 0, scale: 0.85, duration: 0.22, ease: 'power2.in', onComplete: swap })
+          .to([this.hubLogo, this.hubHosts], { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'back.out(2)' });
       } else swap();
 
       // fundo desfocado em crossfade
@@ -442,7 +445,8 @@
         var target = lv ? lv[b] : 0;
         this.bands[b] += (target - this.bands[b]) * (target > this.bands[b] ? 0.55 : 0.12);
       }
-      if (!this.vizVisible && !active) return;
+      // fora da tela não há o que desenhar (evita estilo/pintura a cada quadro durante o resto do site)
+      if (!this.vizVisible) return;
       for (var i = 0; i < n; i++) {
         var x = i / (n - 1) * 3; // 0..3 ao longo das 4 bandas
         var k = Math.min(2, Math.floor(x)), fr = x - k;
@@ -454,7 +458,13 @@
         this.barVals[i] = cur;
         this.bars[i].style.transform = 'scaleY(' + cur.toFixed(3) + ')';
       }
-      this.root.style.setProperty('--bass', this.bands[0].toFixed(3));
+      // pulso do grave: transform/opacity direto nos dois elementos (sem variável CSS herdada pela seção)
+      var bass = Math.round(this.bands[0] * 500) / 500;
+      if (bass !== this._bass) {
+        this._bass = bass;
+        if (this.hub && !(window.gsap && gsap.isTweening(this.hub))) this.hub.style.transform = 'scale(' + (1 + bass * 0.035).toFixed(4) + ')';
+        if (this.pulse) this.pulse.style.opacity = (0.32 + bass * 0.68).toFixed(3);
+      }
     }
   };
 

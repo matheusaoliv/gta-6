@@ -361,7 +361,7 @@
       var links = (cfg.links || []).map(function (l) { return '<a class="btn btn--glass" target="_blank" rel="noopener" href="' + esc(l.href) + '">' + esc(l.label) + ' ↗</a>'; }).join('');
       showOverlay(
         '<div class="vp__card"><p class="vp__card-title">Não deu para carregar o vídeo</p>' +
-        '<p class="vp__card-text">O servidor da Rockstar não respondeu ou o seu navegador não aceitou o arquivo. Tente uma qualidade menor ou assista na fonte:</p>' +
+        '<p class="vp__card-text">O servidor não respondeu ou o seu navegador não aceitou o arquivo. ' + (lower >= 0 ? 'Tente uma qualidade menor ou assista na fonte:' : 'Tente de novo em instantes ou assista na fonte:') + '</p>' +
         '<div class="vp__card-actions">' + (lower >= 0 ? '<button class="btn btn--sun" type="button" data-lower>Tentar ' + esc(cfg.sources[lower].label) + '</button>' : '') + links + '</div></div>'
       );
       var lb = overlay.querySelector('[data-lower]');

@@ -24,7 +24,7 @@ Grand Theft Auto VI em 19 de novembro de 2026.**
 Inspirado no [site oficial](https://www.rockstargames.com/VI), o projeto tenta
 ir além dele em movimento e interatividade: arte em WebGL, o logo "VI" virando
 portal, rádio do jogo tocando de verdade e o *An Extended Look* passando dentro
-da página.
+da página, junto com os trailers 1 e 2.
 
 > **Projeto não oficial e sem fins lucrativos.** Não é afiliado à Rockstar Games
 > nem à Take-Two Interactive. Todo o conteúdo do jogo pertence aos seus donos.
@@ -46,7 +46,7 @@ Também tem:
 
 - **Entrada:** portão de som, onde você escolhe entrar com ou sem trilha, e um mergulho pelo "I" do logo.
 - **Contagem:** dígitos que giram como num caça-níquel, e a contagem acompanha você no menu e no título da aba.
-- **Trailers:** abrem em modal, e a rádio pausa sozinha e volta quando você fecha.
+- **Trailers:** os três vídeos oficiais tocam num player próprio, dentro de um modal. A rádio pausa sozinha e volta quando você fecha.
 - **Galeria:** 24 capturas oficiais em esteiras infinitas que reagem ao scroll, com arraste e lightbox (teclado e swipe).
 - **Agenda e compartilhamento:** um botão baixa um arquivo `.ics` com o pré-download (12/11) e o lançamento (19/11), e outro compartilha a contagem.
 - **Detalhes:** player fixo da rádio, cursor personalizado, botões magnéticos e grão de filme.
@@ -71,20 +71,33 @@ quem tem 18 anos ou mais (classificação indicativa no Brasil; ESRB Mature 17+)
 - **Como funciona:** é uma autodeclaração, igual à do site da Rockstar. A
   resposta fica só no navegador (`localStorage`, se você marcar "lembrar"). Quem
   informa menos de 18 anos fica bloqueado na sessão.
-- **Por que vídeo do YouTube não resolve:** a verificação de idade do YouTube
-  depende da conta logada lá, então nenhum site consegue "passar" essa
-  verificação por você.
+- **Por que não usar o player do YouTube:** os vídeos de GTA VI estão
+  bloqueados para reprodução fora do YouTube (erro 150 do player), e a
+  verificação de idade de lá depende da conta logada. Por isso os vídeos tocam
+  num player próprio.
 
 O que acontece com cada vídeo:
 
 | Vídeo | Onde toca | Por quê |
 |---|---|---|
-| **An Extended Look** | **Dentro do site**, no player próprio | A Rockstar publica o vídeo em MP4 (H.264) no CDN de vídeo dela, em 360p, 720p, 1080p e 4K, com **legendas oficiais em português**. O player transmite direto de lá; nada é hospedado aqui. |
-| **Trailer 1** e **Trailer 2** | Janela do YouTube por cima do site | No YouTube, o dono do vídeo bloqueou a reprodução em outros sites (erro 150 do player), inclusive pelo player da própria Rockstar. O único arquivo oficial alternativo é um download 4K em MPEG-4 Part 2, codec que nenhum navegador reproduz. |
+| **An Extended Look** | **Dentro do site**, no player próprio | A Rockstar publica o vídeo em MP4 (H.264) no CDN de vídeo dela, em 360p, 720p, 1080p e 4K, com **legendas oficiais em português**. O player transmite direto de lá. |
+| **Trailer 1** e **Trailer 2** | **Dentro do site**, no player próprio | A Rockstar só oferece esses trailers como download 4K em MPEG-4 Part 2, codec que nenhum navegador reproduz. Eles foram convertidos para H.264 1080p (cerca de 3,7 Mbps, com `faststart` para começar a tocar antes de baixar tudo) e ficam em [`assets/video/`](assets/video/): 41 MB e 78 MB. |
+
+Para refazer a conversão a partir dos arquivos oficiais:
+
+```bash
+for n in 1 2; do
+  ffmpeg -i "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_$n/GTAVI_Trailer_$n.mp4" \
+    -map 0:v:0 -map 0:a:0 -vf "scale=1920:1080:flags=lanczos,format=yuv420p" \
+    -c:v libx264 -preset slow -crf 21 -maxrate 4000k -bufsize 8000k -profile:v high -level 4.1 -g 60 \
+    -c:a aac -b:a 160k -ac 2 -map_metadata -1 -write_tmcd 0 -movflags +faststart \
+    "assets/video/gtavi-trailer-$n-1080p.mp4"
+done
+```
 
 O player próprio tem:
 
-- Seletor de qualidade de 360p a 4K, que lembra sua escolha.
+- Seletor de qualidade de 360p a 4K no An Extended Look, que lembra sua escolha.
 - Legendas em pt-BR, inglês e espanhol, com as falas em português já ligadas.
 - Opção de continuar de onde você parou.
 - Picture-in-picture e tela cheia.
@@ -181,6 +194,7 @@ assets/
   js/vendor/               # GSAP 3.15 (ScrollTrigger, SplitText, CustomEase) e Lenis 1.3
   fonts/                   # Big Shoulders Display, Manrope, Mr Dafoe e IBM Plex Mono (OFL)
   img/                     # artes e capturas oficiais otimizadas em WebP (~11 MB)
+  video/                   # trailers 1 e 2 convertidos para H.264 1080p
 docs/                      # imagens deste README
 ```
 
@@ -201,7 +215,10 @@ docs/                      # imagens deste README
 
 - Imagens em WebP com `width`/`height` e carregamento preguiçoso.
 - Fontes auto-hospedadas com `preload`.
-- Nada de áudio ou vídeo pesado no repositório: tudo é transmitido sob demanda dos servidores oficiais.
+- A entrada não trava: o shader é compilado e a imagem do hero é decodificada (com `createImageBitmap`, fora da thread principal) enquanto o portão de som ainda está na tela. No clique, só sobra animação de `transform` e `opacity`.
+- O shader tem teto de densidade e de pixels totais (menor no celular), e o visualizador da rádio e as esteiras da galeria param quando saem da tela.
+- Nada de vidro desfocado (`backdrop-filter`) por cima do canvas animado, e o grão de filme fica parado no celular.
+- Os vídeos só baixam quando você dá play (`preload="metadata"`), e as rádios tocam direto do servidor oficial.
 
 ---
 
@@ -212,7 +229,8 @@ docs/                      # imagens deste README
   seus licenciadores. Eles são usados aqui sem fins lucrativos, como homenagem
   de fã.
 - **Vídeos:** o An Extended Look é transmitido do CDN oficial da Rockstar; os
-  trailers 1 e 2 vêm do canal oficial da Rockstar no YouTube.
+  trailers 1 e 2 são os downloads oficiais da Rockstar, apenas convertidos de
+  formato para tocar no navegador.
 - **Bibliotecas:** [GSAP](https://gsap.com) (licença padrão "no charge") e
   [Lenis](https://github.com/darkroomengineering/lenis) (MIT).
 - **Fontes:** Big Shoulders Display, Manrope, Mr Dafoe e IBM Plex Mono, todas
