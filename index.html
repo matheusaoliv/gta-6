@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>GTA VI — Contagem Regressiva · 19.11.2026</title>
+  <meta name="description" content="Contagem regressiva cinematográfica (feita por fã) para o lançamento de Grand Theft Auto VI em 19 de novembro de 2026: trailers oficiais, rádios de Leonida, personagens, lugares e galeria.">
+  <meta name="theme-color" content="#12051f">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="GTA VI — Contagem Regressiva">
+  <meta property="og:description" content="Faltam poucos dias para Leonida. Trailers, rádios e a contagem ao vivo até 19.11.2026.">
+  <meta property="og:url" content="https://matheusaoliv.github.io/gta-6/">
+  <meta property="og:image" content="https://matheusaoliv.github.io/gta-6/assets/img/key/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/img/brand/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/brand/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/big-shoulders-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/brand/vi.webp" as="image">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body class="is-loading">
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <!-- ============ PRELOADER / PORTÃO DE SOM ============ -->
+  <div class="loader" id="loader" aria-live="polite">
+    <div class="loader__glow" aria-hidden="true"></div>
+    <div class="loader__inner">
+      <div class="loader__logo" aria-hidden="true">
+        <img class="loader__logo-base" src="assets/img/brand/vi.webp" alt="" width="1210" height="936">
+        <img class="loader__logo-fill" src="assets/img/brand/vi.webp" alt="" width="1210" height="936">
+      </div>
+      <div class="loader__meter">
+        <span class="loader__pct"><span id="loaderPct">000</span><small>%</small></span>
+        <span class="loader__status" id="loaderStatus">Sintonizando Leonida…</span>
+      </div>
+      <div class="loader__gate" id="loaderGate" hidden>
+        <p class="loader__ask">A experiência tem trilha sonora: as prévias oficiais das rádios de Leonida.</p>
+        <div class="loader__actions">
+          <button class="btn btn--sun" type="button" data-enter="sound">
+            <span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 4V6L7 10H3zm13.5 2A4.5 4.5 0 0 0 14 8v8a4.47 4.47 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></span>
+            <span class="btn__label">Entrar com som</span>
+          </button>
+          <button class="btn btn--ghost" type="button" data-enter="mute"><span class="btn__label">Entrar sem som</span></button>
+        </div>
+        <p class="loader__hint">Dica: use fones de ouvido.</p>
+      </div>
+    </div>
+    <p class="loader__legal">Projeto de fã · não oficial · não afiliado à Rockstar Games</p>
+  </div>
+
+  <!-- ============ CAMADAS GLOBAIS ============ -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><span class="cursor__label"></span></span></div>
+  <div class="radio-hud" id="radioHud" aria-hidden="true">
+    <span class="radio-hud__station"></span>
+    <span class="radio-hud__track"></span>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ============ NAVEGAÇÃO ============ -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#contagem" aria-label="Início — contagem regressiva">
+      <img src="assets/img/brand/vi.webp" alt="" width="1210" height="936">
+      <span class="nav__brand-text">Contagem<br>Regressiva</span>
+    </a>
+    <nav class="nav__links" aria-label="Seções">
+      <a href="#trailers">Trailers</a>
+      <a href="#personagens">Personagens</a>
+      <a href="#leonida">Leonida</a>
+      <a href="#radio">Rádio</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#jornada">Jornada</a>
+    </nav>
+    <div class="nav__right">
+      <a class="nav__timer" href="#lancamento" aria-label="Tempo restante até o lançamento">
+        <span class="nav__timer-dot" aria-hidden="true"></span>
+        <span data-mini-countdown>--d --:--:--</span>
+      </a>
+      <button class="nav__sound" type="button" id="navSound" aria-pressed="false" aria-label="Ligar rádio">
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </button>
+      <button class="nav__menu" type="button" id="navMenuBtn" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" hidden>
+    <nav aria-label="Menu principal">
+      <ol>
+        <li><a href="#contagem"><span>01</span>Contagem</a></li>
+        <li><a href="#trailers"><span>02</span>Trailers</a></li>
+        <li><a href="#personagens"><span>03</span>Personagens</a></li>
+        <li><a href="#leonida"><span>04</span>Leonida</a></li>
+        <li><a href="#radio"><span>05</span>Rádio</a></li>
+        <li><a href="#galeria"><span>06</span>Galeria</a></li>
+        <li><a href="#jornada"><span>07</span>Jornada</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ 1. HERO / CONTAGEM ============ -->
+    <section class="hero" id="contagem" aria-labelledby="heroTitle">
+      <div class="hero__media" aria-hidden="true">
+        <picture>
+          <source media="(max-aspect-ratio: 4/5)" srcset="assets/img/key/hero-portrait.webp">
+          <source media="(max-width: 1280px)" srcset="assets/img/key/hero-sm.webp 1280w, assets/img/key/hero.webp 2560w" sizes="100vw">
+          <img class="hero__img" id="heroImg" src="assets/img/key/hero.webp" alt="" width="2560" height="1280" fetchpriority="high">
+        </picture>
+        <canvas class="hero__gl" id="heroGl"></canvas>
+        <div class="hero__shade"></div>
+      </div>
+
+      <div class="hero__content">
+        <h1 class="hero__title" id="heroTitle">
+          <img class="hero__logo" src="assets/img/brand/logo-gtavi.webp" alt="Grand Theft Auto VI" width="1210" height="936">
+        </h1>
+
+        <div class="hero__count">
+          <p class="hero__eyebrow"><span class="pulse-dot" aria-hidden="true"></span><span data-scramble>Contagem para o lançamento</span></p>
+          <div class="countdown countdown--hero" data-countdown aria-hidden="true">
+            <div class="countdown__unit" data-unit="days"><div class="countdown__digits"></div><span class="countdown__label">Dias</span></div>
+            <span class="countdown__sep" aria-hidden="true">:</span>
+            <div class="countdown__unit" data-unit="hours"><div class="countdown__digits"></div><span class="countdown__label">Horas</span></div>
+            <span class="countdown__sep" aria-hidden="true">:</span>
+            <div class="countdown__unit" data-unit="minutes"><div class="countdown__digits"></div><span class="countdown__label">Minutos</span></div>
+            <span class="countdown__sep" aria-hidden="true">:</span>
+            <div class="countdown__unit" data-unit="seconds"><div class="countdown__digits"></div><span class="countdown__label">Segundos</span></div>
+          </div>
+          <p class="sr-only" role="timer" data-countdown-sr></p>
+          <div class="hero__meta">
+            <p class="hero__date"><strong>Quinta, 19 de novembro de 2026</strong><span>PlayStation 5 · Xbox Series X|S</span></p>
+            <p class="chip" data-preload-chip>Pré-download a partir de 12/11</p>
+          </div>
+          <div class="hero__actions">
+            <a class="btn btn--sun" href="#trailers" data-magnetic>
+              <span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+              <span class="btn__label">Assistir trailers</span>
+            </a>
+            <button class="btn btn--glass" type="button" data-radio-toggle data-magnetic>
+              <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+              <span class="btn__label" data-radio-toggle-label>Ligar a rádio</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__ticker" aria-hidden="true">
+        <div class="ticker__track">
+          <span>Vice City</span><i>✦</i><span>Leonida Keys</span><i>✦</i><span>Grassrivers</span><i>✦</i><span>Port Gellhorn</span><i>✦</i><span>Ambrosia</span><i>✦</i><span>Mount Kalaga</span><i>✦</i>
+          <span>Vice City</span><i>✦</i><span>Leonida Keys</span><i>✦</i><span>Grassrivers</span><i>✦</i><span>Port Gellhorn</span><i>✦</i><span>Ambrosia</span><i>✦</i><span>Mount Kalaga</span><i>✦</i>
+        </div>
+      </div>
+      <a class="hero__scroll" href="#vice" aria-label="Rolar para a próxima seção"><span>Role para entrar em Leonida</span><i aria-hidden="true"></i></a>
+    </section>
+
+    <!-- ============ 2. MERGULHO PELO "VI" ============ -->
+    <section class="dive" id="vice" aria-labelledby="diveTitle">
+      <div class="dive__pin">
+        <div class="dive__media" aria-hidden="true">
+          <img src="assets/img/key/vice-skyline.webp" alt="" width="2560" height="1707" loading="lazy" decoding="async">
+        </div>
+        <div class="dive__veil" aria-hidden="true"></div>
+        <svg class="dive__mask" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="sunsetStroke" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7b6cff"/>
+              <stop offset="0.45" stop-color="#ff4f9a"/>
+              <stop offset="1" stop-color="#ffc06b"/>
+            </linearGradient>
+            <mask id="viHole" maskUnits="userSpaceOnUse">
+              <rect class="dive__mask-rect" fill="#fff"/>
+              <path class="dive__vi" fill="#000" d="M0 0 L453 936 L853 111 L853 916.5 L1210 916.5 L1210 0 L539 0 L453 186.5 L366.6 0 Z"/>
+            </mask>
+          </defs>
+          <rect class="dive__mask-rect dive__plate" fill="#12051f" mask="url(#viHole)"/>
+          <path class="dive__vi dive__stroke" fill="none" stroke="url(#sunsetStroke)" vector-effect="non-scaling-stroke" d="M0 0 L453 936 L853 111 L853 916.5 L1210 916.5 L1210 0 L539 0 L453 186.5 L366.6 0 Z"/>
+        </svg>
+        <div class="dive__intro" aria-hidden="true">
+          <p class="kicker">O estado mais ensolarado da América</p>
+          <p class="dive__intro-line">Prepare-se para mergulhar</p>
+        </div>
+        <div class="dive__copy">
+          <p class="kicker">Bem-vindo a Leonida</p>
+          <h2 class="display dive__title" id="diveTitle">Vice City, <span class="text-sun">EUA.</span></h2>
+          <p class="dive__text" data-split-lines>Jason e Lucia sempre jogaram com as cartas marcadas contra eles. Quando um trabalho fácil sai do controle, o casal cai no lado mais escuro do lugar mais ensolarado dos Estados Unidos — e no centro de uma conspiração que atravessa Leonida inteira. Sair vivo vai exigir confiança total um no outro.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. TRAILERS ============ -->
+    <section class="trailers section" id="trailers" aria-labelledby="trailersTitle">
+      <header class="section-head">
+        <p class="kicker" data-scramble>Vídeos oficiais da Rockstar</p>
+        <h2 class="display" id="trailersTitle" data-split>Assista</h2>
+        <p class="section-head__lede" data-reveal>Do primeiro vislumbre de Vice City ao gameplay estendido. Clique para assistir em tela cheia — a rádio pausa sozinha e volta quando você fechar.</p>
+      </header>
+
+      <div class="trailers__grid">
+        <a class="tcard tcard--feature" href="https://www.youtube.com/watch?v=tJbzMqJGH4k" data-video="tJbzMqJGH4k" data-title="Grand Theft Auto VI: An Extended Look" data-embed="age" data-poster="assets/img/trailers/extended-look.webp" data-cursor="Assistir" data-reveal-card>
+          <div class="tcard__media">
+            <img src="assets/img/trailers/extended-look.webp" alt="Jason e Lucia puxando bandanas no rosto em frente a um posto de gasolina ao pôr do sol" width="1920" height="1080" loading="lazy" decoding="async">
+          </div>
+          <div class="tcard__shade" aria-hidden="true"></div>
+          <div class="tcard__meta">
+            <span class="tag tag--hot">Novo · Gameplay</span>
+            <h3 class="tcard__title">An Extended Look</h3>
+            <p class="tcard__info">27 de agosto de 2026 · Estreou na Netflix e no YouTube · Capturado no PS5</p>
+          </div>
+          <span class="tcard__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </a>
+
+        <a class="tcard" href="https://www.youtube.com/watch?v=VQRLujxTm3c" data-video="VQRLujxTm3c" data-title="Grand Theft Auto VI — Trailer 2" data-cursor="Assistir" data-reveal-card>
+          <div class="tcard__media">
+            <img src="assets/img/trailers/trailer-2.webp" alt="Jason e Lucia armados em um píer com os arranha-céus de Vice City ao fundo" width="1920" height="1080" loading="lazy" decoding="async">
+          </div>
+          <div class="tcard__shade" aria-hidden="true"></div>
+          <div class="tcard__meta">
+            <span class="tag">Trailer 2</span>
+            <h3 class="tcard__title">Trailer 2</h3>
+            <p class="tcard__info">6 de maio de 2025 · Trilha: “Hot Together” — The Pointer Sisters</p>
+          </div>
+          <span class="tcard__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </a>
+
+        <a class="tcard" href="https://www.youtube.com/watch?v=QdBZY2fkU-0" data-video="QdBZY2fkU-0" data-title="Grand Theft Auto VI — Trailer 1" data-cursor="Assistir" data-reveal-card>
+          <div class="tcard__media">
+            <img src="assets/img/trailers/trailer-1.webp" alt="Lucia e Jason sentados no capô de um carro clássico entre palmeiras de Vice City" width="1920" height="1080" loading="lazy" decoding="async">
+          </div>
+          <div class="tcard__shade" aria-hidden="true"></div>
+          <div class="tcard__meta">
+            <span class="tag">Trailer 1</span>
+            <h3 class="tcard__title">Trailer 1</h3>
+            <p class="tcard__info">Dezembro de 2023 · Trilha: “Love Is a Long Road” — Tom Petty</p>
+          </div>
+          <span class="tcard__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ 4. PROTAGONISTAS ============ -->
+    <section class="leads section" id="personagens" aria-labelledby="leadsTitle">
+      <div class="leads__marquee" aria-hidden="true"><span>Jason &amp; Lucia — Jason &amp; Lucia — Jason &amp; Lucia — Jason &amp; Lucia —</span></div>
+      <header class="section-head">
+        <p class="kicker" data-scramble>Os protagonistas</p>
+        <h2 class="display" id="leadsTitle" data-split>Dois contra Leonida</h2>
+      </header>
+
+      <div class="leads__grid">
+        <article class="lead" data-lead>
+          <div class="lead__media">
+            <img class="lead__img is-active" src="assets/img/cast/jason-portrait.webp" alt="Jason Duval à noite, em frente a um hotel art déco com néon" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/jason-1.webp" alt="Jason encostado em uma moto esportiva sob palmeiras" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/jason-2.webp" alt="Jason caminhando à noite em uma rua iluminada de Vice City" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/jason-3.webp" alt="Jason atrás de uma grade iluminada por luzes de viatura" width="1920" height="1080" loading="lazy" decoding="async">
+          </div>
+          <div class="lead__shade" aria-hidden="true"></div>
+          <div class="lead__body">
+            <span class="lead__index">01</span>
+            <h3 class="lead__name"><span>Jason</span><span>Duval</span></h3>
+            <p class="lead__bio">Criado entre trambiqueiros, Jason tentou se endireitar no Exército, mas terminou nas Leonida Keys prestando serviço para contrabandistas locais. Ele só quer uma vida tranquila — e ela parece cada vez mais distante.</p>
+            <div class="lead__dots" role="tablist" aria-label="Imagens de Jason">
+              <button type="button" role="tab" aria-selected="true" aria-label="Imagem 1"></button>
+              <button type="button" role="tab" aria-selected="false" aria-label="Imagem 2"></button>
+              <button type="button" role="tab" aria-selected="false" aria-label="Imagem 3"></button>
+              <button type="button" role="tab" aria-selected="false" aria-label="Imagem 4"></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="lead lead--right" data-lead>
+          <div class="lead__media">
+            <img class="lead__img is-active" src="assets/img/cast/lucia-portrait.webp" alt="Lucia Caminos dentro de um carro com luzes de néon ao fundo" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/lucia-1.webp" alt="Lucia apoiada na borda de uma piscina com um drinque" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/lucia-2.webp" alt="Lucia dançando em uma boate iluminada" width="1920" height="1080" loading="lazy" decoding="async">
+            <img class="lead__img" src="assets/img/cast/lucia-3.webp" alt="Lucia com luvas de boxe em um pátio de treino" width="1920" height="1080" loading="lazy" decoding="async">
+          </div>
+          <div class="lead__shade" aria-hidden="true"></div>
+          <div class="lead__body">
+            <span class="lead__index">02</span>
+            <h3 class="lead__name"><span>Lucia</span><span>Caminos</span></h3>
+            <p class="lead__bio">Ensinada pelo pai a brigar desde pequena, Lucia foi parar na Penitenciária de Leonida defendendo a família — e saiu por pura sorte. Lição aprendida: daqui pra frente, só jogadas calculadas.</p>
+            <div class="lead__dots" role="tablist" aria-label="Imagens de Lucia">
+              <button type="button" role="tab" aria-selected="true" aria-label="Imagem 1"></button>
+              <button type="button" role="tab" aria-selected="false" aria-label="Imagem 2"></button>
+              <button type="button" role="tab" aria-selected="false" aria-label="Imagem 3"></button>
+              <button type="button" role="tab" aria-selected="false" aria-label="Imagem 4"></button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 5. ELENCO DE APOIO (HORIZONTAL) ============ -->
+    <section class="cast" id="elenco" aria-labelledby="castTitle">
+      <div class="cast__pin">
+        <header class="cast__head">
+          <p class="kicker" data-scramble>Elenco de apoio</p>
+          <h2 class="display" id="castTitle" data-split>Rostos de Leonida</h2>
+          <p class="cast__hint" aria-hidden="true"><span>Role</span><i></i></p>
+          <div class="cast__progress" aria-hidden="true"><span></span></div>
+        </header>
+        <div class="cast__viewport">
+          <div class="cast__track">
+            <article class="ccard" style="--accent:#41c7ff">
+              <div class="ccard__bg"><img src="assets/img/cast/cal-bg.webp" alt="" width="1600" height="1113" loading="lazy" decoding="async"></div>
+              <div class="ccard__fg"><img src="assets/img/cast/cal-fg.webp" alt="Ilustração de Cal Hampton sentado num barco com uma cerveja" width="1400" height="1279" loading="lazy" decoding="async"></div>
+              <div class="ccard__body"><span class="ccard__idx">01</span><h3>Cal Hampton</h3><p>Amigo de Jason e parceiro nos bicos para Brian. Acredita em toda teoria da internet e prefere cerveja gelada, o barco e distância de confusão.</p></div>
+            </article>
+            <article class="ccard" style="--accent:#ff5f6d">
+              <div class="ccard__bg"><img src="assets/img/cast/boobie-bg.webp" alt="" width="1600" height="1113" loading="lazy" decoding="async"></div>
+              <div class="ccard__fg"><img src="assets/img/cast/boobie-fg.webp" alt="Ilustração de Boobie Ike de jaqueta estampada segurando um copo" width="866" height="1400" loading="lazy" decoding="async"></div>
+              <div class="ccard__body"><span class="ccard__idx">02</span><h3>Boobie Ike</h3><p>Lenda das ruas de Vice City que virou empresário: boate, imóveis e uma gravadora, a Only Raw Records. Tudo vira negócio nas mãos dele.</p></div>
+            </article>
+            <article class="ccard" style="--accent:#ff3d8b">
+              <div class="ccard__bg"><img src="assets/img/cast/drequan-bg.webp" alt="" width="1600" height="1113" loading="lazy" decoding="async"></div>
+              <div class="ccard__fg"><img src="assets/img/cast/drequan-fg.webp" alt="Ilustração de Dre'Quan Priest sentado no capô de um carro" width="1359" height="1400" loading="lazy" decoding="async"></div>
+              <div class="ccard__body"><span class="ccard__idx">03</span><h3>Dre’Quan Priest</h3><p>Trocou as esquinas pela música e comanda a Only Raw Records ao lado de Boobie, sempre atrás do próximo grande hit.</p></div>
+            </article>
+            <article class="ccard" style="--accent:#b46bff">
+              <div class="ccard__bg"><img src="assets/img/cast/dimez-bg.webp" alt="" width="1600" height="1113" loading="lazy" decoding="async"></div>
+              <div class="ccard__fg"><img src="assets/img/cast/dimez-fg.webp" alt="Ilustração da dupla Real Dimez posando" width="1282" height="1400" loading="lazy" decoding="async"></div>
+              <div class="ccard__body"><span class="ccard__idx">04</span><h3>Real Dimez</h3><p>Bae-Luxe e Roxy viralizaram nas redes e agora querem transformar fama de internet em carreira musical de verdade.</p></div>
+            </article>
+            <article class="ccard" style="--accent:#ffd36b">
+              <div class="ccard__bg"><img src="assets/img/cast/raul-bg.webp" alt="" width="1600" height="1113" loading="lazy" decoding="async"></div>
+              <div class="ccard__fg"><img src="assets/img/cast/raul-fg.webp" alt="Ilustração de Raul Bautista de terno branco carregando uma bolsa" width="799" height="1400" loading="lazy" decoding="async"></div>
+              <div class="ccard__body"><span class="ccard__idx">05</span><h3>Raul Bautista</h3><p>Assaltante de bancos experiente e carismático, sempre recrutando talentos para golpes cada vez mais ousados.</p></div>
+            </article>
+            <article class="ccard" style="--accent:#5ef0c8">
+              <div class="ccard__bg"><img src="assets/img/cast/brian-bg.webp" alt="" width="1600" height="1113" loading="lazy" decoding="async"></div>
+              <div class="ccard__fg"><img src="assets/img/cast/brian-fg.webp" alt="Ilustração de Brian Heder debruçado sobre um mapa com cervejas na mesa" width="1400" height="834" loading="lazy" decoding="async"></div>
+              <div class="ccard__body"><span class="ccard__idx">06</span><h3>Brian Heder</h3><p>Contrabandista das antigas nas Keys e dono do estaleiro onde Jason mora — o aluguel ele cobra em serviços.</p></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. LEONIDA (LUGARES) ============ -->
+    <section class="places" id="leonida" aria-labelledby="placesTitle">
+      <div class="places__pin">
+        <div class="places__stage" aria-hidden="true">
+          <figure class="place-media is-active"><img src="assets/img/places/vice-city-1.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async"></figure>
+          <figure class="place-media"><img src="assets/img/places/leonida-keys-1.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async"></figure>
+          <figure class="place-media"><img src="assets/img/places/grassrivers-1.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async"></figure>
+          <figure class="place-media"><img src="assets/img/places/port-gellhorn-1.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async"></figure>
+          <figure class="place-media"><img src="assets/img/places/ambrosia-1.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async"></figure>
+          <figure class="place-media"><img src="assets/img/places/mount-kalaga-1.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async"></figure>
+        </div>
+        <div class="places__shade" aria-hidden="true"></div>
+
+        <div class="places__ui">
+          <header class="places__head">
+            <p class="kicker" data-scramble>Explore o estado</p>
+            <h2 class="display" id="placesTitle">Leonida</h2>
+          </header>
+          <ol class="places__list" role="tablist" aria-label="Regiões de Leonida">
+            <li role="presentation"><button type="button" role="tab" aria-selected="true" data-place="0"><span class="num">01</span><span class="name">Vice City</span></button></li>
+            <li role="presentation"><button type="button" role="tab" aria-selected="false" data-place="1"><span class="num">02</span><span class="name">Leonida Keys</span></button></li>
+            <li role="presentation"><button type="button" role="tab" aria-selected="false" data-place="2"><span class="num">03</span><span class="name">Grassrivers</span></button></li>
+            <li role="presentation"><button type="button" role="tab" aria-selected="false" data-place="3"><span class="num">04</span><span class="name">Port Gellhorn</span></button></li>
+            <li role="presentation"><button type="button" role="tab" aria-selected="false" data-place="4"><span class="num">05</span><span class="name">Ambrosia</span></button></li>
+            <li role="presentation"><button type="button" role="tab" aria-selected="false" data-place="5"><span class="num">06</span><span class="name">Mount Kalaga</span></button></li>
+          </ol>
+          <div class="places__info" role="tabpanel" aria-live="polite">
+            <img class="places__logo" src="assets/img/places/vice-city-logo.webp" alt="Vice City" width="900" height="431">
+            <p class="places__desc">Praias, néon e excesso. A capital do glamour de Leonida, onde todo mundo quer ficar famoso — ou rico — antes do pôr do sol.</p>
+          </div>
+          <figure class="places__postcard" aria-hidden="true">
+            <img src="assets/img/places/vice-city-2.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+            <figcaption>Visit Leonida</figcaption>
+          </figure>
+          <div class="places__counter" aria-hidden="true"><span class="places__current">01</span><i></i><span>06</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. RÁDIO ============ -->
+    <section class="radio section" id="radio" aria-labelledby="radioTitle">
+      <div class="radio__bg" aria-hidden="true">
+        <img class="radio__bg-img is-active" src="assets/img/radio/flash-fm-bg.webp" alt="" loading="lazy" decoding="async">
+        <img class="radio__bg-img" src="" alt="" decoding="async">
+      </div>
+      <div class="radio__glow" aria-hidden="true"></div>
+
+      <header class="section-head section-head--center">
+        <p class="kicker" data-scramble>Transmitindo ao vivo de Leonida</p>
+        <h2 class="display" id="radioTitle" data-split>Rádio Leonida</h2>
+        <p class="section-head__lede" data-reveal>As prévias oficiais das seis primeiras estações reveladas pela Rockstar, tocando direto do site oficial. Gire o dial.</p>
+      </header>
+
+      <div class="radio__layout">
+        <div class="wheel" id="radioWheel">
+          <div class="wheel__ring" aria-hidden="true"></div>
+          <div class="wheel__pointer" aria-hidden="true"></div>
+          <div class="wheel__stations" role="radiogroup" aria-label="Estações de rádio"></div>
+          <div class="wheel__hub">
+            <svg class="hub__progress" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56"/><circle class="hub__progress-bar" cx="60" cy="60" r="56"/></svg>
+            <div class="hub__inner">
+              <img class="hub__logo" src="assets/img/radio/flash-fm-logo.webp" alt="" width="900" height="607">
+              <p class="hub__hosts">Com Robyn e Alex</p>
+              <button class="hub__play" type="button" data-radio-toggle aria-label="Tocar rádio">
+                <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="radio__panel">
+          <p class="radio__label">Tocando agora</p>
+          <p class="radio__now"><span class="radio__track">Good Ones</span><span class="radio__artist">Charli xcx</span></p>
+          <div class="radio__viz" aria-hidden="true"></div>
+          <div class="radio__time"><span data-radio-cur>0:00</span><div class="radio__bar" data-radio-seek role="slider" tabindex="0" aria-label="Posição da prévia" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div><span data-radio-dur>0:00</span></div>
+          <ol class="radio__tracks" aria-label="Faixas da prévia"></ol>
+          <div class="radio__controls">
+            <button class="icon-btn" type="button" data-radio-prev aria-label="Estação anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+            <button class="icon-btn icon-btn--big" type="button" data-radio-toggle aria-label="Tocar rádio">
+              <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+            </button>
+            <button class="icon-btn" type="button" data-radio-next aria-label="Próxima estação"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+            <label class="vol"><span class="sr-only">Volume</span><input type="range" min="0" max="1" step="0.01" value="0.8" data-radio-volume></label>
+          </div>
+          <p class="radio__credit">Prévias oficiais (~2 min) publicadas pela Rockstar Games em 08/10/2026. Mais estações e o restante da trilha chegam no lançamento.</p>
+        </div>
+      </div>
+
+      <aside class="album" data-reveal>
+        <img src="assets/img/key/album.webp" alt="Capa de Grand Theft Auto VI: The Album" width="900" height="900" loading="lazy" decoding="async">
+        <div>
+          <p class="kicker">Trilha original</p>
+          <h3>Grand Theft Auto VI: The Album</h3>
+          <p>34 faixas originais inspiradas em Vice City e Leonida. Chega em 19 de novembro.</p>
+          <a class="link-arrow" href="https://gtavi-thealbum.lnk.to/gtavithealbum" target="_blank" rel="noopener">Ouvir e pré-salvar <span aria-hidden="true">↗</span></a>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ============ 8. A CAPA SE MONTA ============ -->
+    <section class="assemble" id="capa" aria-labelledby="assembleTitle">
+      <div class="assemble__pin">
+        <div class="assemble__copy">
+          <p class="kicker" data-scramble>A arte oficial</p>
+          <h2 class="display" id="assembleTitle">Tudo se encaixa em <span class="text-sun">19.11</span></h2>
+        </div>
+        <div class="assemble__canvas" aria-hidden="true">
+          <img class="shard" src="assets/img/poster/shard0.webp" alt="" width="459" height="595" style="--x:40;--y:40;--w:459;--h:595" loading="lazy" decoding="async">
+          <img class="shard" src="assets/img/poster/shard1.webp" alt="" width="754" height="771" style="--x:517;--y:40;--w:754;--h:771" loading="lazy" decoding="async">
+          <img class="shard" src="assets/img/poster/shard2.webp" alt="" width="716" height="557" style="--x:1289;--y:40;--w:716;--h:557" loading="lazy" decoding="async">
+          <img class="shard" src="assets/img/poster/shard3.webp" alt="" width="497" height="717" style="--x:2023;--y:40;--w:497;--h:717" loading="lazy" decoding="async">
+          <img class="shard" src="assets/img/poster/shard4.webp" alt="" width="459" height="763" style="--x:40;--y:637;--w:459;--h:763" loading="lazy" decoding="async">
+          <img class="shard" src="assets/img/poster/shard5.webp" alt="" width="543" height="598" style="--x:517;--y:802;--w:543;--h:598" loading="lazy" decoding="async">
+          <img class="shard" src="assets/img/poster/shard6.webp" alt="" width="474" height="472" style="--x:1078;--y:928;--w:474;--h:472" loading="lazy" decoding="async">
+          <img class="shard" src="assets/img/poster/shard7.webp" alt="" width="435" height="824" style="--x:1570;--y:576;--w:435;--h:824" loading="lazy" decoding="async">
+          <img class="shard" src="assets/img/poster/shard8.webp" alt="" width="497" height="642" style="--x:2023;--y:758;--w:497;--h:642" loading="lazy" decoding="async">
+          <img class="shard" src="assets/img/poster/shard9.webp" alt="" width="387" height="217" style="--x:1146;--y:619;--w:387;--h:217" loading="lazy" decoding="async">
+          <img class="assemble__logo" src="assets/img/brand/logo-gtavi.webp" alt="" width="1210" height="936" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 9. GALERIA ============ -->
+    <section class="gallery section" id="galeria" aria-labelledby="galleryTitle">
+      <header class="section-head">
+        <p class="kicker" data-scramble>Capturas oficiais</p>
+        <h2 class="display" id="galleryTitle" data-split>Cartões-postais</h2>
+        <p class="section-head__lede" data-reveal>Arraste, role ou clique para ampliar. Cada quadro é uma captura oficial divulgada pela Rockstar.</p>
+      </header>
+      <div class="gallery__rows" data-cursor="Ampliar">
+        <div class="grow" data-dir="-1">
+          <div class="grow__track">
+            <button class="gitem" type="button" data-full="assets/img/gallery/g01.webp"><img src="assets/img/gallery/g01-sm.webp" alt="Praia lotada de Vice City com salva-vidas e banhistas" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g02.webp"><img src="assets/img/gallery/g02-sm.webp" alt="Abordagem policial à noite em Vice City com luzes de viatura" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g03.webp"><img src="assets/img/gallery/g03-sm.webp" alt="Interior de boate com dançarinas e luzes neon" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g04.webp"><img src="assets/img/gallery/g04-sm.webp" alt="Vista aérea de Vice City com prédios, piscinas e o mar" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g05.webp"><img src="assets/img/gallery/g05-sm.webp" alt="Mergulho entre tartarugas e recifes nas Leonida Keys" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g06.webp"><img src="assets/img/gallery/g06-sm.webp" alt="Bar à beira-mar The Rusty Anchor nas Keys" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g07.webp"><img src="assets/img/gallery/g07-sm.webp" alt="Caçadores posando com um jacaré nos pântanos de Grassrivers" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g08.webp"><img src="assets/img/gallery/g08-sm.webp" alt="Casal dentro de um carro estacionado em Port Gellhorn" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g09.webp"><img src="assets/img/gallery/g09-sm.webp" alt="Motoqueiro abraçado à namorada em Ambrosia" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g10.webp"><img src="assets/img/gallery/g10-sm.webp" alt="Helicóptero sobrevoando o Mount Kalaga ao entardecer" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g11.webp"><img src="assets/img/gallery/g11-sm.webp" alt="Cal Hampton boiando numa boia rosa na piscina" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g12.webp"><img src="assets/img/gallery/g12-sm.webp" alt="Boobie Ike na boate Jack of Hearts" width="720" height="405" loading="lazy" decoding="async"></button>
+          </div>
+        </div>
+        <div class="grow" data-dir="1">
+          <div class="grow__track">
+            <button class="gitem" type="button" data-full="assets/img/gallery/g13.webp"><img src="assets/img/gallery/g13-sm.webp" alt="Real Dimez em uma festa com dançarinos" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g14.webp"><img src="assets/img/gallery/g14-sm.webp" alt="Raul Bautista ao telefone diante de monitores" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g15.webp"><img src="assets/img/gallery/g15-sm.webp" alt="Brian Heder ao volante de uma picape" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g16.webp"><img src="assets/img/gallery/g16-sm.webp" alt="Jason pescando em um barco nas Keys" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g17.webp"><img src="assets/img/gallery/g17-sm.webp" alt="Lucia em close, com expressão determinada" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g18.webp"><img src="assets/img/gallery/g18-sm.webp" alt="Assaltante de terno apontando um fuzil durante um roubo" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g19.webp"><img src="assets/img/gallery/g19-sm.webp" alt="Duas mulheres posando em uma boate com luzes roxas" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g20.webp"><img src="assets/img/gallery/g20-sm.webp" alt="Jason mascarado apontando uma pistola em uma loja de conveniência" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g21.webp"><img src="assets/img/gallery/g21-sm.webp" alt="Jason e Lucia ao lado de um esportivo verde na praia" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g22.webp"><img src="assets/img/gallery/g22-sm.webp" alt="Lucia e Jason abrindo o porta-malas de um carro" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g23.webp"><img src="assets/img/gallery/g23-sm.webp" alt="Jason em um bar com amigos" width="720" height="405" loading="lazy" decoding="async"></button>
+            <button class="gitem" type="button" data-full="assets/img/gallery/g24.webp"><img src="assets/img/gallery/g24-sm.webp" alt="Lucia sentada em uma moto diante de uma loja de bebidas" width="720" height="405" loading="lazy" decoding="async"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 10. JORNADA (LINHA DO TEMPO) ============ -->
+    <section class="journey section" id="jornada" aria-labelledby="journeyTitle">
+      <header class="section-head section-head--center">
+        <p class="kicker" data-scramble>A estrada até Leonida</p>
+        <h2 class="display" id="journeyTitle" data-split>A jornada</h2>
+      </header>
+
+      <div class="wait" data-reveal>
+        <p class="wait__label">Desde o Trailer 1, você já percorreu</p>
+        <p class="wait__pct"><span data-wait-pct>97,0000000</span><small>%</small></p>
+        <p class="wait__label">do caminho até o lançamento.</p>
+        <div class="wait__bar" aria-hidden="true"><span data-wait-bar></span><i data-wait-car></i></div>
+      </div>
+
+      <ol class="timeline">
+        <li class="tl" data-date="2022-02-04"><time datetime="2022-02-04">Fev 2022</time><h3>Está confirmado</h3><p>A Rockstar anuncia oficialmente que o próximo Grand Theft Auto está em produção.</p></li>
+        <li class="tl" data-date="2023-12-04"><time datetime="2023-12">Dez 2023</time><h3>Trailer 1</h3><p>Lucia, Jason e Vice City são revelados ao som de Tom Petty — e o vídeo quebra recordes de audiência em 24 horas.</p></li>
+        <li class="tl" data-date="2025-05-06"><time datetime="2025-05">Mai 2025</time><h3>Trailer 2</h3><p>Uma nova data (26/05/2026) e o segundo trailer, apresentando o elenco e as regiões de Leonida.</p></li>
+        <li class="tl" data-date="2025-11-06"><time datetime="2025-11">Nov 2025</time><h3>A data definitiva</h3><p>O lançamento é ajustado para 19 de novembro de 2026 — mais tempo para o polimento final.</p></li>
+        <li class="tl" data-date="2026-06-25"><time datetime="2026-06-25">25 Jun 2026</time><h3>Pré-venda aberta</h3><p>Edições Standard e Ultimate entram em pré-venda no mundo todo.</p></li>
+        <li class="tl" data-date="2026-08-27"><time datetime="2026-08-27">27 Ago 2026</time><h3>An Extended Look</h3><p>Quase meia hora de gameplay estreia na Netflix e, horas depois, no YouTube.</p></li>
+        <li class="tl" data-date="2026-10-08"><time datetime="2026-10-08">08 Out 2026</time><h3>As rádios no ar</h3><p>Seis estações reveladas, com apresentadores como Bad Bunny, Lana Del Rey, Robyn e Kerry King.</p></li>
+        <li class="tl" data-date="2026-11-12"><time datetime="2026-11-12">12 Nov 2026</time><h3>Pré-download</h3><p>Quem comprou já pode baixar o jogo e deixar tudo pronto.</p></li>
+        <li class="tl tl--launch" data-date="2026-11-19"><time datetime="2026-11-19">19 Nov 2026</time><h3>Leonida abre as portas</h3><p>Lançamento no PlayStation 5 e no Xbox Series X|S.</p></li>
+      </ol>
+    </section>
+
+    <!-- ============ 11. FINAL ============ -->
+    <section class="finale" id="lancamento" aria-labelledby="finaleTitle">
+      <div class="finale__bg" aria-hidden="true">
+        <img src="assets/img/key/walk.webp" srcset="assets/img/key/walk-sm.webp 1280w, assets/img/key/walk.webp 2560w" sizes="100vw" alt="" width="2560" height="1313" loading="lazy" decoding="async">
+      </div>
+      <div class="finale__shade" aria-hidden="true"></div>
+      <div class="finale__content">
+        <h2 class="finale__title" id="finaleTitle"><span class="script">Nos vemos em</span><span class="display">Leonida</span></h2>
+        <p class="sr-only" role="timer" data-countdown-sr></p>
+        <div class="countdown countdown--compact" data-countdown aria-hidden="true">
+          <div class="countdown__unit" data-unit="days"><div class="countdown__digits"></div><span class="countdown__label">Dias</span></div>
+          <span class="countdown__sep" aria-hidden="true">:</span>
+          <div class="countdown__unit" data-unit="hours"><div class="countdown__digits"></div><span class="countdown__label">Horas</span></div>
+          <span class="countdown__sep" aria-hidden="true">:</span>
+          <div class="countdown__unit" data-unit="minutes"><div class="countdown__digits"></div><span class="countdown__label">Minutos</span></div>
+          <span class="countdown__sep" aria-hidden="true">:</span>
+          <div class="countdown__unit" data-unit="seconds"><div class="countdown__digits"></div><span class="countdown__label">Segundos</span></div>
+        </div>
+        <p class="finale__note">Contagem até a meia-noite de 19/11/2026 no seu fuso horário. O horário exato de liberação ainda não foi anunciado.</p>
+        <div class="finale__actions">
+          <button class="btn btn--sun" type="button" id="addCalendar" data-magnetic>
+            <span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm-2 8h14v10H5V10z"/></svg></span>
+            <span class="btn__label">Adicionar à agenda</span>
+          </button>
+          <button class="btn btn--glass" type="button" id="shareBtn" data-magnetic><span class="btn__label">Compartilhar contagem</span></button>
+          <a class="btn btn--ghost" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener"><span class="btn__label">Site oficial ↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <img src="assets/img/brand/logo-gtavi.webp" alt="Grand Theft Auto VI" width="1210" height="936" loading="lazy" decoding="async">
+      <p class="footer__claim">Uma contagem regressiva feita por fã, com carinho, para quem está esperando desde 2013.</p>
+    </div>
+    <div class="footer__legal">
+      <p><strong>Projeto não oficial e sem fins lucrativos.</strong> Não afiliado, patrocinado ou endossado pela Rockstar Games ou Take-Two Interactive. Grand Theft Auto, GTA VI, os logotipos, as imagens, os trailers e as músicas pertencem aos seus respectivos donos.</p>
+      <p>Trailers incorporados do canal oficial da Rockstar Games no YouTube. As prévias das rádios são transmitidas diretamente do <a href="https://www.rockstargames.com/VI/music" target="_blank" rel="noopener">site oficial</a> e não são hospedadas aqui. Classificação indicativa: ESRB Mature 17+.</p>
+    </div>
+    <p class="footer__bottom"><span>Feito com GSAP, Lenis e WebGL</span><a href="#contagem">Voltar ao topo ↑</a></p>
+  </footer>
+
+  <!-- ============ DOCK DA RÁDIO ============ -->
+  <aside class="dock" id="dock" aria-label="Player da rádio" hidden>
+    <button class="dock__art" type="button" data-goto-radio aria-label="Ir para a seção da rádio"><img src="assets/img/radio/flash-fm-icon.webp" alt="" width="480" height="480"></button>
+    <div class="dock__text">
+      <span class="dock__station">Flash FM</span>
+      <span class="dock__track"><span class="dock__track-inner">Good Ones — Charli xcx</span></span>
+    </div>
+    <div class="dock__btns">
+      <button class="icon-btn" type="button" data-radio-prev aria-label="Estação anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+      <button class="icon-btn icon-btn--accent" type="button" data-radio-toggle aria-label="Tocar rádio">
+        <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+      <button class="icon-btn" type="button" data-radio-next aria-label="Próxima estação"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+    </div>
+    <span class="dock__progress" aria-hidden="true"><span></span></span>
+  </aside>
+
+  <!-- ============ MODAL DE VÍDEO ============ -->
+  <div class="vmodal" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="vmodalTitle" hidden>
+    <div class="vmodal__backdrop" data-close></div>
+    <div class="vmodal__window">
+      <div class="vmodal__bar">
+        <h2 class="vmodal__title" id="vmodalTitle">Trailer</h2>
+        <a class="vmodal__yt" href="#" target="_blank" rel="noopener">Abrir no YouTube ↗</a>
+        <button class="vmodal__close" type="button" data-close aria-label="Fechar vídeo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7l-1.4-1.4L9.2 12 2.9 5.7l1.4-1.4 6.3 6.3 6.3-6.3z"/></svg></button>
+      </div>
+      <div class="vmodal__frame" id="vmodalFrame"></div>
+    </div>
+  </div>
+
+  <!-- ============ LIGHTBOX ============ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Imagem ampliada" hidden>
+    <div class="lightbox__backdrop" data-close></div>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" src="" alt="">
+      <figcaption class="lightbox__cap"><span class="lightbox__count"></span><span class="lightbox__text"></span></figcaption>
+    </figure>
+    <button class="lightbox__nav lightbox__nav--prev" type="button" data-lb-prev aria-label="Imagem anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/></svg></button>
+    <button class="lightbox__nav lightbox__nav--next" type="button" data-lb-next aria-label="Próxima imagem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.6 16.6 10 18l6-6-6-6-1.4 1.4 4.6 4.6z"/></svg></button>
+    <button class="lightbox__close" type="button" data-close aria-label="Fechar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7l-1.4-1.4L9.2 12 2.9 5.7l1.4-1.4 6.3 6.3 6.3-6.3z"/></svg></button>
+  </div>
+
+  <script src="assets/js/vendor/gsap.min.js" defer></script>
+  <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/vendor/SplitText.min.js" defer></script>
+  <script src="assets/js/vendor/CustomEase.min.js" defer></script>
+  <script src="assets/js/vendor/lenis.min.js" defer></script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/radio-levels.js" defer></script>
+  <script src="assets/js/webgl.js" defer></script>
+  <script src="assets/js/radio.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
