@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Passagem para Vice City — GTA VI · Leonida Airways</title>
+  <meta name="description" content="Emita grátis sua passagem para Vice City no voo que pousa no lançamento de GTA VI, em 19 de novembro de 2026. Bilhete ao vivo, QR code de verdade e imagens prontas para story e feed.">
+  <meta name="theme-color" content="#12051f">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Passagem para Vice City — voo LA 1119, portão VI">
+  <meta property="og:description" content="Emita a sua passagem para Leonida e chegue em Vice City no lançamento de GTA VI.">
+  <meta property="og:url" content="https://matheusaoliv.github.io/gta-6/passagem.html">
+  <meta property="og:image" content="https://matheusaoliv.github.io/gta-6/assets/img/key/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/img/brand/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/brand/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/big-shoulders-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/mr-dafoe-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/passagem.css">
+</head>
+<body class="pass-page">
+  <a class="skip-link" href="#balcao">Pular para o balcão de check-in</a>
+
+  <header class="pnav">
+    <a class="pnav__back" href="./"><span aria-hidden="true">←</span> Contagem</a>
+    <a class="pnav__brand" href="./" aria-label="GTA VI — voltar à contagem"><img src="assets/img/brand/vi.webp" alt="" width="1210" height="936"></a>
+    <span class="pnav__timer"><span class="nav__timer-dot" aria-hidden="true"></span><span data-mini>--</span></span>
+  </header>
+
+  <main id="main">
+    <section class="phero">
+      <div class="board" aria-hidden="true">
+        <span>Voo</span><span>Destino</span><span>Portão</span><span>Status</span>
+        <b>LA 1119</b><b>Vice City</b><b>VI</b><b class="board__live">Embarcando</b>
+      </div>
+      <p class="kicker">Leonida Airways · embarque aberto</p>
+      <h1 class="phero__title"><span>Sua passagem para</span> <em>Vice City</em></h1>
+      <p class="phero__lede">Emita grátis o bilhete do voo que pousa em Leonida à meia-noite de 19 de novembro, no lançamento de GTA VI. O cartão se monta enquanto você preenche, tem QR code de verdade e sai pronto para story, feed ou impressão.</p>
+    </section>
+
+    <section class="checkin" id="balcao" aria-label="Balcão de check-in">
+      <form class="desk" id="desk" autocomplete="off">
+        <p class="desk__shared" id="sharedNote" hidden>Você abriu a passagem de <strong></strong>. Troque o nome para emitir a sua.</p>
+
+        <div class="desk__field">
+          <label class="desk__label" for="n">Nome ou apelido</label>
+          <input class="desk__input" id="n" name="n" type="text" maxlength="22" placeholder="Como vai aparecer no bilhete" autocomplete="nickname" spellcheck="false" enterkeyhint="done">
+          <p class="desk__hint">Até 22 caracteres. Use um apelido se preferir: o nome vai no link do bilhete.</p>
+          <p class="desk__secret" id="secretNote" role="status" hidden></p>
+        </div>
+
+        <div class="desk__field">
+          <label class="desk__label" for="de">De onde você parte</label>
+          <div class="desk__select"><select class="desk__input" id="de" name="de"></select></div>
+        </div>
+
+        <fieldset class="desk__field">
+          <legend class="desk__label">Classe</legend>
+          <div class="classes">
+            <label class="class-card class-card--eco"><input type="radio" name="c" value="eco"><span class="class-card__swatch" aria-hidden="true"></span><strong>Econômica</strong><small>Pôr do sol no letreiro de Vice City</small></label>
+            <label class="class-card class-card--exe"><input type="radio" name="c" value="exe"><span class="class-card__swatch" aria-hidden="true"></span><strong>Executiva</strong><small>Hidroavião sobre as Leonida Keys</small></label>
+            <label class="class-card class-card--pri"><input type="radio" name="c" value="pri"><span class="class-card__swatch" aria-hidden="true"></span><strong>Primeira Classe</strong><small>Vice City à noite, com acabamento dourado</small></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="desk__field">
+          <legend class="desk__label">Quem viaja com você</legend>
+          <div class="chips">
+            <label class="chip-radio"><input type="radio" name="com" value="ambos"><span>Jason &amp; Lucia</span></label>
+            <label class="chip-radio"><input type="radio" name="com" value="lucia"><span>Lucia</span></label>
+            <label class="chip-radio"><input type="radio" name="com" value="jason"><span>Jason</span></label>
+            <label class="chip-radio"><input type="radio" name="com" value="solo"><span>Sozinho</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="desk__field">
+          <legend class="desk__label">Rádio de bordo</legend>
+          <div class="chips chips--stations" id="radios"></div>
+        </fieldset>
+
+        <button class="btn btn--sun desk__go" type="submit"><span class="btn__label">Ver meu bilhete</span></button>
+      </form>
+
+      <div class="stage">
+        <div class="stage__formats" role="group" aria-label="Formato da imagem">
+          <button type="button" data-format="card" aria-pressed="true">Cartão</button>
+          <button type="button" data-format="story" aria-pressed="false">Story 9:16</button>
+          <button type="button" data-format="feed" aria-pressed="false">Feed 4:5</button>
+        </div>
+        <div class="pass" id="pass" data-format="card">
+          <canvas id="passCanvas" width="1080" height="1800" role="img" aria-label="Cartão de embarque"></canvas>
+          <span class="pass__shine" aria-hidden="true"></span>
+        </div>
+        <div class="stage__actions">
+          <button class="btn btn--sun" type="button" id="download">
+            <span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 3h2v9.2l3.3-3.3 1.4 1.4L12 16l-5.7-5.7 1.4-1.4 3.3 3.3V3zM5 19h14v2H5z"/></svg></span>
+            <span class="btn__label">Baixar imagem</span>
+          </button>
+          <button class="btn btn--glass" type="button" id="share"><span class="btn__label">Compartilhar</span></button>
+          <button class="btn btn--ghost" type="button" id="copy"><span class="btn__label">Copiar link</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="how" aria-labelledby="howTitle">
+      <h2 class="how__title" id="howTitle">Como funciona o voo LA 1119</h2>
+      <ol class="how__steps">
+        <li><strong>Check-in</strong><span>Escreva seu nome, a cidade de partida, a classe, quem viaja com você e a rádio do voo. O bilhete muda na hora.</span></li>
+        <li><strong>Seu lugar</strong><span>Assento e localizador saem do seu nome: o mesmo nome sempre gera o mesmo bilhete, em qualquer aparelho.</span></li>
+        <li><strong>Embarque</strong><span>Baixe em formato de cartão, story ou feed, ou compartilhe direto. O QR code abre o seu bilhete aqui no site.</span></li>
+        <li><strong>Imigração</strong><span>A partir da meia-noite de 19/11, todo bilhete ganha o carimbo de chegada em Leonida. Volte para baixar o seu carimbado.</span></li>
+      </ol>
+      <p class="how__secret"><strong>Bilhetes secretos.</strong> Alguns nomes destravam cartões especiais. Tente o do antigo dono de Vice City, ou o de um certo casal procurado em Leonida.</p>
+      <p class="how__legal">Brincadeira de fã, sem valor de passagem. A Leonida Airways não existe; GTA VI, Vice City e Leonida são marcas da Rockstar Games. Nada do que você digita é enviado a servidores: o bilhete é feito no seu navegador.</p>
+      <a class="link-arrow" href="./">Voltar à contagem regressiva →</a>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/vendor/qrcode.min.js"></script>
+  <script src="assets/js/passagem.js"></script>
+</body>
+</html>

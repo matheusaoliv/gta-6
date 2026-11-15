@@ -567,6 +567,7 @@ ol, ul { padding: 0; list-style: none; }
 }
 .nav.is-scrolled::before { opacity: 1; }
 .nav.is-hidden { transform: translateY(-110%); }
+.nav__links .nav__links-hot { color: var(--gold); }
 .nav__brand { display: flex; align-items: center; gap: 12px; min-height: 44px; }
 .nav__brand img { width: 44px; height: auto; filter: drop-shadow(0 4px 14px rgba(255, 79, 154, 0.4)); }
 .nav__brand-text {

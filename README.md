@@ -48,6 +48,7 @@ Também tem:
 - **Contagem:** dígitos que giram como num caça-níquel, e a contagem acompanha você no menu e no título da aba.
 - **Trailers:** os três vídeos oficiais tocam num player próprio, dentro de um modal. A rádio pausa sozinha e volta quando você fecha.
 - **Galeria:** 24 capturas oficiais em esteiras infinitas que reagem ao scroll, com arraste e lightbox (teclado e swipe).
+- **Passagem para Vice City:** em [`passagem.html`](https://matheusaoliv.github.io/gta-6/passagem.html) cada fã emite o cartão de embarque do voo LA 1119 (veja abaixo).
 - **Agenda e compartilhamento:** o botão de agenda abre as opções Google Agenda, Calendário da Apple, Outlook e arquivo `.ics`, com o pré-download (12/11) e o lançamento (19/11). A opção do seu aparelho aparece primeiro. Outro botão compartilha a contagem.
 - **Detalhes:** player fixo da rádio, cursor personalizado, botões magnéticos e grão de filme.
 
@@ -58,6 +59,31 @@ Também tem:
 *Tudo funciona no celular, inclusive o player e a rádio.*
 
 </div>
+
+---
+
+## Passagem para Vice City
+
+Um balcão de check-in da Leonida Airways (companhia fictícia criada para o site)
+em que o fã monta o próprio cartão de embarque para o lançamento:
+
+- **Ao vivo:** o bilhete se monta enquanto você digita, com as letras girando
+  como num letreiro de aeroporto.
+- **Escolhas:** cidade de partida (Brasil, Portugal, mundo e as cidades da série),
+  classe (Econômica, Executiva ou Primeira, cada uma com foto e paleta próprias),
+  quem viaja com você (Jason, Lucia, os dois ou sozinho) e a rádio de bordo.
+- **Assento e localizador** saem do nome: o mesmo nome gera sempre o mesmo bilhete.
+- **QR code de verdade:** abre o bilhete da pessoa no site. O estado vai na URL,
+  sem servidor e sem cadastro.
+- **Exportação** em cartão (1080x1800), story 9:16 e feed 4:5, com compartilhamento
+  direto no celular (Web Share).
+- **Carimbo de chegada:** a partir da meia-noite de 19/11 todo bilhete sai
+  carimbado pela imigração de Leonida.
+- **Bilhetes secretos** para alguns nomes da série.
+
+Tudo é desenhado num `<canvas>`
+([`assets/js/passagem.js`](assets/js/passagem.js)). O QR usa a
+[qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (MIT).
 
 ---
 
@@ -184,16 +210,18 @@ Quase todo o conteúdo editável está em [`assets/js/data.js`](assets/js/data.j
 
 ```
 index.html                 # estrutura e conteúdo das seções
+passagem.html              # passagem para Vice City
 assets/
   css/main.css             # tokens de design, layout e componentes
   gta-vi.ics               # os dois eventos para o Calendário da Apple e outros apps
   js/data.js               # datas, rádios, vídeos e lugares
   js/main.js               # contagem, scroll (Lenis + ScrollTrigger), seções, modais, cursor
+  js/passagem.js           # gerador do cartão de embarque (canvas, QR, exportação)
   js/player.js             # verificação de idade e player de vídeo
   js/radio.js              # rádio, HUD, visualizador e Media Session
   js/radio-levels.js       # energia pré-calculada das prévias (4 bandas, 20 fps)
   js/webgl.js              # shader do hero (dissolve, miragem, aberração cromática, grão)
-  js/vendor/               # GSAP 3.15 (ScrollTrigger, SplitText, CustomEase) e Lenis 1.3
+  js/vendor/               # GSAP 3.15 (ScrollTrigger, SplitText, CustomEase), Lenis 1.3 e qrcode-generator 1.4
   fonts/                   # Big Shoulders Display, Manrope, Mr Dafoe e IBM Plex Mono (OFL)
   img/                     # artes e capturas oficiais otimizadas em WebP (~11 MB)
   video/                   # trailers 1 e 2 convertidos para H.264 1080p
