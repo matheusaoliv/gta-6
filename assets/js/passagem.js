@@ -768,8 +768,8 @@
 
   function syncOrient() {
     $$('[data-orient]').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.orient === state.o ? 'true' : 'false'); });
-    stage.dataset.orient = state.o;
-    $('.checkin').dataset.orient = state.o;
+    stage.dataset.ticket = state.o;
+    $('.checkin').dataset.ticket = state.o;
   }
   $$('[data-orient]').forEach(function (b) {
     b.addEventListener('click', function () {

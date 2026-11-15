@@ -196,7 +196,10 @@ envie o conteúdo para essa branch:
 git push origin HEAD:gh-pages
 ```
 
-O GitHub reconstrói o site em menos de um minuto. As tags `og:url` e
+O GitHub reconstrói o site em menos de um minuto. Como o GitHub Pages deixa
+o navegador guardar CSS e JS por 10 minutos, troque o `?v=` dos arquivos em
+`index.html` e `passagem.html` a cada publicação; assim ninguém fica com a
+página nova rodando um script antigo. As tags `og:url` e
 `og:image` do `index.html` apontam para `https://matheusaoliv.github.io/gta-6/`;
 se publicar em outro endereço, ajuste essas duas tags.
 
