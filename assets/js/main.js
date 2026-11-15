@@ -21,7 +21,24 @@
   function blur(o, px) { if (FINE) o.filter = 'blur(' + px + 'px)'; return o; }
   function dateFrom(arr) { return new Date(arr[0], arr[1], arr[2], arr[3] || 0, arr[4] || 0, arr[5] || 0); }
 
-  var RELEASE = dateFrom(DATA.release);
+  // Fusos: instante da meia-noite de 19/11 no fuso de uma loja (sem biblioteca, via Intl)
+  function tzOffset(tz, t) {
+    var p = {};
+    new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+      .formatToParts(new Date(t)).forEach(function (x) { p[x.type] = x.value; });
+    return Date.UTC(+p.year, p.month - 1, +p.day, +p.hour % 24, +p.minute, +p.second) - t;
+  }
+  function midnightIn(tz) {
+    var r = DATA.release, g = Date.UTC(r[0], r[1], r[2]);
+    return new Date(g - tzOffset(tz, g - tzOffset(tz, g)));
+  }
+  var MY_TZ = (Intl.DateTimeFormat().resolvedOptions().timeZone) || '';
+  // shortcut: só Brasil e EUA/Canadá têm uma janela única para fusos diferentes; outros países seguem a meia-noite local
+  var STORE_TZ = /^America\/(Sao_Paulo|Manaus|Cuiaba|Campo_Grande|Porto_Velho|Boa_Vista|Rio_Branco|Eirunepe|Belem|Fortaleza|Recife|Maceio|Bahia|Araguaina|Santarem|Noronha)$/.test(MY_TZ) ? 'America/Sao_Paulo'
+    : /^(America\/(Chicago|Denver|Phoenix|Los_Angeles|Anchorage|Boise|Detroit|Indiana\/.+|Kentucky\/.+|Vancouver|Edmonton|Winnipeg|Regina|Toronto|Halifax|St_Johns)|Pacific\/Honolulu)$/.test(MY_TZ) ? 'America/New_York'
+    : '';
+  var RELEASE = STORE_TZ ? midnightIn(STORE_TZ) : dateFrom(DATA.release);
+  var LAUNCH_DAY = dateFrom(DATA.release); // data do lançamento no calendário local (eventos de dia inteiro)
   var PRELOAD = dateFrom(DATA.preload);
   var T1 = new Date(DATA.trailer1);
 
@@ -219,11 +236,49 @@
       }
       if (preloadChip) {
         var pd = Math.ceil((PRELOAD - now) / 86400000);
-        if (now < PRELOAD) preloadChip.textContent = 'Pré-download em ' + pd + (pd === 1 ? ' dia' : ' dias') + ' · 12/11';
+        if (now < PRELOAD) preloadChip.textContent = 'Pré-download em ' + pd + (pd === 1 ? ' dia' : ' dias') + ' · 10/11';
         else if (!parts.launched) preloadChip.textContent = 'Pré-download liberado';
         else preloadChip.textContent = 'Disponível agora';
       }
     }
+  }
+
+  /* Guia do lançamento: horário de cada loja no relógio do visitante, com contagem por linha */
+  var EARLY = new Date(DATA.early);
+  var regionBody = $('[data-regions]');
+  var earlyCount = $('[data-early-count]');
+  var regionRows = [];
+  function short(ms) {
+    if (ms <= 0) return 'Liberado';
+    var d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4), sec = Math.floor(ms % 6e4 / 1e3);
+    return (d ? d + 'd ' : '') + pad(h) + 'h ' + pad(m) + 'min ' + pad(sec) + 's';
+  }
+  if (regionBody) {
+    var mine = STORE_TZ || MY_TZ;
+    var clock = { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' };
+    DATA.regions.map(function (r) { return { r: r, at: midnightIn(r.tz) }; })
+      .sort(function (a, b) { return a.at - b.at; })
+      .forEach(function (x) {
+        var tr = document.createElement('tr');
+        var you = x.r.tz === mine;
+        if (you) tr.className = 'is-you';
+        tr.innerHTML = '<th scope="row"><strong></strong><small></small></th><td></td><td class="wtable__left"></td>';
+        $('strong', tr).textContent = x.r.name + (you ? ' · você' : '');
+        $('small', tr).textContent = x.r.note || 'Meia-noite de 19/11, hora local.';
+        $('td', tr).textContent = x.at.toLocaleString('pt-BR', clock).replace('.', '');
+        regionBody.appendChild(tr);
+        regionRows.push({ at: x.at, cell: $('.wtable__left', tr), row: tr });
+      });
+    var earlyLocal = $('[data-early-local]');
+    if (earlyLocal) earlyLocal.textContent = EARLY.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', ' às');
+  }
+  function updateGuide(now) {
+    regionRows.forEach(function (x) {
+      var left = x.at - now;
+      x.cell.textContent = short(left);
+      x.row.classList.toggle('is-open', left <= 0);
+    });
+    if (earlyCount) earlyCount.textContent = EARLY - now > 0 ? 'Faltam ' + short(EARLY - now) : 'Já liberado na Nova Zelândia';
   }
 
   var tickTimer;
@@ -236,6 +291,7 @@
       setTimeout(function () { c.el.classList.remove('is-tick'); }, 450);
     });
     updateTexts(parts, now);
+    updateGuide(now);
     clearTimeout(tickTimer);
     tickTimer = setTimeout(tick, 1000 - (Date.now() % 1000) + 8);
   }
@@ -244,6 +300,7 @@
     var p = getParts(new Date());
     countdowns.forEach(function (c, i) { c.render(p, i === 0 ? 'instant' : 'instant'); });
     updateTexts(p, new Date());
+    updateGuide(new Date());
   })();
 
   /* ---------------------------------------------------------------------
@@ -1235,6 +1292,21 @@
     }
   })();
 
+  // dados estruturados das perguntas frequentes, gerados do próprio HTML (uma fonte só)
+  (function faqSchema() {
+    var items = $$('.faq__item');
+    if (!items.length) return;
+    var ld = document.createElement('script');
+    ld.type = 'application/ld+json';
+    ld.textContent = JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'FAQPage',
+      mainEntity: items.map(function (d) {
+        return { '@type': 'Question', name: $('summary', d).textContent, acceptedAnswer: { '@type': 'Answer', text: $('p', d).textContent } };
+      })
+    });
+    document.head.appendChild(ld);
+  })();
+
   /* ---------------------------------------------------------------------
      11. Final — parallax, agenda (.ics) e compartilhar
      --------------------------------------------------------------------- */
@@ -1255,18 +1327,25 @@
     var list = $('.calsheet__list', sheet);
     var site = location.href.split('#')[0].split('?')[0];
     var events = {
-      launch: { title: 'Lançamento de GTA VI', date: RELEASE, details: 'Grand Theft Auto VI chega ao PlayStation 5 e ao Xbox Series X|S. Nos vemos em Leonida!' },
-      preload: { title: 'GTA VI: começa o pré-download', date: PRELOAD, details: 'Pré-download de Grand Theft Auto VI liberado no PlayStation 5 e no Xbox Series X|S.' }
+      launch: { title: 'Lançamento de GTA VI', date: LAUNCH_DAY, details: 'Grand Theft Auto VI chega ao PlayStation 5 e ao Xbox Series X|S. Nos vemos em Leonida!' },
+      early: { title: 'GTA VI libera na Nova Zelândia', date: new Date(DATA.early), timed: true, details: 'Primeira região do mundo a liberar GTA VI. No Xbox, quem muda a região do console para a Nova Zelândia (Configurações > Sistema > Idioma e localidade) já pode jogar.' }
     };
+    var earlyEl = $('[data-cal-early]', sheet);
+    if (earlyEl) earlyEl.textContent = events.early.date.toLocaleString('pt-BR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
     function ymd(d, sep) { return d.getFullYear() + sep + pad(d.getMonth() + 1) + sep + pad(d.getDate()); }
     function nextDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1); }
+    function utc(d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
     function q(o) { return Object.keys(o).map(function (k) { return k + '=' + encodeURIComponent(o[k]); }).join('&'); }
     var links = {
       google: function (ev) {
-        return 'https://calendar.google.com/calendar/render?' + q({ action: 'TEMPLATE', text: ev.title, dates: ymd(ev.date, '') + '/' + ymd(nextDay(ev.date), ''), details: ev.details + '\n\nContagem: ' + site }).replace('%2F', '/');
+        var dates = ev.timed ? utc(ev.date) + '/' + utc(new Date(+ev.date + 36e5)) : ymd(ev.date, '') + '/' + ymd(nextDay(ev.date), '');
+        return 'https://calendar.google.com/calendar/render?' + q({ action: 'TEMPLATE', text: ev.title, dates: dates, details: ev.details + '\n\nContagem: ' + site }).replace('%2F', '/');
       },
       outlook: function (ev) {
-        return 'https://outlook.live.com/calendar/0/action/compose?' + q({ path: '/calendar/action/compose', rru: 'addevent', allday: 'true', startdt: ymd(ev.date, '-'), enddt: ymd(nextDay(ev.date), '-'), subject: ev.title, body: ev.details + '\n\nContagem: ' + site });
+        var t = ev.timed
+          ? { allday: 'false', startdt: ev.date.toISOString(), enddt: new Date(+ev.date + 36e5).toISOString() }
+          : { allday: 'true', startdt: ymd(ev.date, '-'), enddt: ymd(nextDay(ev.date), '-') };
+        return 'https://outlook.live.com/calendar/0/action/compose?' + q({ path: '/calendar/action/compose', rru: 'addevent', allday: t.allday, startdt: t.startdt, enddt: t.enddt, subject: ev.title, body: ev.details + '\n\nContagem: ' + site });
       }
     };
     $$('[data-cal="google"] a, [data-cal="outlook"] a', sheet).forEach(function (a) {

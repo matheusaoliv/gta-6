@@ -48,8 +48,10 @@ Também tem:
 - **Contagem:** dígitos que giram como num caça-níquel, e a contagem acompanha você no menu e no título da aba.
 - **Trailers:** os três vídeos oficiais tocam num player próprio, dentro de um modal. A rádio pausa sozinha e volta quando você fecha.
 - **Galeria:** 24 capturas oficiais em esteiras infinitas que reagem ao scroll, com arraste e lightbox (teclado e swipe).
+- **Guia do lançamento:** a hora em que GTA VI libera em cada país (das 11 janelas da PlayStation Store), convertida para o relógio de quem visita e com contagem por linha; o passo a passo para jogar antes no Xbox pela Nova Zelândia; os fatos confirmados (pré-download, 212 GB, preço, 30 FPS, reviews, trilha) com links para as fontes; e perguntas frequentes com dados estruturados para o Google.
+- **Contagem no fuso certo:** no Brasil a contagem vai até a meia-noite de Brasília mesmo para quem está em Manaus ou Cuiabá, e nos EUA e Canadá até a meia-noite da costa leste, como a loja libera.
 - **Passagem para Vice City:** em [`passagem.html`](https://matheusaoliv.github.io/gta-6/passagem.html) cada fã emite o cartão de embarque do voo LA 1119 (veja abaixo).
-- **Agenda e compartilhamento:** o botão de agenda abre as opções Google Agenda, Calendário da Apple, Outlook e arquivo `.ics`, com o pré-download (12/11) e o lançamento (19/11). A opção do seu aparelho aparece primeiro. Outro botão compartilha a contagem.
+- **Agenda e compartilhamento:** o botão de agenda abre as opções Google Agenda, Calendário da Apple, Outlook e arquivo `.ics`, com o lançamento (19/11) e a liberação na Nova Zelândia (18/11, para jogar antes no Xbox). A opção do seu aparelho aparece primeiro. Outro botão compartilha a contagem.
 - **Detalhes:** player fixo da rádio, cursor personalizado, botões magnéticos e grão de filme.
 
 <div align="center">
@@ -107,17 +109,20 @@ O que acontece com cada vídeo:
 | Vídeo | Onde toca | Por quê |
 |---|---|---|
 | **An Extended Look** | **Dentro do site**, no player próprio | A Rockstar publica o vídeo em MP4 (H.264) no CDN de vídeo dela, em 360p, 720p, 1080p e 4K, com **legendas oficiais em português**. O player transmite direto de lá. |
+| **Trailer de lançamento** | **Dentro do site**, no player próprio | Em 1080p, convertido do download oficial e hospedado aqui (40 MB); em 4K, o arquivo oficial da Rockstar (H.264, cerca de 70 Mbps) direto do CDN dela. |
 | **Trailer 1** e **Trailer 2** | **Dentro do site**, no player próprio | A Rockstar só oferece esses trailers como download 4K em MPEG-4 Part 2, codec que nenhum navegador reproduz. Eles foram convertidos para H.264 1080p (cerca de 3,7 Mbps, com `faststart` para começar a tocar antes de baixar tudo) e ficam em [`assets/video/`](assets/video/): 41 MB e 78 MB. |
 
 Para refazer a conversão a partir dos arquivos oficiais:
 
 ```bash
-for n in 1 2; do
-  ffmpeg -i "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Trailer_$n/GTAVI_Trailer_$n.mp4" \
+# Trailer_1 -> gtavi-trailer-1, Trailer_2 -> gtavi-trailer-2, Launch_Trailer -> gtavi-launch-trailer
+for n in Trailer_1 Trailer_2 Launch_Trailer; do
+  out=gtavi-$(echo "$n" | tr 'A-Z_' 'a-z-')
+  ffmpeg -i "https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_$n/GTAVI_$n.mp4" \
     -map 0:v:0 -map 0:a:0 -vf "scale=1920:1080:flags=lanczos,format=yuv420p" \
     -c:v libx264 -preset slow -crf 21 -maxrate 4000k -bufsize 8000k -profile:v high -level 4.1 -g 60 \
     -c:a aac -b:a 160k -ac 2 -map_metadata -1 -write_tmcd 0 -movflags +faststart \
-    "assets/video/gtavi-trailer-$n-1080p.mp4"
+    "assets/video/$out-1080p.mp4"
 done
 ```
 
@@ -224,7 +229,7 @@ assets/
   js/vendor/               # GSAP 3.15 (ScrollTrigger, SplitText, CustomEase), Lenis 1.3 e qrcode-generator 1.4
   fonts/                   # Big Shoulders Display, Manrope, Mr Dafoe e IBM Plex Mono (OFL)
   img/                     # artes e capturas oficiais otimizadas em WebP (~11 MB)
-  video/                   # trailers 1 e 2 convertidos para H.264 1080p
+  video/                   # trailers 1, 2 e de lançamento convertidos para H.264 1080p
 docs/                      # imagens deste README
 ```
 

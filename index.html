@@ -72,6 +72,7 @@
       <span class="nav__brand-text">Contagem<br>Regressiva</span>
     </a>
     <nav class="nav__links" aria-label="Seções">
+      <a href="#guia">Guia</a>
       <a href="#trailers">Trailers</a>
       <a href="#personagens">Personagens</a>
       <a href="#leonida">Leonida</a>
@@ -98,13 +99,14 @@
     <nav aria-label="Menu principal">
       <ol>
         <li><a href="#contagem"><span>01</span>Contagem</a></li>
-        <li><a href="#trailers"><span>02</span>Trailers</a></li>
-        <li><a href="#personagens"><span>03</span>Personagens</a></li>
-        <li><a href="#leonida"><span>04</span>Leonida</a></li>
-        <li><a href="#radio"><span>05</span>Rádio</a></li>
-        <li><a href="#galeria"><span>06</span>Galeria</a></li>
-        <li><a href="#jornada"><span>07</span>Jornada</a></li>
-        <li><a href="passagem.html"><span>08</span>Passagem ✈</a></li>
+        <li><a href="#guia"><span>02</span>Guia do lançamento</a></li>
+        <li><a href="#trailers"><span>03</span>Trailers</a></li>
+        <li><a href="#personagens"><span>04</span>Personagens</a></li>
+        <li><a href="#leonida"><span>05</span>Leonida</a></li>
+        <li><a href="#radio"><span>06</span>Rádio</a></li>
+        <li><a href="#galeria"><span>07</span>Galeria</a></li>
+        <li><a href="#jornada"><span>08</span>Jornada</a></li>
+        <li><a href="passagem.html"><span>09</span>Passagem ✈</a></li>
       </ol>
     </nav>
   </div>
@@ -142,7 +144,7 @@
           <p class="sr-only" role="timer" data-countdown-sr></p>
           <div class="hero__meta">
             <p class="hero__date"><strong>Quinta, 19 de novembro de 2026</strong><span>PlayStation 5 · Xbox Series X|S</span></p>
-            <p class="chip" data-preload-chip>Pré-download a partir de 12/11</p>
+            <p class="chip" data-preload-chip>Pré-download liberado</p>
           </div>
           <div class="hero__actions">
             <a class="btn btn--sun" href="#trailers" data-magnetic>
@@ -200,24 +202,82 @@
       </div>
     </section>
 
+    <!-- ============ GUIA DO LANÇAMENTO ============ -->
+    <section class="guide section" id="guia" aria-labelledby="guideTitle">
+      <header class="section-head">
+        <p class="kicker" data-scramble>Tudo o que já se sabe</p>
+        <h2 class="display" id="guideTitle" data-split>Guia do lançamento</h2>
+        <p class="section-head__lede" data-reveal>Os fatos confirmados pela Rockstar e pelas lojas, e a hora em que GTA VI libera em cada país, já convertida para o seu relógio. Revisado em 15 de novembro de 2026.</p>
+      </header>
+
+      <div class="guide__times">
+        <article class="early" aria-labelledby="earlyTitle" data-reveal>
+          <p class="kicker">Jogue antes no Xbox</p>
+          <h3 class="early__title" id="earlyTitle">Nova Zelândia: <span data-early-local>18/11 às 08:00</span></h3>
+          <p class="early__count" data-early-count aria-live="off">--</p>
+          <ol class="early__steps">
+            <li>No Xbox, abra <strong>Configurações › Sistema › Idioma e localidade</strong>.</li>
+            <li>Mude o <strong>Local</strong> para Nova Zelândia e reinicie o console.</li>
+            <li>Com a compra digital e o pré-download feitos, o jogo abre quando der meia-noite lá: cerca de 16 horas antes do Brasil.</li>
+          </ol>
+          <p class="early__note">Depois, volte a região para a sua. No PS5 o caminho exige uma conta da PSN de lá, e os termos da Sony não permitem contas de países onde você não mora.</p>
+        </article>
+
+        <div class="wtable" data-reveal>
+          <h3 class="wtable__title">Que horas libera no seu país</h3>
+          <p class="wtable__lede">A PlayStation Store libera à meia-noite de cada loja, em janelas que vão da Nova Zelândia ao México. O Xbox costuma seguir os mesmos horários.</p>
+          <div class="wtable__scroll">
+            <table>
+              <thead><tr><th scope="col">País</th><th scope="col">No seu relógio</th><th scope="col">Faltam</th></tr></thead>
+              <tbody data-regions></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <ul class="facts">
+        <li class="fact" data-reveal><span class="fact__label">Lançamento</span><strong class="fact__value">19 de novembro</strong><p>PlayStation 5 e Xbox Series X|S, à meia-noite de cada país. No Brasil, meia-noite de Brasília.</p></li>
+        <li class="fact" data-reveal><span class="fact__label">Pré-download</span><strong class="fact__value">Liberado desde 10/11</strong><p>A Rockstar antecipou a data em dois dias. No PS5 abriu à meia-noite local; no Xbox, à 0h GMT (21h de 9/11 em Brasília). As caixas com código chegaram às lojas em 12/11.</p><a href="https://www.gamesradar.com/games/grand-theft-auto/rockstar-confirms-gta-6-is-212gb-pre-loading-opens-earlier-than-previously-announced-for-digital-orders/" target="_blank" rel="noopener">GamesRadar ↗</a></li>
+        <li class="fact" data-reveal><span class="fact__label">Tamanho</span><strong class="fact__value">Até 212 GB</strong><p>Varia um pouco de console para console, segundo a Rockstar. Num Xbox Series S de 512 GB sobra pouco espaço para mais nada.</p><a href="https://www.techradar.com/gaming/gta-6-digital-pre-loads-for-ps5-and-xbox-will-begin-9-days-early-and-require-a-whopping-212gb-of-free-space" target="_blank" rel="noopener">TechRadar ↗</a></li>
+        <li class="fact" data-reveal><span class="fact__label">Preço no Brasil</span><strong class="fact__value">R$ 449,90</strong><p>Edição Padrão. A Ultimate Edition custa R$ 549,90, e a melhoria da Padrão para a Ultimate, R$ 100.</p><a href="https://tecnoblog.net/noticias/preco-de-gta-6-no-brasil-e-revelado-r-449/" target="_blank" rel="noopener">Tecnoblog ↗</a></li>
+        <li class="fact" data-reveal><span class="fact__label">Plataformas</span><strong class="fact__value">PS5 e Xbox Series</strong><p>Roda também no PS5 Pro. A versão de PC ainda não foi anunciada.</p></li>
+        <li class="fact" data-reveal><span class="fact__label">Desempenho</span><strong class="fact__value">30 FPS</strong><p>Rob Nelson, co-chefe da Rockstar North, disse que o jogo roda a 30 FPS nos consoles. Um modo de 60 FPS não foi confirmado, nem no PS5 Pro.</p><a href="https://www.videogameschronicle.com/news/gta-6-is-confirmed-to-be-30-frames-per-second-at-launch-no-performance-mode-at-launch/" target="_blank" rel="noopener">VGC ↗</a></li>
+        <li class="fact" data-reveal><span class="fact__label">Reviews</span><strong class="fact__value">18 de novembro</strong><p>Data vazada e verificada pelo Insider Gaming, ainda sem confirmação da Rockstar: as notas sairiam na véspera do lançamento.</p><a href="https://insider-gaming.com/grand-theft-auto-6-review-embargo/" target="_blank" rel="noopener">Insider Gaming ↗</a></li>
+        <li class="fact" data-reveal><span class="fact__label">Trilha original</span><strong class="fact__value">Justice</strong><p>A dupla francesa assina a trilha. “Flower in a Hurricane”, com Tame Impala e SZA, embala o Trailer de lançamento.</p><a href="https://au.variety.com/2026/music/news/gta-vi-trailer-justice-original-score-song-sza-tame-impala-41354/" target="_blank" rel="noopener">Variety ↗</a></li>
+      </ul>
+    </section>
+
     <!-- ============ 3. TRAILERS ============ -->
     <section class="trailers section" id="trailers" aria-labelledby="trailersTitle">
       <header class="section-head">
         <p class="kicker" data-scramble>Vídeos oficiais da Rockstar</p>
         <h2 class="display" id="trailersTitle" data-split>Assista</h2>
-        <p class="section-head__lede" data-reveal>Do primeiro vislumbre de Vice City ao gameplay estendido. Os três vídeos tocam aqui mesmo, e o An Extended Look vai até 4K, com legenda. A rádio pausa sozinha e volta quando você fechar.</p>
+        <p class="section-head__lede" data-reveal>Do primeiro vislumbre de Vice City ao gameplay estendido. Os quatro vídeos oficiais tocam aqui mesmo: o Trailer de lançamento e o An Extended Look vão até 4K. A rádio pausa sozinha e volta quando você fechar.</p>
       </header>
 
       <div class="trailers__grid">
-        <a class="tcard tcard--feature" href="https://www.rockstargames.com/VI/an-extended-look" data-video="extended-look" data-cursor="Assistir" data-reveal-card>
+        <a class="tcard tcard--feature" href="https://www.youtube.com/watch?v=rz1B4B2yBZY" data-video="launch-trailer" data-cursor="Assistir" data-reveal-card>
+          <div class="tcard__media">
+            <img src="assets/img/trailers/launch-trailer.webp" alt="Jason em pé ao lado de Lucia, que confere uma pistola sentada no capô de um carro vermelho ao pôr do sol" width="1920" height="1080" loading="lazy" decoding="async">
+          </div>
+          <div class="tcard__shade" aria-hidden="true"></div>
+          <div class="tcard__meta">
+            <span class="tag tag--hot">Novo · toca aqui · até 4K</span>
+            <h3 class="tcard__title">Trailer de lançamento</h3>
+            <p class="tcard__info">15 de outubro de 2026 · O último trailer antes da estreia, ao som de “Flower in a Hurricane”, do Justice com Tame Impala e SZA</p>
+          </div>
+          <span class="tcard__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </a>
+
+        <a class="tcard" href="https://www.rockstargames.com/VI/an-extended-look" data-video="extended-look" data-cursor="Assistir" data-reveal-card>
           <div class="tcard__media">
             <img src="assets/img/trailers/extended-look.webp" alt="Jason e Lucia puxando bandanas no rosto em frente a um posto de gasolina ao pôr do sol" width="1920" height="1080" loading="lazy" decoding="async">
           </div>
           <div class="tcard__shade" aria-hidden="true"></div>
           <div class="tcard__meta">
-            <span class="tag tag--hot">Toca aqui · até 4K · legendado</span>
+            <span class="tag">Gameplay · 4K · legendado</span>
             <h3 class="tcard__title">An Extended Look</h3>
-            <p class="tcard__info">27 de agosto de 2026 · Quase meia hora de gameplay capturada no PS5, direto dos servidores da Rockstar, com legendas em português</p>
+            <p class="tcard__info">27 de agosto de 2026 · Quase meia hora de gameplay no PS5, com legendas em português</p>
           </div>
           <span class="tcard__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         </a>
@@ -538,9 +598,29 @@
         <li class="tl" data-date="2026-06-25"><time datetime="2026-06-25">25 Jun 2026</time><h3>Pré-venda aberta</h3><p>Edições Standard e Ultimate entram em pré-venda no mundo todo.</p></li>
         <li class="tl" data-date="2026-08-27"><time datetime="2026-08-27">27 Ago 2026</time><h3>An Extended Look</h3><p>Quase meia hora de gameplay estreia na Netflix e, horas depois, no YouTube.</p></li>
         <li class="tl" data-date="2026-10-08"><time datetime="2026-10-08">08 Out 2026</time><h3>As rádios no ar</h3><p>Seis estações reveladas, com apresentadores como Bad Bunny, Lana Del Rey, Robyn e Kerry King.</p></li>
-        <li class="tl" data-date="2026-11-12"><time datetime="2026-11-12">12 Nov 2026</time><h3>Pré-download</h3><p>Quem comprou já pode baixar o jogo e deixar tudo pronto.</p></li>
+        <li class="tl" data-date="2026-10-15"><time datetime="2026-10-15">15 Out 2026</time><h3>Trailer de lançamento</h3><p>O último trailer antes da estreia, ao som de “Flower in a Hurricane”, do Justice com Tame Impala e SZA. O Justice assina a trilha original.</p></li>
+        <li class="tl" data-date="2026-11-10"><time datetime="2026-11-10">10 Nov 2026</time><h3>Pré-download</h3><p>A Rockstar antecipa a data em dois dias: quem comprou a versão digital já pode baixar os até 212 GB.</p></li>
+        <li class="tl" data-date="2026-11-18"><time datetime="2026-11-18">18 Nov 2026</time><h3>Primeiros a jogar</h3><p>À meia-noite da Nova Zelândia (8h em Brasília) o jogo libera por lá. No mesmo dia, segundo vazamentos, caem os primeiros reviews.</p></li>
         <li class="tl tl--launch" data-date="2026-11-19"><time datetime="2026-11-19">19 Nov 2026</time><h3>Leonida abre as portas</h3><p>Lançamento no PlayStation 5 e no Xbox Series X|S.</p></li>
       </ol>
+    </section>
+
+    <!-- ============ PERGUNTAS FREQUENTES ============ -->
+    <section class="faq section" id="perguntas" aria-labelledby="faqTitle">
+      <header class="section-head">
+        <p class="kicker" data-scramble>Perguntas frequentes</p>
+        <h2 class="display" id="faqTitle" data-split>Dúvidas da reta final</h2>
+      </header>
+      <div class="faq__list">
+        <details class="faq__item"><summary>Quanto falta para o GTA 6?</summary><p>A contagem no topo do site mostra os dias, horas, minutos e segundos que faltam até a liberação na loja do seu país: meia-noite de 19 de novembro de 2026. No Brasil, meia-noite no horário de Brasília.</p></details>
+        <details class="faq__item"><summary>Que horas GTA 6 lança no Brasil?</summary><p>À meia-noite de 19 de novembro, no horário de Brasília, segundo a PlayStation Store. O Brasil inteiro libera junto: no Amazonas e em Mato Grosso o relógio local marca 23h de 18/11, e no Acre, 22h.</p></details>
+        <details class="faq__item"><summary>Dá para jogar GTA 6 mais cedo?</summary><p>No Xbox, sim. A Nova Zelândia é a primeira região a liberar, às 8h de 18 de novembro no horário de Brasília. Quem muda a região do console para a Nova Zelândia em Configurações › Sistema › Idioma e localidade joga cerca de 16 horas antes. No PS5 é preciso uma conta da PSN de lá, o que os termos da Sony não permitem para quem não mora no país.</p></details>
+        <details class="faq__item"><summary>Quando começa o pré-download e quanto espaço ocupa?</summary><p>O pré-download começou em 10 de novembro para quem comprou a versão digital: à meia-noite local no PS5 e à 0h GMT no Xbox (21h de 9/11 em Brasília). O jogo ocupa até 212 GB, segundo a Rockstar.</p></details>
+        <details class="faq__item"><summary>Quanto custa GTA 6 no Brasil?</summary><p>R$ 449,90 na Edição Padrão e R$ 549,90 na Ultimate Edition. A melhoria da Padrão para a Ultimate custa R$ 100.</p></details>
+        <details class="faq__item"><summary>GTA 6 vai sair para PC?</summary><p>A Rockstar ainda não anunciou a versão de PC. No lançamento, o jogo sai só para PlayStation 5 e Xbox Series X|S.</p></details>
+        <details class="faq__item"><summary>GTA 6 roda a 60 FPS?</summary><p>Não há confirmação. Rob Nelson, da Rockstar North, disse que o jogo roda a 30 FPS nos consoles, inclusive no PS5 Pro, e que um modo de 60 FPS ainda não está confirmado.</p></details>
+        <details class="faq__item"><summary>Quando saem os reviews de GTA 6?</summary><p>Segundo um vazamento verificado pelo Insider Gaming, as análises saem em 18 de novembro, na véspera do lançamento. A Rockstar não confirmou a data.</p></details>
+      </div>
     </section>
 
     <!-- ============ 11. FINAL ============ -->
@@ -561,7 +641,7 @@
           <span class="countdown__sep" aria-hidden="true">:</span>
           <div class="countdown__unit" data-unit="seconds"><div class="countdown__digits"></div><span class="countdown__label">Segundos</span></div>
         </div>
-        <p class="finale__note">Contagem até a meia-noite de 19/11/2026 no seu fuso horário. O horário exato de liberação ainda não foi anunciado.</p>
+        <p class="finale__note">Contagem até a liberação na loja do seu país: meia-noite de 19/11, como lista a PlayStation Store. No Brasil, horário de Brasília. <a href="#guia">Ver todos os horários</a>.</p>
         <div class="finale__actions">
           <button class="btn btn--sun" type="button" id="addCalendar" data-magnetic>
             <span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm-2 8h14v10H5V10z"/></svg></span>
@@ -618,7 +698,7 @@
       </div>
       <ul class="calsheet__events">
         <li><strong>Lançamento · qui</strong><span>19 de novembro</span></li>
-        <li><strong>Pré-download · qui</strong><span>12 de novembro</span></li>
+        <li><strong>Antes, no Xbox · NZ</strong><span data-cal-early>18 de novembro, 08:00</span></li>
       </ul>
       <div class="calsheet__list">
         <div class="calopt" data-cal="google">
@@ -626,7 +706,7 @@
           <span class="calopt__text"><strong>Google Agenda</strong><small>Android, Chrome e web</small></span>
           <span class="calopt__acts">
             <a class="calopt__pill calopt__pill--main" data-event="launch" target="_blank" rel="noopener" href="#" aria-label="Adicionar o lançamento no Google Agenda">Lançamento</a>
-            <a class="calopt__pill" data-event="preload" target="_blank" rel="noopener" href="#" aria-label="Adicionar o pré-download no Google Agenda">Pré-download</a>
+            <a class="calopt__pill" data-event="early" target="_blank" rel="noopener" href="#" aria-label="Adicionar a liberação na Nova Zelândia no Google Agenda">Nova Zelândia</a>
           </span>
         </div>
         <a class="calopt" data-cal="apple" href="assets/gta-vi.ics">
@@ -639,7 +719,7 @@
           <span class="calopt__text"><strong>Outlook</strong><small>Outlook.com e Microsoft 365</small></span>
           <span class="calopt__acts">
             <a class="calopt__pill calopt__pill--main" data-event="launch" target="_blank" rel="noopener" href="#" aria-label="Adicionar o lançamento no Outlook">Lançamento</a>
-            <a class="calopt__pill" data-event="preload" target="_blank" rel="noopener" href="#" aria-label="Adicionar o pré-download no Outlook">Pré-download</a>
+            <a class="calopt__pill" data-event="early" target="_blank" rel="noopener" href="#" aria-label="Adicionar a liberação na Nova Zelândia no Outlook">Nova Zelândia</a>
           </span>
         </div>
         <a class="calopt" data-cal="ics" href="assets/gta-vi.ics" download="gta-vi.ics">
@@ -648,7 +728,7 @@
           <span class="calopt__go" aria-hidden="true">↓</span>
         </a>
       </div>
-      <p class="calsheet__note">Eventos de dia inteiro, no seu fuso horário. O lançamento já vem com lembrete na véspera no Calendário da Apple e no arquivo .ics. O horário exato de liberação ainda não foi anunciado.</p>
+      <p class="calsheet__note">O lançamento entra como dia inteiro, já que o jogo libera à meia-noite de cada país; a liberação na Nova Zelândia entra no seu horário. No Calendário da Apple e no arquivo .ics o lançamento vem com lembrete na véspera.</p>
     </div>
   </div>
 

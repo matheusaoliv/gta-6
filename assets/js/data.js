@@ -8,7 +8,25 @@
     // Meia-noite (horário local do visitante) de 19/11/2026.
     // A Rockstar ainda não divulgou o horário exato de liberação.
     release: [2026, 10, 19, 0, 0, 0],
-    preload: [2026, 10, 12, 0, 0, 0],
+    // Janelas da PlayStation Store: meia-noite de 19/11 no fuso de cada loja (o Xbox costuma seguir).
+    // O Brasil inteiro libera à meia-noite de Brasília; EUA e Canadá, pela costa leste.
+    regions: [
+      { name: 'Nova Zelândia', tz: 'Pacific/Auckland', note: 'Primeira região do mundo. No Xbox dá para jogar daqui trocando a região do console.' },
+      { name: 'Austrália', tz: 'Australia/Sydney', note: 'Costa leste (Sydney e Melbourne).' },
+      { name: 'Japão e Coreia do Sul', tz: 'Asia/Tokyo' },
+      { name: 'Alemanha, França, Espanha e Itália', tz: 'Europe/Paris', note: 'Europa Central.' },
+      { name: 'Portugal', tz: 'Europe/Lisbon' },
+      { name: 'Reino Unido', tz: 'Europe/London' },
+      { name: 'Brasil', tz: 'America/Sao_Paulo', note: 'Horário de Brasília para o país inteiro: no Amazonas, Mato Grosso e outros fusos, o relógio local marca mais cedo.' },
+      { name: 'Argentina', tz: 'America/Argentina/Buenos_Aires' },
+      { name: 'Chile', tz: 'America/Santiago' },
+      { name: 'Estados Unidos e Canadá', tz: 'America/New_York', note: 'Meia-noite na costa leste: 21h de 18/11 na costa oeste.' },
+      { name: 'México e América Central', tz: 'America/Mexico_City', note: 'Última janela do mundo.' }
+    ],
+    // A Rockstar antecipou o pré-download de 12 para 10/11 (Newswire, 03/11/2026).
+    preload: [2026, 10, 10, 0, 0, 0],
+    // Meia-noite de 19/11 na Nova Zelândia (NZDT, UTC+13): a primeira região a liberar.
+    early: '2026-11-18T11:00:00Z',
     // Estreia do Trailer 1 (04/12/2023, ~18h30 ET) — usada no "percentual da espera".
     trailer1: '2023-12-04T23:30:00Z',
 
@@ -143,6 +161,18 @@
           { label: 'Netflix', href: 'https://www.netflix.com/GTAVI' },
           { label: 'YouTube', href: 'https://www.youtube.com/watch?v=tJbzMqJGH4k' }
         ]
+      },
+      'launch-trailer': {
+        title: 'Grand Theft Auto VI — Trailer de lançamento',
+        meta: '15 de outubro de 2026 · “Flower in a Hurricane” — Justice, Tame Impala e SZA',
+        poster: 'assets/img/trailers/launch-trailer.webp',
+        // 1080p convertido e hospedado aqui; o 4K é o arquivo oficial (H.264, ~70 Mbps) direto do CDN da Rockstar
+        sources: [
+          { label: '4K', height: 2160, src: 'https://media-rockstargames-com.akamaized.net/VI/downloads/videos/GTAVI_Launch_Trailer/GTAVI_Launch_Trailer.mp4' },
+          { label: '1080p', height: 1080, src: 'assets/video/gtavi-launch-trailer-1080p.mp4' }
+        ],
+        youtube: 'rz1B4B2yBZY',
+        links: [{ label: 'YouTube', href: 'https://www.youtube.com/watch?v=rz1B4B2yBZY' }]
       },
       'trailer-2': {
         title: 'Grand Theft Auto VI — Trailer 2',
