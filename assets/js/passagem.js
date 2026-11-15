@@ -65,7 +65,7 @@
   /* ---------------------------------------------------------------------
      Estado (URL > localStorage > padrão)
      --------------------------------------------------------------------- */
-  var DEFAULTS = { n: '', de: 'LSI', c: 'eco', com: 'ambos', r: 'flash-fm' };
+  var DEFAULTS = { n: '', de: 'LSI', c: 'eco', com: 'ambos', r: 'flash-fm', o: 'v' };
   function clean(s) {
     // texto livre do usuário: sem caracteres de controle, espaços colapsados, até 22 caracteres
     return String(s || '').replace(/[\u0000-\u001f\u007f-\u009f]/g, '').replace(/\s+/g, ' ').trim().slice(0, 22);
@@ -76,12 +76,13 @@
       de: CITY[st.de] ? st.de : DEFAULTS.de,
       c: THEMES[st.c] && !THEMES[st.c].secret ? st.c : DEFAULTS.c,
       com: COMPANY[st.com] ? st.com : DEFAULTS.com,
-      r: STATIONS[st.r] ? st.r : DEFAULTS.r
+      r: STATIONS[st.r] ? st.r : DEFAULTS.r,
+      o: st.o === 'h' ? 'h' : 'v'
     };
   }
   function fromURL() {
     var p = new URLSearchParams(location.search), o = {};
-    ['n', 'de', 'c', 'com', 'r'].forEach(function (k) { if (p.has(k)) o[k] = p.get(k); });
+    ['n', 'de', 'c', 'com', 'r', 'o'].forEach(function (k) { if (p.has(k)) o[k] = p.get(k); });
     return o;
   }
   var urlState = fromURL();
@@ -92,7 +93,7 @@
 
   function shareURL(st) {
     var u = new URL('passagem.html', location.href);
-    u.search = new URLSearchParams({ n: st.n || 'Passageiro', de: st.de, c: st.c, com: st.com, r: st.r }).toString();
+    u.search = new URLSearchParams({ n: st.n || 'Passageiro', de: st.de, c: st.c, com: st.com, r: st.r, o: st.o }).toString();
     return u.href;
   }
 
@@ -257,8 +258,8 @@
     ctx.fillStyle = 'rgba(0,0,0,0.55)';
     ctx.fillRect(x, y + h / 2 - 1.5, w, 3);
   }
-  function code(ctx, s, x, y, th, alignRight) {
-    var w = 112, h = 150, gap = 10, total = s.length * w + (s.length - 1) * gap;
+  function code(ctx, s, x, y, th, alignRight, size) {
+    var k = size || 1, w = 112 * k, h = 150 * k, gap = 10 * k, total = s.length * w + (s.length - 1) * gap;
     var x0 = alignRight ? x - total : x;
     for (var i = 0; i < s.length; i++) tile(ctx, x0 + i * (w + gap), y, w, h, s.charAt(i), th);
   }
@@ -402,6 +403,150 @@
     }
   }
 
+  /* Bilhete horizontal (2000 x 820): corpo com foto e rota à esquerda, canhoto destacável à direita */
+  var HW = 2000, HH = 820;
+  function drawTicketH(ctx, tk, t, im) {
+    var th = tk.th, W = HW, H = HH, tearX = 1480, hb = 118;
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    rr(ctx, 0, 0, W, H, 40);
+    ctx.clip();
+    ctx.fillStyle = th.paper;
+    ctx.fillRect(0, 0, W, H);
+
+    // faixa do topo, de ponta a ponta
+    ctx.fillStyle = gradient(ctx, 0, 0, W, 0, th.head);
+    ctx.fillRect(0, 0, W, hb);
+    var headInk = th.foil ? '#1a0b02' : th === THEMES.exe ? '#04202e' : th.dark ? '#fff4ea' : '#1a0624';
+    sun(ctx, 86, hb / 2, 36, ['#fff4ea', '#ffe9c7'], th.head[1]);
+    text(ctx, 'LEONIDA', 140, 70, { font: '900 54px ' + F.display, color: headInk, spacing: 2 });
+    text(ctx, 'AIRWAYS', 142, 100, { font: '600 19px ' + F.mono, color: headInk, spacing: 9 });
+    ctx.save();
+    ctx.globalAlpha = 0.9;
+    text(ctx, 'Próxima parada:', 470, 76, { font: '800 30px ' + F.body, color: headInk });
+    ctx.restore();
+    text(ctx, 'Vice City', 728, 84, { font: '400 64px ' + F.script, color: headInk });
+    rr(ctx, tearX + 40, 32, W - tearX - 80, 54, 27);
+    ctx.fillStyle = 'rgba(0,0,0,0.82)';
+    ctx.fill();
+    text(ctx, 'CARTÃO DE EMBARQUE', (tearX + W) / 2, 68, { font: '800 22px ' + F.body, color: '#fff4ea', align: 'center', spacing: 2 });
+
+    // foto do destino na coluna da esquerda
+    var px = 0, pw = 430, py = hb, ph = H - hb;
+    cover(ctx, im, px, py, pw, ph, th.fy);
+    ctx.fillStyle = gradient(ctx, 0, py, 0, H, ['rgba(0,0,0,0.05)', 'rgba(0,0,0,0.15)', 'rgba(8,2,16,0.85)']);
+    ctx.fillRect(px, py, pw, ph);
+    text(ctx, 'DESTINO FINAL', 40, H - 150, { font: '600 20px ' + F.mono, color: 'rgba(255,244,234,0.85)', spacing: 6 });
+    ctx.save();
+    ctx.shadowColor = th.accent; ctx.shadowBlur = 30;
+    text(ctx, 'Vice City', 30, H - 58, { font: '400 ' + (fitScript(ctx, 'Vice City', pw - 60, 112)) + 'px ' + F.script, color: '#fff4ea' });
+    ctx.restore();
+    text(ctx, 'LEONIDA · EUA', 40, H - 28, { font: '600 18px ' + F.mono, color: 'rgba(255,244,234,0.8)', spacing: 5 });
+    if (th.secret) {
+      ctx.font = '800 19px ' + F.body;
+      var sw = Math.min(pw - 50, ctx.measureText(th.secret).width + 36);
+      rr(ctx, 25, py + 24, sw, 42, 21);
+      ctx.fillStyle = th.accent; ctx.fill();
+      text(ctx, th.secret, 25 + sw / 2, py + 52, { font: fit(ctx, th.secret, sw - 24, 19, '800 #px ' + F.body), color: '#0d0518', align: 'center' });
+    }
+
+    // rota
+    var L = 480, R = tearX - 50, cw = R - L;
+    var ry = 160;
+    text(ctx, 'PARTIDA', L, ry, { font: '600 20px ' + F.mono, color: th.muted, spacing: 5 });
+    text(ctx, 'CHEGADA', R, ry, { font: '600 20px ' + F.mono, color: th.muted, spacing: 5, align: 'right' });
+    code(ctx, flapText('de', t) || tk.de, L, ry + 18, th, false, 0.78);
+    code(ctx, 'VCI', R, ry + 18, th, true, 0.78);
+    var mid = (L + R) / 2, cy = ry + 18 + 58;
+    ctx.save();
+    ctx.strokeStyle = th.accent; ctx.lineWidth = 3; ctx.setLineDash([2, 10]); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(mid - 110, cy + 12); ctx.quadraticCurveTo(mid, cy - 30, mid + 110, cy + 12); ctx.stroke();
+    ctx.restore();
+    plane(ctx, mid, cy - 6, 50, th.accent);
+    text(ctx, tk.city.toUpperCase(), L, ry + 178, { font: fit(ctx, tk.city.toUpperCase(), 340, 34, '900 #px ' + F.display), color: th.ink });
+    text(ctx, '18 NOV 2026 · 23:00', L, ry + 212, { font: '500 21px ' + F.mono, color: th.muted });
+    text(ctx, 'VICE CITY', R, ry + 178, { font: '900 34px ' + F.display, color: th.ink, align: 'right' });
+    text(ctx, '19 NOV 2026 · 00:00', R, ry + 212, { font: '500 21px ' + F.mono, color: th.muted, align: 'right' });
+
+    // passageiro
+    var ny = 412;
+    ctx.fillStyle = th.ink; ctx.fillRect(L, ny, cw, 3);
+    text(ctx, 'PASSAGEIRO', L, ny + 42, { font: '600 20px ' + F.mono, color: th.muted, spacing: 5 });
+    text(ctx, flapText('n', t) || tk.name, L - 2, ny + 118, { font: fit(ctx, tk.name, cw, 84, '900 #px ' + F.display), color: tk.placeholder ? th.muted : th.ink });
+
+    // grade de dados
+    var gy = 582, col = cw / 4;
+    ctx.fillStyle = th.line;
+    ctx.fillRect(L, gy - 30, cw, 2);
+    for (var c = 1; c < 4; c++) ctx.fillRect(L + col * c - 16, gy - 10, 2, 214);
+    field(ctx, L, gy, 'VOO', tk.flight, th, { color: th.accent, size: 50, maxW: col - 26 });
+    field(ctx, L + col, gy, 'ASSENTO', flapText('seat', t) || tk.seat, th, { size: 50 });
+    field(ctx, L + col * 2, gy, 'PORTÃO', tk.gate, th, { color: th.accent, size: 50 });
+    field(ctx, L + col * 3, gy, 'CLASSE', th.label.replace(' Classe', '').toUpperCase(), th, { size: 40, maxW: col - 10 });
+    field(ctx, L, gy + 112, 'EMBARQUE', '22:20', th, { size: 36 });
+    field(ctx, L + col, gy + 112, 'GRUPO', th.group, th, { size: 36 });
+    field(ctx, L + col * 2, gy + 112, 'RÁDIO', tk.station.name.toUpperCase(), th, { size: 36, maxW: col - 26 });
+    field(ctx, L + col * 3, gy + 112, 'COM', tk.company.toUpperCase(), th, { size: 36, maxW: col - 10 });
+
+    // canhoto
+    var sx = tearX + 44, sr = W - 44, sw2 = sr - sx;
+    var qs = 200, qy = 150;
+    rr(ctx, sx, qy, qs, qs, 18);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    drawQR(ctx, shareURL(tk.st), sx + 14, qy + 14, qs - 28);
+    var tx = sx + qs + 26, tw = sr - tx;
+    text(ctx, 'LOCALIZADOR', tx, qy + 24, { font: '600 17px ' + F.mono, color: th.muted, spacing: 4 });
+    text(ctx, flapText('loc', t) || tk.loc, tx, qy + 72, { font: fit(ctx, tk.loc + '      ', tw, 42, '600 #px ' + F.mono), color: th.ink, spacing: 4 });
+    var st = status();
+    text(ctx, st.label, tx, qy + 122, { font: '600 17px ' + F.mono, color: th.muted, spacing: 4 });
+    text(ctx, st.value, tx, qy + 170, { font: fit(ctx, st.value, tw, 40, '900 #px ' + F.display), color: th.accent });
+    text(ctx, 'Escaneie o QR', tx, qy + 196, { font: '600 17px ' + F.body, color: th.muted });
+
+    text(ctx, 'PASSAGEIRO', sx, 412 + 42, { font: '600 18px ' + F.mono, color: th.muted, spacing: 5 });
+    text(ctx, tk.name, sx, 412 + 96, { font: fit(ctx, tk.name, sw2, 52, '900 #px ' + F.display), color: tk.placeholder ? th.muted : th.ink });
+    var sc = sw2 / 3;
+    field(ctx, sx, 582, 'ASSENTO', tk.seat, th, { size: 40, maxW: sc - 16 });
+    field(ctx, sx + sc, 582, 'PORTÃO', tk.gate, th, { size: 40, maxW: sc - 16, color: th.accent });
+    field(ctx, sx + sc * 2, 582, 'VOO', tk.flight, th, { size: 40, maxW: sc });
+    var r = rng(tk.seed), bx = sx;
+    ctx.fillStyle = th.ink;
+    while (bx < sr) { var bw = 2 + Math.floor(r() * 6); if (r() > 0.35) ctx.fillRect(bx, 696, Math.min(bw, sr - bx), 54); bx += bw + 3; }
+    text(ctx, tk.loc + ' · ' + tk.flight + ' · ' + tk.de + '-VCI', (sx + sr) / 2, 784, { font: '500 16px ' + F.mono, color: th.muted, align: 'center', spacing: 2 });
+    text(ctx, 'PROJETO DE FÃ · NÃO OFICIAL', 474, H - 22, { font: '500 16px ' + F.mono, color: th.muted, spacing: 3 });
+    ctx.restore();
+
+    // linha de destaque vertical: semicírculos recortados + tracejado
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath(); ctx.arc(tearX, 0, 30, 0, Math.PI * 2); ctx.arc(tearX, H, 30, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+    ctx.save();
+    ctx.strokeStyle = th.dark ? th.line : 'rgba(0,0,0,0.18)'; ctx.lineWidth = 4; ctx.setLineDash([16, 12]);
+    ctx.beginPath(); ctx.moveTo(tearX, 46); ctx.lineTo(tearX, H - 46); ctx.stroke();
+    ctx.restore();
+
+    if (Date.now() >= RELEASE) {
+      ctx.save(); ctx.translate(1100, 330); ctx.scale(0.8, 0.8); stamp(ctx, 0, 0, th); ctx.restore();
+    }
+    if (th.foil) {
+      ctx.save();
+      rr(ctx, 0, 0, W, H, 40); ctx.clip();
+      ctx.globalCompositeOperation = 'overlay';
+      ctx.fillStyle = gradient(ctx, 0, 0, W, H, ['rgba(255,255,255,0)', 'rgba(255,238,190,0.28)', 'rgba(255,255,255,0)', 'rgba(150,230,255,0.18)', 'rgba(255,255,255,0)']);
+      ctx.fillRect(0, 0, W, H);
+      ctx.restore();
+      ctx.save();
+      ctx.strokeStyle = th.accent; ctx.lineWidth = 6;
+      rr(ctx, 3, 3, W - 6, H - 6, 38); ctx.stroke();
+      ctx.restore();
+    }
+  }
+  function fitScript(ctx, s, maxW, size) {
+    for (; size > 40; size -= 4) { ctx.font = '400 ' + size + 'px ' + F.script; if (ctx.measureText(s).width <= maxW) break; }
+    return size;
+  }
+
   function stamp(ctx, x, y, th) {
     ctx.save();
     ctx.translate(x, y);
@@ -443,15 +588,18 @@
      Formatos de saída: cartão, story (1080x1920) e feed (1080x1350)
      --------------------------------------------------------------------- */
   var FORMATS = {
-    card: { w: TW, h: TH, label: 'Cartão', file: 'cartao' },
+    card: { label: 'Cartão', file: 'cartao' },
     story: { w: 1080, h: 1920, label: 'Story', file: 'story' },
-    feed: { w: 1080, h: 1350, label: 'Feed', file: 'feed' }
+    feed: { w: 1080, h: 1350, label: 'Feed vertical', file: 'feed-vertical' },
+    feedh: { w: 1920, h: 1005, label: 'Feed horizontal', file: 'feed-horizontal' }
   };
+  function tsize(o) { return o === 'h' ? { w: HW, h: HH } : { w: TW, h: TH }; }
+  function drawAny(ctx, tk, t, im) { (tk.st.o === 'h' ? drawTicketH : drawTicket)(ctx, tk, t, im); }
   var ticketCanvas = document.createElement('canvas');
-  ticketCanvas.width = TW; ticketCanvas.height = TH;
 
   function drawPoster(ctx, f, tk, im) {
-    var W = f.w, H = f.h, th = tk.th, story = H > 1500;
+    var W = f.w, H = f.h, th = tk.th, ts = tsize(tk.st.o);
+    var u = Math.min(W, H) / 1080, tall = H / W > 1.6, land = W > H;
     ctx.fillStyle = '#0d0518';
     ctx.fillRect(0, 0, W, H);
     ctx.save();
@@ -460,35 +608,68 @@
     ctx.restore();
     ctx.fillStyle = gradient(ctx, 0, 0, 0, H, ['rgba(13,5,24,0.55)', 'rgba(13,5,24,0.35)', 'rgba(13,5,24,0.92)']);
     ctx.fillRect(0, 0, W, H);
-    var top = story ? 150 : 74;
-    text(ctx, 'MINHA PASSAGEM PARA', W / 2, top, { font: '900 ' + (story ? 70 : 54) + 'px ' + F.display, color: '#fff4ea', align: 'center', spacing: 2 });
-    ctx.save();
-    ctx.shadowColor = th.accent; ctx.shadowBlur = 40;
-    ctx.fillStyle = gradient(ctx, 0, top, 0, top + 200, ['#ffd98a', '#ff7a5c', '#ff4f9a']);
-    ctx.font = '400 ' + (story ? 190 : 140) + 'px ' + F.script;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-    ctx.fillText('Vice City', W / 2, top + (story ? 190 : 140));
-    ctx.restore();
-    var avail = H - (top + (story ? 260 : 175)) - (story ? 170 : 92);
-    var s = Math.min(avail / TH, (W - 120) / TW);
-    var tw = TW * s, tx = (W - tw) / 2, ty = top + (story ? 250 : 170);
-    ctx.save();
-    ctx.shadowColor = 'rgba(0,0,0,0.6)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 24;
-    ctx.translate(tx + tw / 2, ty + TH * s / 2);
-    ctx.rotate(story ? -0.035 : 0);
-    ctx.drawImage(ticketCanvas, -tw / 2, -TH * s / 2, tw, TH * s);
-    ctx.restore();
     var host = location.host && !/^(localhost|127\.)/.test(location.host) ? location.host + location.pathname.replace(/passagem\.html$/, '') : 'matheusaoliv.github.io/gta-6/';
-    if (story) text(ctx, 'GTA VI · 19.11.2026', W / 2, H - 110, { font: '900 46px ' + F.display, color: '#fff4ea', align: 'center', spacing: 3 });
-    text(ctx, 'EMITA A SUA EM ' + host.replace(/\/$/, '').toUpperCase(), W / 2, H - (story ? 56 : 40), { font: '600 ' + (story ? 26 : 22) + 'px ' + F.mono, color: 'rgba(255,244,234,0.75)', align: 'center', spacing: 3 });
+    var cta = 'EMITA A SUA EM ' + host.replace(/\/$/, '').toUpperCase();
+    function title(cx, top, big, size, script) {
+      text(ctx, 'MINHA PASSAGEM PARA', cx, top, { font: '900 ' + size + 'px ' + F.display, color: '#fff4ea', align: 'center', spacing: 2 });
+      ctx.save();
+      ctx.shadowColor = th.accent; ctx.shadowBlur = 40 * u;
+      ctx.fillStyle = gradient(ctx, 0, top, 0, top + script, ['#ffd98a', '#ff7a5c', '#ff4f9a']);
+      ctx.font = '400 ' + script + 'px ' + F.script;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      ctx.fillText('Vice City', cx, top + script * (big ? 1 : 1));
+      ctx.restore();
+    }
+    function ticket(x, y, w, h, tilt) {
+      var s = Math.min(w / ts.w, h / ts.h), tw = ts.w * s, th2 = ts.h * s;
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.6)'; ctx.shadowBlur = 60 * u; ctx.shadowOffsetY = 24 * u;
+      ctx.translate(x + w / 2, y + h / 2);
+      ctx.rotate(tilt || 0);
+      ctx.drawImage(ticketCanvas, -tw / 2, -th2 / 2, tw, th2);
+      ctx.restore();
+    }
+    if (land && tk.st.o !== 'h') {
+      // feed horizontal com bilhete vertical: texto à esquerda, bilhete à direita
+      var colW = W * 0.5;
+      title(colW / 2, H * 0.32, false, Math.round(64 * u), Math.round(170 * u));
+      text(ctx, 'GTA VI · 19.11.2026', colW / 2, H * 0.32 + 290 * u, { font: '900 ' + Math.round(48 * u) + 'px ' + F.display, color: '#fff4ea', align: 'center', spacing: 3 });
+      text(ctx, cta, colW / 2, H - 60 * u, { font: '600 ' + Math.round(22 * u) + 'px ' + F.mono, color: 'rgba(255,244,234,0.75)', align: 'center', spacing: 3 });
+      ticket(colW, 40 * u, W - colW - 60 * u, H - 80 * u, 0.03);
+      return;
+    }
+    var top = (tall ? 150 : land ? 92 : 74) * u;
+    var size = Math.round((tall ? 70 : 54) * u), script = Math.round((tall ? 190 : land ? 120 : 140) * u);
+    title(W / 2, top, tall, size, script);
+    var boxTop = top + script * 1.3 + (tall ? 30 : 10) * u;
+    var foot = (tall ? 170 : land ? 80 : 92) * u;
+    var boxW = W - 120 * u, boxH = H - boxTop - foot;
+    var sc = Math.min(boxW / ts.w, boxH / ts.h), tH = ts.h * sc, spare = boxH - tH;
+    if (spare < 300 * u) { ticket(60 * u, boxTop, boxW, boxH, tall ? -0.035 : 0); }
+    else {
+      // bilhete deitado num post em pé: o espaço que sobra vira o bloco de contagem
+      var ty = boxTop + Math.min(60 * u, spare * 0.12);
+      ticket(60 * u, ty, boxW, tH, tall ? -0.03 : 0);
+      var st = status(), by = ty + tH + (H - foot - ty - tH) / 2 - 110 * u;
+      text(ctx, st.label, W / 2, by, { font: '600 ' + Math.round(26 * u) + 'px ' + F.mono, color: 'rgba(255,244,234,0.8)', align: 'center', spacing: 8 });
+      ctx.save();
+      ctx.shadowColor = th.accent; ctx.shadowBlur = 30 * u;
+      text(ctx, st.value, W / 2, by + 130 * u, { font: fit(ctx, st.value, W - 160 * u, Math.round(130 * u), '900 #px ' + F.display), color: '#ffd98a', align: 'center' });
+      ctx.restore();
+      text(ctx, 'VOO LA 1119 · PORTÃO VI · ASSENTO ' + tk.seat, W / 2, by + 200 * u, { font: '700 ' + Math.round(26 * u) + 'px ' + F.mono, color: '#fff4ea', align: 'center', spacing: 3 });
+    }
+    if (tall) text(ctx, 'GTA VI · 19.11.2026', W / 2, H - 110 * u, { font: '900 ' + Math.round(46 * u) + 'px ' + F.display, color: '#fff4ea', align: 'center', spacing: 3 });
+    text(ctx, cta, W / 2, H - (tall ? 56 : 36) * u, { font: '600 ' + Math.round((tall ? 26 : 22) * u) + 'px ' + F.mono, color: 'rgba(255,244,234,0.75)', align: 'center', spacing: 3 });
   }
 
   function render(target, fmt, tk, t, im) {
-    var f = FORMATS[fmt];
+    var f = fmt === 'card' ? tsize(tk.st.o) : FORMATS[fmt];
     if (target.width !== f.w || target.height !== f.h) { target.width = f.w; target.height = f.h; }
     var ctx = target.getContext('2d');
-    if (fmt === 'card') { drawTicket(ctx, tk, t, im); return; }
-    drawTicket(ticketCanvas.getContext('2d'), tk, t, im);
+    if (fmt === 'card') { drawAny(ctx, tk, t, im); return; }
+    var ts = tsize(tk.st.o);
+    if (ticketCanvas.width !== ts.w || ticketCanvas.height !== ts.h) { ticketCanvas.width = ts.w; ticketCanvas.height = ts.h; }
+    drawAny(ticketCanvas.getContext('2d'), tk, t, im);
     drawPoster(ctx, f, tk, im);
   }
 
@@ -537,7 +718,7 @@
 
   function read() {
     var fd = new FormData(form);
-    return valid({ n: fd.get('n'), de: fd.get('de'), c: fd.get('c'), com: fd.get('com'), r: fd.get('r') });
+    return valid({ n: fd.get('n'), de: fd.get('de'), c: fd.get('c'), com: fd.get('com'), r: fd.get('r'), o: state.o });
   }
 
   function describe(tk) {
@@ -585,6 +766,20 @@
     setTimeout(function () { flaps = {}; update(); }, REDUCE ? 0 : 450);
   });
 
+  function syncOrient() {
+    $$('[data-orient]').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.orient === state.o ? 'true' : 'false'); });
+    stage.dataset.orient = state.o;
+    $('.checkin').dataset.orient = state.o;
+  }
+  $$('[data-orient]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.o = b.dataset.orient;
+      syncOrient();
+      update(false);
+    });
+  });
+  syncOrient();
+
   $$('[data-format]').forEach(function (b) {
     b.addEventListener('click', function () {
       fmt = b.dataset.format;
@@ -608,7 +803,7 @@
     render(c, fmt, current.tk, 1e12, current.im); // tempo "infinito": letras já paradas
     return new Promise(function (res) { c.toBlob(res, 'image/png'); });
   }
-  function fileName() { return 'passagem-vice-city-' + slug(state.n) + '-' + FORMATS[fmt].file + '.png'; }
+  function fileName() { return 'passagem-vice-city-' + slug(state.n) + '-' + FORMATS[fmt].file + '-bilhete-' + (state.o === 'h' ? 'horizontal' : 'vertical') + '.png'; }
   function needName() {
     if (state.n) return false;
     toast('Escreva seu nome ou apelido primeiro.');

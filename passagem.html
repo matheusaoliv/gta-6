@@ -87,10 +87,15 @@
       </form>
 
       <div class="stage">
-        <div class="stage__formats" role="group" aria-label="Formato da imagem">
-          <button type="button" data-format="card" aria-pressed="true">Cartão</button>
+        <div class="stage__formats" role="group" aria-label="Formato do bilhete">
+          <button type="button" data-orient="v" aria-pressed="true">Bilhete vertical</button>
+          <button type="button" data-orient="h" aria-pressed="false">Bilhete horizontal</button>
+        </div>
+        <div class="stage__formats stage__formats--posts" role="group" aria-label="Formato da imagem">
+          <button type="button" data-format="card" aria-pressed="true">Só o bilhete</button>
           <button type="button" data-format="story" aria-pressed="false">Story 9:16</button>
           <button type="button" data-format="feed" aria-pressed="false">Feed 4:5</button>
+          <button type="button" data-format="feedh" aria-pressed="false">Feed 1,91:1</button>
         </div>
         <div class="pass" id="pass" data-format="card">
           <canvas id="passCanvas" width="1080" height="1800" role="img" aria-label="Cartão de embarque"></canvas>
@@ -112,7 +117,7 @@
       <ol class="how__steps">
         <li><strong>Check-in</strong><span>Escreva seu nome, a cidade de partida, a classe, quem viaja com você e a rádio do voo. O bilhete muda na hora.</span></li>
         <li><strong>Seu lugar</strong><span>Assento e localizador saem do seu nome: o mesmo nome sempre gera o mesmo bilhete, em qualquer aparelho.</span></li>
-        <li><strong>Embarque</strong><span>Baixe em formato de cartão, story ou feed, ou compartilhe direto. O QR code abre o seu bilhete aqui no site.</span></li>
+        <li><strong>Embarque</strong><span>Escolha o bilhete vertical ou horizontal e baixe só o bilhete, o story do Instagram ou o post de feed (vertical 4:5 ou horizontal). O QR code abre o seu bilhete aqui no site.</span></li>
         <li><strong>Imigração</strong><span>A partir da meia-noite de 19/11, todo bilhete ganha o carimbo de chegada em Leonida. Volte para baixar o seu carimbado.</span></li>
       </ol>
       <p class="how__secret"><strong>Bilhetes secretos.</strong> Alguns nomes destravam cartões especiais. Tente o do antigo dono de Vice City, ou o de um certo casal procurado em Leonida.</p>

@@ -77,8 +77,11 @@ em que o fã monta o próprio cartão de embarque para o lançamento:
 - **Assento e localizador** saem do nome: o mesmo nome gera sempre o mesmo bilhete.
 - **QR code de verdade:** abre o bilhete da pessoa no site. O estado vai na URL,
   sem servidor e sem cadastro.
-- **Exportação** em cartão (1080x1800), story 9:16 e feed 4:5, com compartilhamento
-  direto no celular (Web Share).
+- **Dois bilhetes:** vertical (1080x1800) e horizontal com canhoto destacável
+  (2000x820), cada um exportável sozinho ou como post.
+- **Posts prontos** para os dois bilhetes: story do Instagram (1080x1920), feed
+  vertical 4:5 (1080x1350) e feed horizontal 1,91:1 (1920x1005), com
+  compartilhamento direto no celular (Web Share).
 - **Carimbo de chegada:** a partir da meia-noite de 19/11 todo bilhete sai
   carimbado pela imigração de Leonida.
 - **Bilhetes secretos** para alguns nomes da série.

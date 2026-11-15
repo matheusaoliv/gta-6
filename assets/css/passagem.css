@@ -135,6 +135,19 @@
 .stage__formats { display: inline-flex; padding: 4px; border-radius: 999px; background: rgba(255, 244, 234, 0.06); border: 1px solid var(--line); }
 .stage__formats button { min-height: 40px; padding: 0 16px; border-radius: 999px; font-family: var(--f-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .stage__formats button[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
+.stage__formats--posts { flex-wrap: wrap; justify-content: center; border-radius: 24px; }
+@media (max-width: 420px) { .stage__formats button { padding: 0 11px; letter-spacing: 0.06em; } }
+/* bilhete horizontal: a prévia ganha largura; no desktop a coluna da prévia cresce */
+.pass[data-orient="h"][data-format="card"] { width: min(100%, 640px); }
+.pass[data-orient="h"][data-format="card"] canvas, .pass[data-orient="h"][data-format="card"] .pass__shine { border-radius: 2%/4.9%; }
+.pass[data-format="feedh"] { width: min(100%, 640px); }
+.pass[data-format="feedh"] canvas { border-radius: 14px; }
+@media (min-width: 960px) {
+  .checkin[data-orient="h"], .checkin:has(.pass[data-format="feedh"]) { grid-template-columns: minmax(0, 1fr) minmax(0, 620px); }
+  .checkin[data-orient="h"] .classes, .checkin:has(.pass[data-format="feedh"]) .classes { grid-template-columns: minmax(0, 1fr); }
+  .checkin[data-orient="h"] .class-card, .checkin:has(.pass[data-format="feedh"]) .class-card { grid-template-columns: 56px minmax(0, 1fr); align-items: center; column-gap: 14px; }
+  .checkin[data-orient="h"] .class-card__swatch, .checkin:has(.pass[data-format="feedh"]) .class-card__swatch { grid-row: span 2; height: 44px; margin: 0; }
+}
 .pass {
   --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 30%;
   position: relative; width: min(100%, 420px, (100svh - 250px) * 0.6);
@@ -179,4 +192,7 @@
 @media (prefers-reduced-motion: reduce) {
   .pass { transition: none; }
   .board__live { animation: none; }
+}
+@media (max-width: 520px) {
+  .stage__formats--posts { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
 }
