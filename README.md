@@ -73,16 +73,18 @@ Os blocos do mapa e os lugares vêm do [gtadb.org](https://map.gtadb.org)
 [`tools/build-mapa.py`](tools/build-mapa.py) lê um clone de
 [rolux/gtadb.org](https://github.com/rolux/gtadb.org) e gera:
 
-- **Blocos:** níveis de zoom 0 a 5 convertidos para WebP, com os blocos que são
-  só mar descartados (o mapa pinta o mar com a cor de fundo). São 3.828 blocos e
-  8 MB, contra 42 MB nos originais. Cada visitante só baixa a área que está vendo.
+- **Blocos:** níveis de zoom 0 a 6 convertidos para WebP, com os blocos que são
+  só mar descartados (o mapa pinta o mar com a cor de fundo). O nível 6, o mais
+  detalhado do gtadb, tem 2 pixels por unidade do jogo; o mapa amplia no máximo
+  2× além dele, para o zoom continuar nítido. São 12.898 blocos e 54 MB, contra
+  150 MB nos originais. Cada visitante só baixa a área que está vendo.
 - **Dados:** [`assets/mapa/mapa.json`](assets/mapa/mapa.json), com 3.663
   lugares, categorias em português e os indicadores "dá para entrar",
   "demolido na vida real" e outros (98 KB comprimido).
 
 ```bash
 git clone --filter=blob:none --sparse https://github.com/rolux/gtadb.org.git /tmp/gtadb
-cd /tmp/gtadb && git sparse-checkout set --no-cone '/maps/tiles/6/day/[0-5]/' '/map/data/6/'
+cd /tmp/gtadb && git sparse-checkout set --no-cone '/maps/tiles/6/day/[0-6]/' '/map/data/6/'
 python3 <este-repo>/tools/build-mapa.py /tmp/gtadb
 ```
 
@@ -99,8 +101,12 @@ do gtadb no GitHub. O mapa usa o [Leaflet](https://leafletjs.com) 1.9.4 (BSD-2).
   passo, o que você ganha e as fontes. "Confirmado" quer dizer que mais de um
   guia descreve o mesmo lugar; "Relatado" ainda tem uma fonte só.
 - **Trapaças (61):** efeito e desafio que libera cada uma; 18 já têm o código
-  publicado. O modo treino lê o direcional de um controle de verdade (Gamepad
-  API), as setas do teclado ou um direcional na tela, e cronometra a sequência.
+  publicado, conferido na Screen Rant, na Red Bull Gaming e na KeenGamer. As
+  sequências são só de direcional e valem igual no PS5 e no Xbox; o seletor de
+  console troca os botões que se seguram (L1 + R1 ou LB + RB) nas instruções e
+  no modo treino. O modo treino lê o direcional de um controle de verdade
+  (Gamepad API), as setas do teclado ou um direcional na tela, e cronometra a
+  sequência.
 - **Progresso:** o botão ✓ de cada item fica salvo no aparelho (`localStorage`,
   chave `vi-guias`) e o mapa usa a mesma marcação.
 - **No mapa:** [`mapa.html`](mapa.html) ganha a camada de segredos (rosa para

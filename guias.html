@@ -17,8 +17,8 @@
   <link rel="icon" type="image/png" href="assets/img/brand/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/brand/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/big-shoulders-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/main.css?v=20261123b">
-  <link rel="stylesheet" href="assets/css/guias.css?v=20261123b">
+  <link rel="stylesheet" href="assets/css/main.css?v=20261123c">
+  <link rel="stylesheet" href="assets/css/guias.css?v=20261123c">
 </head>
 <body class="guide-page">
   <a class="skip-link" href="#gbusca">Pular para a busca</a>
@@ -75,12 +75,19 @@
 
     <section class="gpane" id="pane-trapacas" role="tabpanel" aria-labelledby="tab-trapacas" data-pane="trapacas" hidden>
       <div class="ginfo ginfo--open">
-        <h2>Como ativar uma trapaça</h2>
+        <div class="ginfo__head">
+          <h2>Como ativar uma trapaça</h2>
+          <div class="gplat" role="group" aria-label="Seu console">
+            <button type="button" data-plat="ps" aria-pressed="true">PlayStation 5</button>
+            <button type="button" data-plat="xbox" aria-pressed="false">Xbox Series X|S</button>
+          </div>
+        </div>
         <ol>
           <li>Termine a história de Jason e Lucia. A lista aparece em <strong>Progresso › Trapaças</strong>, e cada uma pede um desafio próprio.</li>
           <li>Fora de missão, aperte <kbd>↑</kbd> no direcional para pegar o celular.</li>
-          <li>Segure <kbd>L1</kbd> + <kbd>R1</kbd> (no Xbox, <kbd>LB</kbd> + <kbd>RB</kbd>) e digite a sequência no direcional. É a mesma nos dois consoles.</li>
+          <li>Segure <kbd data-hold="1">L1</kbd>, aperte <kbd data-hold="2">R1</kbd> e digite a sequência no direcional.</li>
         </ol>
+        <p class="ginfo__same">Todas as sequências usam só o direcional, então são iguais no PS5 e no Xbox. Só muda o botão que você segura: <strong>L1 + R1</strong> no PlayStation, <strong>LB + RB</strong> no Xbox.</p>
         <p class="ginfo__warn">Com uma trapaça ativa o jogo não salva e não libera troféus ou conquistas até o fim da sessão. Salve antes.</p>
         <p class="gsrc" data-cheat-src></p>
       </div>
@@ -109,7 +116,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/guias-data.js?v=20261123b"></script>
-  <script src="assets/js/guias.js?v=20261123b"></script>
+  <script src="assets/js/guias-data.js?v=20261123c"></script>
+  <script src="assets/js/guias.js?v=20261123c"></script>
 </body>
 </html>

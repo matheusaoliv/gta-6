@@ -42,13 +42,13 @@ window.VI_GUIAS = (function () {
       src: [['GamerHour', 'https://gamerhour.net/guides/gta-6-throwing-real-easter-egg-off-tallest-tower-easter-egg/'], S.click, ['Gamer Social Club', 'https://gamersocialclub.ca/2026/11/18/grand-theft-auto-vi-where-to-find-and-use-the-easter-egg/'], S.kotaku, ['WikiGames', 'https://wikigames.net/grand-theft-auto-vi-easter-egg-on-radio-tower/']]
     },
     {
-      id: 'pe-grande', kind: 'criatura', ok: 1, x: -2650, y: -4050, r: 700,
+      id: 'pe-grande', kind: 'criatura', ok: 1, x: -3400, y: -4650, r: 700,
       t: 'Pé-Grande no Lago Cottonmouth',
       sum: 'Um rugido no pântano, um vulto peludo atravessando a estrada e um altar na mata. Chegue perto e Jason apaga.',
-      where: 'Pântano do Lago Cottonmouth, ao sul de Grassrivers, perto da ponte para Cottonmouth.',
+      where: 'Lago Cottonmouth, nos pântanos logo abaixo de Hamlet (Mariana County).',
       when: 'Sem horário definido. Dá para ir logo no começo do jogo.',
       steps: [
-        'Dirija até o pântano do Lago Cottonmouth, perto da ponte.',
+        'Dirija até o Lago Cottonmouth, nos pântanos ao sul de Hamlet.',
         'Vá devagar e escute: um rugido grave indica que você chegou.',
         'A criatura aparece na estrada, em cima de uma carcaça, e corre para a mata.',
         'Siga até um altar amarrado numa árvore, cercado de flores.',
@@ -75,7 +75,7 @@ window.VI_GUIAS = (function () {
       src: [['PC Gamer', 'https://www.pcgamer.com/games/grand-theft-auto/the-5-year-long-mystery-of-the-ufo-house-has-finally-been-solved-in-gta-6-but-one-npc-knows-too-much/'], ['Dexerto', 'https://www.dexerto.com/gta/gta-6-screenshot-hidden-in-san-andreas-back-in-2021-was-real-and-the-house-has-a-dark-secret-3429837/'], S.click]
     },
     {
-      id: 'iate-michael-gta-5', kind: 'referencia', ok: 1, x: -2354, y: -5532, r: 150,
+      id: 'iate-michael-gta-5', kind: 'referencia', ok: 1, x: -2354, y: -5532, r: 150, exact: 1,
       t: 'O iate do Michael, de GTA V',
       sum: 'O barco ao lado da casa de Jason é do mesmo modelo do iate que Michael perdeu em GTA V, e o GPS mostra Los Santos.',
       where: 'Casa de Jason, sobre palafitas, em Key Lento (Leonida Keys).',
@@ -222,12 +222,12 @@ window.VI_GUIAS = (function () {
       src: [S.gr, S.ig, S.vgt, S.click]
     },
     {
-      id: 'gauntlet-hellfire', grp: 'randy', ok: 1, x: -2495, y: -3422, r: 150, value: 10120,
+      id: 'gauntlet-hellfire', grp: 'randy', ok: 1, x: -2530, y: -3480, r: 190, value: 10120,
       t: 'Bravado Gauntlet Hellfire',
-      where: 'No fim da rua interna do ferro-velho All Grade Scrapyard, sudeste de Hamlet, ao lado de um contêiner vermelho.',
+      where: 'Ferro-velho da gangue M7 (All Grade Scrapyard) em Hamlet, a leste da Boone Speedway e perto da Kurt’s Barber Shop, ao lado de um contêiner vermelho.',
       when: CLON + ' O ferro-velho tem guardas armados.',
       steps: [
-        'Entre no All Grade Scrapyard, colado ao ferro-velho da gangue M7, no sudeste de Hamlet.',
+        'Em Hamlet, siga a leste da Boone Speedway até o ferro-velho da M7, perto da Kurt’s Barber Shop (Route 61).',
         'Siga a rua de dentro até o fim. O Gauntlet está ao lado do contêiner vermelho.',
         'Aproxime-se devagar: os guardas atiram se perceberem o roubo. Abra com o Clonador.',
         'Leve até a garagem do Randy (ícone verde RK).'
@@ -266,7 +266,7 @@ window.VI_GUIAS = (function () {
       src: [S.clickR, ['Overgear', 'https://overgear.com/guides/gta-6/vehicles-and-cars-guide/']]
     },
     {
-      id: 'pegassi-vitello', grp: 'randy', ok: 0, x: 636, y: 3764, r: 220, value: 18865,
+      id: 'pegassi-vitello', grp: 'randy', ok: 1, x: 636, y: 3764, r: 220, value: 18865,
       t: 'Pegassi Vitello',
       where: 'Garagem sul de uma mansão no lado sul de Vinewood Beach, a do portão branco basculante.',
       when: CLON,
@@ -276,7 +276,7 @@ window.VI_GUIAS = (function () {
       src: [S.clickR, ['Sweat School', 'https://sweatschool.app/gta-6/vehicles/pegassi-vitello/'], S.mg, S.sk]
     },
     {
-      id: 'ascot-paragon', grp: 'randy', ok: 0, x: -1627, y: 3495, r: 220, value: 16555,
+      id: 'ascot-paragon', grp: 'randy', ok: 1, x: -1627, y: 3495, r: 220, value: 16555,
       t: 'Ascot Paragon',
       where: 'Garagem de uma mansão sem muros nos subúrbios ao norte de Belville.',
       when: CLON,
@@ -306,7 +306,7 @@ window.VI_GUIAS = (function () {
       src: [S.clickR]
     },
     {
-      id: 'bravado-banshee', grp: 'randy', ok: 0, x: -1637, y: -1802, r: 150, value: 7315,
+      id: 'bravado-banshee', grp: 'randy', ok: 1, x: -1637, y: -1802, r: 150, value: 7315,
       t: 'Bravado Banshee',
       where: 'Dentro do showroom da Sunrise Premium Autos, El Joven Blvd, norte de Southside (Vice City).',
       when: CLON,
@@ -326,7 +326,7 @@ window.VI_GUIAS = (function () {
       src: [S.clickR, S.ppx, S.meow, S.mg, S.sk]
     },
     {
-      id: 'invetero-coquette-d10', grp: 'randy', ok: 0, x: 94, y: 328, r: 150, value: 9350,
+      id: 'invetero-coquette-d10', grp: 'randy', ok: 1, x: 94, y: 328, r: 150, value: 9350,
       t: 'Invetero Coquette D10',
       where: 'Docas oeste de Waxman Island, no depósito de cerca azul, ao lado de um contêiner vermelho.',
       when: CLON,
@@ -336,7 +336,7 @@ window.VI_GUIAS = (function () {
       src: [S.mg, S.sk]
     },
     {
-      id: 'pegassi-tempesta', grp: 'randy', ok: 0, x: -1970, y: 7029, r: 200,
+      id: 'pegassi-tempesta', grp: 'randy', ok: 1, x: -1970, y: 7029, r: 200,
       t: 'Pegassi Tempesta',
       where: 'Na entrada de uma cabana de madeira no lado oeste do Lake Tallaloko, norte de Leonida.',
       when: CLON,
@@ -367,7 +367,7 @@ window.VI_GUIAS = (function () {
       src: [S.mg]
     },
     {
-      id: 'pegassi-tempesta-valiant', grp: 'destaque', ok: 0, x: 1805, y: 1476, r: 100,
+      id: 'pegassi-tempesta-valiant', grp: 'destaque', ok: 0, x: 1792, y: 1474, r: 100, exact: 1,
       t: 'Pegassi Tempesta Valiant',
       where: 'Pátio em frente ao Vice Museum of Art, sul de Washington Beach (Vice Beach).',
       when: CLON,
@@ -422,28 +422,28 @@ window.VI_GUIAS = (function () {
      Código: U D L R no direcional, igual no PS5 e no Xbox; vazio = ainda não publicado. */
   var cheats = [
     ['dinheiro', 'US$ 250.000', 'jogador', 'Põe US$ 250 mil na conta.', 'Terminar a história principal.', 'URDLULDR'],
-    ['bebado', 'Bêbado', 'jogador', 'Deixa o personagem bêbado.', 'Gastar US$ 2.500 em bebida.', ''],
-    ['heat', 'Aumentar o Heat', 'jogador', 'Sobe o seu nível de Heat com a polícia.', 'Escapar de 3 estrelas de procurado 25 vezes.', 'LDRDUDU'],
-    ['procurado', 'Aumentar o procurado', 'jogador', 'Põe mais estrelas de procurado em você.', 'Escapar de 3 estrelas de procurado 50 vezes.', 'LDRDURU'],
+    ['bebado', 'Bêbado', 'jogador', 'Deixa você e o parceiro(a) bêbados na hora.', 'Gastar US$ 2.500 em bebida.', ''],
+    ['heat', 'Aumentar o Heat', 'jogador', 'Sobe o seu nível de Heat no mapa todo.', 'Escapar de 3 estrelas de procurado 25 vezes.', 'LDRDUDU'],
+    ['procurado', 'Aumentar o procurado', 'jogador', 'Sobe o seu nível de procurado no mapa todo.', 'Escapar de 3 estrelas de procurado 50 vezes.', 'LDRDURU'],
     ['foco', 'Foco infinito', 'jogador', 'O Foco nunca acaba.', 'Terminar a história principal.', 'DUUDUDUDUR'],
-    ['queda', 'Sem dano de queda', 'jogador', 'Quedas não machucam.', 'Sobreviver a 20 quedas livres de mais de 12 metros (40 pés).', ''],
-    ['paraquedas', 'Paraquedas', 'jogador', 'Dá um paraquedas.', 'Fazer 50 saltos de paraquedas ou BASE de pelo menos 90 metros (300 pés).', ''],
-    ['colete', 'Colete à prova de balas', 'jogador', 'Enche o colete.', 'Completar 100 treinos de exercício.', 'DULUUUUUDD'],
-    ['consertar', 'Consertar veículo', 'jogador', 'Conserta o veículo em que você está.', 'Vencer 10 corridas em Gellhorn Raceway, Thrillbilly Mud Club e Boone Speedway.', ''],
-    ['nitro', 'Nitro infinito', 'jogador', 'O nitro não acaba.', 'Completar 50 saltos acrobáticos.', ''],
+    ['queda', 'Sem dano de queda', 'jogador', 'Fica imune a dano de queda.', 'Sobreviver a 20 quedas livres de mais de 12 metros (40 pés).', ''],
+    ['paraquedas', 'Paraquedas', 'jogador', 'Põe um paraquedas no seu inventário.', 'Fazer 50 saltos de paraquedas ou BASE de pelo menos 90 metros (300 pés).', ''],
+    ['colete', 'Colete à prova de balas', 'jogador', 'Põe colete à prova de balas no seu inventário.', 'Completar 100 treinos de exercício.', 'DULUUUUUDD'],
+    ['consertar', 'Consertar veículo', 'jogador', 'Conserta por completo o veículo em que você está.', 'Vencer 10 corridas em Gellhorn Raceway, Thrillbilly Mud Club e Boone Speedway.', ''],
+    ['nitro', 'Nitro infinito', 'jogador', 'Nitro e combustível não acabam.', 'Completar 50 saltos acrobáticos.', ''],
     ['municao-max', 'Munição máxima', 'combate', 'Enche a munição de todas as armas.', 'Ganhar 25 medalhas de bronze ou melhores nos estandes de tiro.', 'DURDLLUUDL'],
     ['municao-inf', 'Munição infinita', 'combate', 'A munição nunca acaba.', 'Ganhar 25 medalhas de prata ou melhores nos estandes de tiro.', 'DURDLLUDDD'],
     ['sem-recarga', 'Sem recarregar', 'combate', 'Atira sem parar para recarregar.', 'Ganhar 25 medalhas de ouro nos estandes de tiro.', 'DURDLLUDDU'],
-    ['explosivos', 'Todas as armas explosivas', 'combate', 'Dá as armas explosivas.', 'Arremessar 100 granadas.', ''],
-    ['incendiaria', 'Munição incendiária', 'combate', 'Os tiros incendeiam.', 'Queimar 100 inimigos com fogo.', ''],
-    ['garrafas', 'Garrafas explosivas', 'combate', 'Garrafas arremessadas explodem.', 'Arremessar 100 coquetéis molotov.', ''],
-    ['escopeta', 'Escopeta explosiva', 'combate', 'Os tiros de escopeta explodem.', 'Ferir 100 inimigos com explosivos.', ''],
-    ['h-at', 'Hauners H-AT', 'combate', 'Dá a arma Hauners H-AT.', 'Destruir 100 veículos.', ''],
-    ['attack-force', 'Attack Force', 'combate', 'Trapaça de combate; os guias ainda não detalharam o efeito.', 'Terminar a história principal.', 'DULLRDDUD'],
-    ['bolas', 'Bolas explosivas', 'combate', 'Bolas arremessadas explodem.', 'Ferir 20 inimigos com explosivos.', 'DULLRDDUR'],
-    ['vehicle-force', 'Vehicle Force', 'combate', 'Trapaça de combate com veículos; efeito ainda não detalhado.', 'Matar 25 inimigos ou civis com um veículo.', 'DULLRDLUD'],
-    ['avancar-hora', 'Avançar a hora', 'mundo', 'Adianta o relógio do jogo.', 'Coletar 10 relógios.', ''],
-    ['pausar-hora', 'Pausar a hora', 'mundo', 'Congela a hora do dia.', 'Coletar 20 relógios.', ''],
+    ['explosivos', 'Todas as armas explosivas', 'combate', 'Dá todas as armas explosivas, com munição cheia.', 'Arremessar 100 granadas.', ''],
+    ['incendiaria', 'Munição incendiária', 'combate', 'Toda a munição vira incendiária.', 'Queimar 100 inimigos com fogo.', ''],
+    ['garrafas', 'Garrafas explosivas', 'combate', 'Garrafas explodem quando são atingidas.', 'Arremessar 100 coquetéis molotov.', ''],
+    ['escopeta', 'Escopeta explosiva', 'combate', 'Dá uma escopeta Mason & Keen Shortstraw com cartuchos explosivos.', 'Ferir 100 inimigos com explosivos.', ''],
+    ['h-at', 'Hauners H-AT', 'combate', 'Põe uma Hauners H-AT no seu inventário.', 'Destruir 100 veículos.', ''],
+    ['attack-force', 'Attack Force', 'combate', 'Tiros e golpes arremessam os alvos longe.', 'Terminar a história principal.', 'DULLRDDUD'],
+    ['bolas', 'Bolas explosivas', 'combate', 'Bolas esportivas explodem no impacto.', 'Ferir 20 inimigos com explosivos.', 'DULLRDDUR'],
+    ['vehicle-force', 'Vehicle Force', 'combate', 'Batidas com veículo arremessam os alvos longe.', 'Matar 25 inimigos ou civis com um veículo.', 'DULLRDLUD'],
+    ['avancar-hora', 'Avançar a hora', 'mundo', 'Avança a hora do dia.', 'Achar 10 relógios colecionáveis.', ''],
+    ['pausar-hora', 'Pausar a hora', 'mundo', 'Congela a hora do dia.', 'Achar 20 relógios colecionáveis.', ''],
     ['clima', 'Mudar o clima', 'mundo', 'Alterna entre os climas.', 'Revelar o mapa inteiro.', 'DRUDRUR'],
     ['ambulancia', 'Interstate Ambulance', 'veiculos', 'Faz aparecer uma ambulância.', 'Descobrir a Interstate Ambulance no menu Progresso.', ''],
     ['airboat', 'Airboat 09', 'veiculos', 'Faz aparecer um aerobarco.', 'Completar 5 desafios de sobrevivência.', ''],
@@ -455,7 +455,7 @@ window.VI_GUIAS = (function () {
     ['emerus', 'Progen Emerus', 'veiculos', 'Faz aparecer um Emerus.', 'Completar todos os desafios de veículos.', ''],
     ['flamingo', 'Flamingo inflável', 'veiculos', 'Faz aparecer um flamingo inflável.', 'Destruir 50 flamingos de cocaína.', ''],
     ['pumper', 'MTL Pumper', 'veiculos', 'Faz aparecer um caminhão de bombeiros MTL Pumper.', 'Descobrir o MTL Pumper no menu Progresso.', 'LURDLRRU'],
-    ['taxi', 'Vapid Stainer G2 Taxi', 'veiculos', 'Faz aparecer um táxi.', 'Completar 5 desafios de esportes.', ''],
+    ['taxi', 'Vapid Stanier G2 Taxi', 'veiculos', 'Faz aparecer um táxi.', 'Completar 5 desafios de esportes.', ''],
     ['lazer', 'Hauners P-996 Lazer', 'veiculos', 'Faz aparecer o caça Lazer.', 'Completar todos os desafios do jogo.', ''],
     ['bulldozer', 'HVY Bulldozer', 'veiculos', 'Faz aparecer um trator.', 'Descobrir o HVY Bulldozer no menu Progresso.', 'LURDLRRD'],
     ['mallard', 'Lapwing Mallard', 'veiculos', 'Faz aparecer um avião Mallard.', 'Completar 5 desafios de veículos.', ''],
@@ -466,22 +466,22 @@ window.VI_GUIAS = (function () {
     ['speeder', 'Speeder 700 GT', 'veiculos', 'Faz aparecer uma lancha Speeder.', 'Completar 5 desafios de combate.', ''],
     ['thrax', 'Truffade Thrax', 'veiculos', 'Faz aparecer um Thrax.', 'Completar todos os desafios de compras.', ''],
     ['bobber', 'Western Zombie Bobber', 'veiculos', 'Faz aparecer uma moto Zombie Bobber.', 'Completar todos os desafios criminosos.', ''],
-    ['golden-hour', 'Golden Hour', 'filtros', 'Filtro de tela Golden Hour.', 'Passar 4 horas de mãos dadas.', ''],
-    ['powdered-sugar', 'Powdered Sugar', 'filtros', 'Filtro de tela Powdered Sugar.', 'Escanear todo o lixo espacial com o WAiNK.', ''],
-    ['pinhole', 'Pinhole', 'filtros', 'Filtro de tela Pinhole.', 'Desmontar 25 operações de gangue com seu parceiro(a).', ''],
-    ['neon-jungle', 'Neon Jungle', 'filtros', 'Filtro de tela Neon Jungle.', 'Descobrir os 16 veículos Girlypop.', ''],
-    ['yesteryear', 'Yesteryear', 'filtros', 'Filtro de tela Yesteryear.', 'Descobrir o Ridgway.', ''],
-    ['cataclysm', 'Cataclysm', 'filtros', 'Filtro de tela Cataclysm.', 'Descobrir o Vamos da Martha no menu Progresso.', 'DDURRULLRR'],
-    ['videotape', 'Videotape', 'filtros', 'Filtro de tela Videotape.', 'Completar 50 atividades com seu parceiro(a).', ''],
-    ['dark-mirror', 'Dark Mirror', 'filtros', 'Filtro de tela Dark Mirror.', 'Faturar US$ 500 mil vendendo veículos.', ''],
-    ['migraine', 'Migraine', 'filtros', 'Filtro de tela Migraine.', 'Sobreviver 6 minutos com 6 estrelas de procurado.', ''],
-    ['dollhouse', 'Dollhouse', 'filtros', 'Filtro de tela Dollhouse.', 'Passar 8 horas com seu parceiro(a).', 'DDURRULLDR'],
-    ['bubblegum', 'Bubblegum', 'filtros', 'Filtro de tela Bubblegum.', 'Coletar os 24 cards Vice City Flamingos.', ''],
-    ['fast-forward', 'Fast Forward', 'filtros', 'Filtro de tela Fast Forward.', 'Fazer 50 meditações.', ''],
-    ['fisheye', 'Fisheye', 'filtros', 'Filtro de tela olho de peixe.', 'Pescar 100 peixes.', ''],
-    ['faded-glory', 'Faded Glory', 'filtros', 'Filtro de tela Faded Glory.', 'Roubar 50 lojas com seu parceiro(a).', 'DDURRULLLR'],
-    ['pixel-art', 'Pixel Art', 'filtros', 'Filtro de tela Pixel Art.', 'Faturar US$ 250 mil vendendo colecionáveis.', ''],
-    ['hellscape', 'Hellscape', 'filtros', 'Filtro de tela Hellscape.', 'Roubar 100 viaturas da polícia.', '']
+    ['golden-hour', 'Golden Hour', 'filtros', 'Filtro dourado em tela panorâmica.', 'Passar 4 horas de mãos dadas.', ''],
+    ['powdered-sugar', 'Powdered Sugar', 'filtros', 'Deixa o mundo branco, com pontos de brilho.', 'Escanear todo o lixo espacial com o WAiNK.', ''],
+    ['pinhole', 'Pinhole', 'filtros', 'Filtro de câmera pinhole.', 'Desmontar 25 operações de gangue com seu parceiro(a).', ''],
+    ['neon-jungle', 'Neon Jungle', 'filtros', 'Contornos em neon no mundo todo.', 'Descobrir os 16 veículos Girlypop.', ''],
+    ['yesteryear', 'Yesteryear', 'filtros', 'Filtro de TV de tubo em preto e branco.', 'Descobrir o Ridgway.', ''],
+    ['cataclysm', 'Cataclysm', 'filtros', 'Enche o mundo de fumaça turva.', 'Descobrir o Vamos da Martha no menu Progresso.', 'DDURRULLRR'],
+    ['videotape', 'Videotape', 'filtros', 'Filtro de fita de vídeo.', 'Completar 50 atividades com seu parceiro(a).', ''],
+    ['dark-mirror', 'Dark Mirror', 'filtros', 'Vira o mundo de cabeça para baixo e deixa tudo escuro.', 'Faturar US$ 500 mil vendendo veículos.', ''],
+    ['migraine', 'Migraine', 'filtros', 'Filtro borrado e distorcido.', 'Sobreviver 6 minutos com 6 estrelas de procurado.', ''],
+    ['dollhouse', 'Dollhouse', 'filtros', 'Cores vivas em tela estreita.', 'Passar 8 horas com seu parceiro(a).', 'DDURRULLDR'],
+    ['bubblegum', 'Bubblegum', 'filtros', 'Deixa o mundo roxo e amarelo, com pontos de brilho.', 'Coletar os 24 cards Vice City Flamingos.', ''],
+    ['fast-forward', 'Fast Forward', 'filtros', 'Borrão de movimento e nuvens passando mais rápido.', 'Fazer 50 meditações.', ''],
+    ['fisheye', 'Fisheye', 'filtros', 'Filtro olho de peixe.', 'Pescar 100 peixes.', ''],
+    ['faded-glory', 'Faded Glory', 'filtros', 'Filtro de TV de tubo colorida.', 'Roubar 50 lojas com seu parceiro(a).', 'DDURRULLLR'],
+    ['pixel-art', 'Pixel Art', 'filtros', 'Filtro pixelado.', 'Faturar US$ 250 mil vendendo colecionáveis.', ''],
+    ['hellscape', 'Hellscape', 'filtros', 'Deixa o mundo vermelho e laranja, com o ar tremendo de calor.', 'Roubar 100 viaturas da polícia.', '']
   ].map(function (c) { return { id: c[0], t: c[1], cat: c[2], fx: c[3], unlock: c[4], code: c[5] }; });
 
   return {

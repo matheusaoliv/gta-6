@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  var V = '20261123b';
+  var V = '20261123c';
   // jsDelivr recusa parte das fotos (o repositório passa do limite de 50 MB dele); o raw do GitHub serve todas
   var PHOTO = 'https://raw.githubusercontent.com/rolux/gtadb.org/main/map/photos/6/L';
   var STORE = 'vi-mapa';
@@ -61,7 +61,7 @@
   var crs = L.extend({}, L.CRS.Simple, { transformation: new L.Transformation(S, 512, -S, 512) });
   var map = L.map('map', {
     crs: crs, zoomControl: false, attributionControl: false,
-    minZoom: 0.5, maxZoom: 7.5, zoomSnap: 0.25, zoomDelta: 1, wheelPxPerZoomLevel: 110,
+    minZoom: 0.5, maxZoom: 7, zoomSnap: 0.25, zoomDelta: 1, wheelPxPerZoomLevel: 110,
     maxBounds: L.latLngBounds([-12500, -14500], [12500, 7500]), maxBoundsViscosity: 0.8,
     preferCanvas: true, fadeAnimation: !REDUCE, zoomAnimation: !REDUCE, markerZoomAnimation: !REDUCE
   });
@@ -94,7 +94,7 @@
       }
     });
     new Tiles('assets/mapa/tiles/{z}/{x}_{y}.webp', {
-      maxNativeZoom: data.tiles.maxZoom, maxZoom: 7.5, minZoom: 0, tileSize: 256,
+      maxNativeZoom: data.tiles.maxZoom, maxZoom: 7, minZoom: 0, tileSize: 256,
       noWrap: true, keepBuffer: 3, updateWhenZooming: false
     }).addTo(map);
 
@@ -380,7 +380,7 @@
         $('[data-p-rl]').src = PHOTO + p.id + ',rl.jpg';
         $('[data-p-rl]').alt = 'Foto na vida real: ' + (p.real.split(',')[0] || label(p));
         $('[data-p-range]').value = 50;
-        cmp.style.setProperty('--split', '50%');
+        split(50);
         cmp.hidden = false;
       } else if (p.ph) {
         var ig = p.ph & 1;
@@ -452,7 +452,14 @@
       im.addEventListener('error', function () { (im.closest('[data-p-compare]') || im.closest('[data-p-single]')).hidden = true; });
     });
     var range = $('[data-p-range]');
-    range.addEventListener('input', function () { $('[data-p-compare]').style.setProperty('--split', range.value + '%'); });
+    function split(v) {
+      var c = $('[data-p-compare]');
+      c.style.setProperty('--split', v + '%');
+      // a etiqueta some quando o lado dela quase não aparece, para nunca ficar sobre a foto errada
+      $('.compare__tag--ig', c).hidden = v < 22;
+      $('.compare__tag--rl', c).hidden = v > 78;
+    }
+    range.addEventListener('input', function () { split(+range.value); });
 
     /* ---------------- controles ---------------- */
     $$('[data-zoom]').forEach(function (b) {

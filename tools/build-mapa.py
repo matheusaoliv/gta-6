@@ -3,7 +3,7 @@ github.com/rolux/gtadb.org (GTA VI Mapping Community, dados e imagens CC BY 4.0)
 
 Uso:  python3 tools/build-mapa.py <caminho-do-clone-gtadb.org>
 
-- Blocos: maps/tiles/6/day, níveis 0 a 5, convertidos para WebP. Blocos só de mar
+- Blocos: maps/tiles/6/day, níveis 0 a 6 (o 6 tem 2 px por unidade do jogo), convertidos para WebP. Blocos só de mar
   (uma cor só) são descartados; o mapa pinta o mar com a cor de fundo.
 - Dados: map/data/6/landmarks.json, compactado e com categorias em português.
 """
@@ -12,27 +12,34 @@ import os
 import re
 import sys
 
+from concurrent.futures import ProcessPoolExecutor
+
 from PIL import Image, ImageStat
 
 SRC = sys.argv[1]
 OUT = os.path.join(os.path.dirname(__file__), '..', 'assets', 'mapa')
-MAX_Z = 5
+MAX_Z = 6
 
 # ---------------------------------------------------------------- blocos
+def convert(job):
+    """Converte um bloco; devolve (x, y) ou None se for só mar."""
+    z, f = job
+    y, x = map(int, re.match(r'\d+,(\d+),(\d+)\.jpg$', f).groups())
+    im = Image.open(os.path.join(SRC, 'maps/tiles/6/day', str(z), f)).convert('RGB')
+    if max(ImageStat.Stat(im).stddev) < 3:  # mar liso: vira cor de fundo
+        return None
+    out = os.path.join(OUT, 'tiles', str(z), f'{x}_{y}.webp')
+    if not os.path.exists(out):
+        im.save(out, 'WEBP', quality=74, method=6)
+    return (x, y)
+
+
 tiles = {}
+pool = ProcessPoolExecutor()
 for z in range(MAX_Z + 1):
     d = os.path.join(SRC, 'maps/tiles/6/day', str(z))
     os.makedirs(os.path.join(OUT, 'tiles', str(z)), exist_ok=True)
-    keep = []
-    for f in sorted(os.listdir(d)):
-        y, x = map(int, re.match(r'\d+,(\d+),(\d+)\.jpg$', f).groups())
-        im = Image.open(os.path.join(d, f)).convert('RGB')
-        if max(ImageStat.Stat(im).stddev) < 3:  # mar liso: vira cor de fundo
-            continue
-        out = os.path.join(OUT, 'tiles', str(z), f'{x}_{y}.webp')
-        if not os.path.exists(out):
-            im.save(out, 'WEBP', quality=74, method=6)
-        keep.append((x, y))
+    keep = [k for k in pool.map(convert, [(z, f) for f in sorted(os.listdir(d))], chunksize=64) if k]
     # índice compacto: por linha y, intervalos [x0, x1] contíguos
     rows = {}
     for x, y in keep:

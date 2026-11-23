@@ -18,7 +18,7 @@
   }
 
   /* ---------------- estado no aparelho (compartilhado com o mapa) ---------------- */
-  var st = { done: [], hide: false };
+  var st = { done: [], hide: false, plat: 'ps' };
   try { st = Object.assign(st, JSON.parse(localStorage.getItem(STORE) || '{}')); } catch (e) {}
   var done = new Set(st.done);
   function persist() {
@@ -217,6 +217,7 @@
     var side = el('div', 'gcheat__code');
     if (it.code) {
       side.appendChild(codeKeys(it.code));
+      side.appendChild(el('small', 'gcheat__plat', 'Igual no PS5 e no Xbox'));
       var row = el('div', 'gcheat__btns');
       var tr = el('button', 'gmini gmini--hot', 'Treinar');
       tr.type = 'button';
@@ -271,6 +272,17 @@
   var hideBox = $('[data-hide-done]');
   hideBox.checked = !!st.hide;
   hideBox.addEventListener('change', function () { st.hide = hideBox.checked; persist(); apply(); });
+
+  /* ---------------- console: muda só os botões que se seguram ---------------- */
+  var HOLD = { ps: ['L1', 'R1'], xbox: ['LB', 'RB'] };
+  function hold() { return HOLD[st.plat] || HOLD.ps; }
+  function syncPlat() {
+    $$('[data-plat]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.plat === st.plat ? 'true' : 'false'); });
+    $$('[data-hold]').forEach(function (k) { k.textContent = hold()[k.dataset.hold - 1]; });
+  }
+  $$('[data-plat]').forEach(function (b) {
+    b.addEventListener('click', function () { st.plat = b.dataset.plat; persist(); syncPlat(); });
+  });
 
   /* ---------------- progresso ---------------- */
   function progressText(k) {
@@ -346,7 +358,7 @@
       paint();
       if (pos === drill.code.length) {
         var s = ((performance.now() - t0) / 1000).toFixed(1).replace('.', ',');
-        msg.textContent = 'Certinho, em ' + s + ' s! No jogo: ↑ abre o celular, segure L1 + R1 (LB + RB) e digite. Toque em qualquer direção para repetir.';
+        msg.textContent = 'Certinho, em ' + s + ' s! No jogo: ↑ abre o celular, segure ' + hold()[0] + ' + ' + hold()[1] + ' e digite. Toque em qualquer direção para repetir.';
       } else {
         msg.textContent = (drill.code.length - pos) + ' para terminar.';
       }
@@ -399,6 +411,7 @@
     }
   }
   window.addEventListener('hashchange', route);
+  syncPlat();
   syncChecks();
   route();
 })();

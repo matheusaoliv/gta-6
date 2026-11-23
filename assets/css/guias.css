@@ -70,6 +70,15 @@ main { max-width: 1040px; margin: 0 auto; padding: 0 var(--gutter) 80px; }
 
 /* blocos de explicação */
 .ginfo { margin: 10px 0 4px; padding: 16px 18px; border-radius: var(--radius, 18px); background: rgba(255, 244, 234, 0.04); border: 1px solid var(--line); }
+.ginfo__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+.ginfo__head h2 { margin: 0; }
+.gplat { display: flex; gap: 4px; padding: 4px; border-radius: 999px; border: 1px solid var(--line); }
+.gplat button { min-height: 36px; padding: 0 14px; border-radius: 999px; font: 700 12px var(--f-body); color: var(--muted); }
+.gplat button[aria-pressed="true"] { color: var(--ink); background: var(--paper); }
+.gplat button:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+.ginfo__same { margin-top: 12px; font-size: 14px; color: var(--muted); }
+.ginfo__same strong { color: var(--paper); }
+.gcheat__plat { font: 600 10px var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
 .ginfo summary { cursor: pointer; font-weight: 800; min-height: 28px; }
 .ginfo h2 { font: 600 12px var(--f-mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
 .ginfo ol { display: grid; gap: 8px; margin: 10px 0 0; padding-left: 20px; color: var(--muted); }
