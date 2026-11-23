@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mapa de Leonida — GTA VI · 3.663 lugares com a versão da vida real</title>
+  <meta name="description" content="Mapa interativo de Leonida (GTA VI) com 3.663 lugares: lojas, esconderijos, postos, hotéis e prédios, cada um com a foto do jogo, a foto da vida real e o endereço em Miami e na Flórida.">
+  <meta name="theme-color" content="#12051f">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Mapa de Leonida — GTA VI">
+  <meta property="og:description" content="3.663 lugares de Leonida, com a foto do jogo e a da vida real lado a lado.">
+  <meta property="og:url" content="https://matheusaoliv.github.io/gta-6/mapa.html">
+  <meta property="og:image" content="https://matheusaoliv.github.io/gta-6/assets/img/key/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/img/brand/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/brand/apple-touch-icon.png">
+  <link rel="preload" href="assets/mapa/mapa.json?v=20261123a" as="fetch" crossorigin>
+  <link rel="preload" href="assets/fonts/big-shoulders-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css?v=20261123a">
+  <link rel="stylesheet" href="assets/css/leaflet.css?v=20261123a">
+  <link rel="stylesheet" href="assets/css/mapa.css?v=20261123a">
+</head>
+<body class="map-page">
+  <a class="skip-link" href="#busca">Pular para a busca de lugares</a>
+
+  <header class="mbar">
+    <a class="mbar__back" href="./"><span aria-hidden="true">←</span> Contagem</a>
+    <a class="mbar__brand" href="./" aria-label="GTA VI — voltar à contagem"><img src="assets/img/brand/vi.webp" alt="" width="1210" height="936"></a>
+    <p class="mbar__title"><strong>Mapa de Leonida</strong><span data-total>3.663 lugares</span></p>
+    <a class="mbar__pass" href="passagem.html">Passagem ✈</a>
+  </header>
+
+  <main class="mapwrap" id="main">
+    <div class="map" id="map" role="region" aria-label="Mapa de Leonida. Use a lista de lugares ao lado para navegar pelo teclado."></div>
+    <p class="map__msg" data-msg>Carregando o mapa…</p>
+
+    <aside class="panel" id="panel" aria-label="Busca e filtros" data-state="peek">
+      <button class="panel__grip" type="button" data-grip aria-label="Abrir ou fechar a lista de lugares" aria-expanded="false"><span></span></button>
+
+      <div class="panel__home" data-view="home">
+        <div class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 0 1 5.96 12.05l4.5 4.5-1.42 1.41-4.5-4.49A7.5 7.5 0 1 1 10.5 3zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"/></svg>
+          <input id="busca" type="search" placeholder="Buscar lugar, bairro ou endereço real" autocomplete="off" spellcheck="false" enterkeyhint="search" aria-describedby="buscaDica">
+          <kbd aria-hidden="true">/</kbd>
+        </div>
+        <p class="sr-only" id="buscaDica">Busque pelo nome no jogo, pelo bairro ou pelo lugar da vida real, como Ritz-Carlton ou Ocean Drive.</p>
+
+        <div class="tabs" role="tablist" aria-label="O que mostrar no painel">
+          <button type="button" role="tab" aria-selected="true" data-tab="filtros">Filtros</button>
+          <button type="button" role="tab" aria-selected="false" data-tab="lista">Lugares <span data-nres></span></button>
+          <button type="button" role="tab" aria-selected="false" data-tab="salvos">Salvos <span data-nsaved></span></button>
+        </div>
+
+        <section class="tabpane" data-pane="filtros">
+          <div class="quick">
+            <label class="toggle"><input type="checkbox" data-only="enter"><span>Só onde dá para entrar</span></label>
+            <label class="toggle"><input type="checkbox" data-only="photo"><span>Só com foto</span></label>
+            <label class="toggle"><input type="checkbox" data-only="unvisited"><span>Esconder os que já visitei</span></label>
+          </div>
+          <div class="cats__head">
+            <h2>Categorias</h2>
+            <button type="button" data-all="on">Todas</button>
+            <button type="button" data-all="off">Nenhuma</button>
+          </div>
+          <ul class="cats" data-cats></ul>
+        </section>
+
+        <section class="tabpane" data-pane="lista" hidden>
+          <ol class="results" data-results></ol>
+        </section>
+
+        <section class="tabpane" data-pane="salvos" hidden>
+          <ol class="results" data-saved></ol>
+        </section>
+      </div>
+
+      <article class="place" data-view="place" hidden aria-live="polite">
+        <button class="place__back" type="button" data-close><span aria-hidden="true">←</span> Voltar</button>
+        <p class="place__cat" data-p-cat></p>
+        <h2 class="place__name" data-p-name></h2>
+        <p class="place__area" data-p-area></p>
+        <ul class="place__flags" data-p-flags></ul>
+        <div class="compare" data-p-compare hidden>
+          <div class="compare__frame">
+            <img data-p-rl alt="" loading="lazy" decoding="async">
+            <div class="compare__top" data-p-topwrap><img data-p-ig alt="" loading="lazy" decoding="async"></div>
+            <span class="compare__tag compare__tag--ig">No jogo</span>
+            <span class="compare__tag compare__tag--rl">Vida real</span>
+            <span class="compare__line" aria-hidden="true"></span>
+          </div>
+          <input class="compare__range" type="range" min="0" max="100" value="50" aria-label="Arraste para comparar a foto do jogo com a da vida real" data-p-range>
+        </div>
+        <figure class="place__photo" data-p-single hidden><img alt="" loading="lazy" decoding="async"><figcaption></figcaption></figure>
+        <div class="real" data-p-real hidden>
+          <h3>Na vida real</h3>
+          <p data-p-realaddr></p>
+          <a class="link-arrow" data-p-gmaps target="_blank" rel="noopener" href="#">Ver no Google Maps ↗</a>
+        </div>
+        <p class="place__coords" data-p-coords></p>
+        <div class="place__actions">
+          <button class="btn btn--sun" type="button" data-p-save><span class="btn__label">Salvar</span></button>
+          <button class="btn btn--glass" type="button" data-p-visit><span class="btn__label">Já visitei</span></button>
+          <button class="btn btn--ghost" type="button" data-p-share><span class="btn__label">Copiar link</span></button>
+        </div>
+      </article>
+
+      <p class="panel__credit">Mapa e dados: <a href="https://map.gtadb.org" target="_blank" rel="noopener">GTA VI Mapping Community / gtadb.org</a>, <a href="https://creativecommons.org/licenses/by/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY 4.0</a>. Blocos convertidos para WebP, mar redesenhado e categorias traduzidas. Mapa feito por fãs, não é o oficial da Rockstar.</p>
+    </aside>
+
+    <div class="mctl" role="group" aria-label="Controles do mapa">
+      <button type="button" data-zoom="in" aria-label="Aproximar">+</button>
+      <button type="button" data-zoom="out" aria-label="Afastar">−</button>
+      <button type="button" data-zoom="home" aria-label="Ver Leonida inteira"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5v2H6v3H4zm11-5h5v5h-2V6h-3V4zM6 15v3h3v2H4v-5h2zm12 0h2v5h-5v-2h3v-3z"/></svg></button>
+    </div>
+    <p class="mcoord" data-coord aria-hidden="true"></p>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/vendor/leaflet.js?v=20261123a"></script>
+  <script src="assets/js/mapa.js?v=20261123a"></script>
+</body>
+</html>

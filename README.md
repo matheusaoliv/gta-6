@@ -50,6 +50,7 @@ Também tem:
 - **Galeria:** 24 capturas oficiais em esteiras infinitas que reagem ao scroll, com arraste e lightbox (teclado e swipe).
 - **Guia do lançamento:** a hora em que GTA VI libera em cada país (das 11 janelas da PlayStation Store), convertida para o relógio de quem visita e com contagem por linha; o passo a passo para jogar antes no Xbox pela Nova Zelândia; os fatos confirmados (pré-download, 212 GB, preço, 30 FPS, reviews, trilha) com links para as fontes; e perguntas frequentes com dados estruturados para o Google.
 - **Contagem no fuso certo:** no Brasil a contagem vai até a meia-noite de Brasília mesmo para quem está em Manaus ou Cuiabá, e nos EUA e Canadá até a meia-noite da costa leste, como a loja libera.
+- **Mapa de Leonida:** em [`mapa.html`](https://matheusaoliv.github.io/gta-6/mapa.html), 3.663 lugares do jogo sobre o mapa da GTA VI Mapping Community, com busca, filtros por categoria, lugares salvos e visitados, link direto para cada lugar e a foto do jogo comparada com a da vida real, com o endereço em Miami e na Flórida (veja abaixo).
 - **Passagem para Vice City:** em [`passagem.html`](https://matheusaoliv.github.io/gta-6/passagem.html) cada fã emite o cartão de embarque do voo LA 1119 (veja abaixo).
 - **Agenda e compartilhamento:** o botão de agenda abre as opções Google Agenda, Calendário da Apple, Outlook e arquivo `.ics`, com o lançamento (19/11) e a liberação na Nova Zelândia (18/11, para jogar antes no Xbox). A opção do seu aparelho aparece primeiro. Outro botão compartilha a contagem.
 - **Detalhes:** player fixo da rádio, cursor personalizado, botões magnéticos e grão de filme.
@@ -61,6 +62,31 @@ Também tem:
 *Tudo funciona no celular, inclusive o player e a rádio.*
 
 </div>
+
+---
+
+## Mapa de Leonida
+
+Os blocos do mapa e os lugares vêm do [gtadb.org](https://map.gtadb.org)
+(GTA VI Mapping Community), cujos dados e imagens são CC BY 4.0. O
+[`tools/build-mapa.py`](tools/build-mapa.py) lê um clone de
+[rolux/gtadb.org](https://github.com/rolux/gtadb.org) e gera:
+
+- **Blocos:** níveis de zoom 0 a 5 convertidos para WebP, com os blocos que são
+  só mar descartados (o mapa pinta o mar com a cor de fundo). São 3.828 blocos e
+  8 MB, contra 42 MB nos originais. Cada visitante só baixa a área que está vendo.
+- **Dados:** [`assets/mapa/mapa.json`](assets/mapa/mapa.json), com 3.663
+  lugares, categorias em português e os indicadores "dá para entrar",
+  "demolido na vida real" e outros (98 KB comprimido).
+
+```bash
+git clone --filter=blob:none --sparse https://github.com/rolux/gtadb.org.git /tmp/gtadb
+cd /tmp/gtadb && git sparse-checkout set --no-cone '/maps/tiles/6/day/[0-5]/' '/map/data/6/'
+python3 <este-repo>/tools/build-mapa.py /tmp/gtadb
+```
+
+As fotos de cada lugar (jogo e vida real) são carregadas direto do repositório
+do gtadb no GitHub. O mapa usa o [Leaflet](https://leafletjs.com) 1.9.4 (BSD-2).
 
 ---
 
@@ -221,6 +247,8 @@ Quase todo o conteúdo editável está em [`assets/js/data.js`](assets/js/data.j
 
 ```
 index.html                 # estrutura e conteúdo das seções
+mapa.html                  # mapa de Leonida (Leaflet)
+tools/build-mapa.py        # gera os blocos e os dados do mapa a partir do gtadb.org
 passagem.html              # passagem para Vice City
 assets/
   css/main.css             # tokens de design, layout e componentes
@@ -232,7 +260,8 @@ assets/
   js/radio.js              # rádio, HUD, visualizador e Media Session
   js/radio-levels.js       # energia pré-calculada das prévias (4 bandas, 20 fps)
   js/webgl.js              # shader do hero (dissolve, miragem, aberração cromática, grão)
-  js/vendor/               # GSAP 3.15 (ScrollTrigger, SplitText, CustomEase), Lenis 1.3 e qrcode-generator 1.4
+  js/vendor/               # GSAP 3.15 (ScrollTrigger, SplitText, CustomEase), Lenis 1.3, qrcode-generator 1.4 e Leaflet 1.9.4
+  mapa/                    # blocos WebP e mapa.json do mapa de Leonida
   fonts/                   # Big Shoulders Display, Manrope, Mr Dafoe e IBM Plex Mono (OFL)
   img/                     # artes e capturas oficiais otimizadas em WebP (~11 MB)
   video/                   # trailers 1, 2 e de lançamento convertidos para H.264 1080p
