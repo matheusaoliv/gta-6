@@ -2299,3 +2299,22 @@ a.calopt:hover .calopt__go { color: var(--paper); transform: translateX(3px); }
   .grain { display: none; }
   .ticker__track { animation: none; }
 }
+
+/* busca e interruptor: usados no mapa e nos guias */
+.search { position: relative; display: flex; align-items: center; }
+.search svg { position: absolute; left: 14px; width: 20px; height: 20px; fill: var(--muted); pointer-events: none; }
+.search input {
+  width: 100%; min-height: 50px; padding: 0 46px 0 44px; border-radius: 14px;
+  font: 700 16px var(--f-body); color: var(--paper);
+  background: rgba(13, 5, 24, 0.7); border: 1px solid rgba(255, 244, 234, 0.2);
+}
+.search input::placeholder { color: var(--faint); font-weight: 600; }
+.search input:focus-visible { outline: 2px solid var(--pink); outline-offset: 1px; }
+.search kbd { position: absolute; right: 12px; padding: 2px 8px; border-radius: 6px; font: 600 12px var(--f-mono); color: var(--faint); border: 1px solid var(--line); }
+@media (hover: none) { .search kbd { display: none; } }
+.toggle { display: flex; align-items: center; gap: 12px; min-height: 40px; cursor: pointer; font-size: 14px; font-weight: 700; }
+.toggle input { appearance: none; -webkit-appearance: none; position: relative; flex: none; width: 40px; height: 24px; border-radius: 999px; background: rgba(255, 244, 234, 0.16); transition: background-color 0.2s; cursor: pointer; }
+.toggle input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--paper); transition: transform 0.25s var(--ease-out); }
+.toggle input:checked { background: var(--pink); }
+.toggle input:checked::after { transform: translateX(16px); }
+.toggle input:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }

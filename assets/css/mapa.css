@@ -24,6 +24,7 @@ html:has(.map-page) { height: 100%; overflow: hidden; scrollbar-gutter: auto; }
   .mbar__back span { font-size: 20px; }
   .mbar__title strong { font-size: 19px; }
   .mbar__pass { padding: 0 12px; font-size: 11px; }
+  .mbar__pass:not(.mbar__pass--alt) { display: none; }
 }
 
 /* mapa */
@@ -80,17 +81,6 @@ html:has(.map-page) { height: 100%; overflow: hidden; scrollbar-gutter: auto; }
 .panel__credit { flex: none; padding: 10px 16px 12px; font-size: 11px; line-height: 1.45; color: var(--faint); border-top: 1px solid var(--line); }
 .panel__credit a { text-decoration: underline; text-underline-offset: 2px; color: var(--muted); }
 
-.search { position: relative; display: flex; align-items: center; }
-.search svg { position: absolute; left: 14px; width: 20px; height: 20px; fill: var(--muted); pointer-events: none; }
-.search input {
-  width: 100%; min-height: 50px; padding: 0 46px 0 44px; border-radius: 14px;
-  font: 700 16px var(--f-body); color: var(--paper);
-  background: rgba(13, 5, 24, 0.7); border: 1px solid rgba(255, 244, 234, 0.2);
-}
-.search input::placeholder { color: var(--faint); font-weight: 600; }
-.search input:focus-visible { outline: 2px solid var(--pink); outline-offset: 1px; }
-.search kbd { position: absolute; right: 12px; padding: 2px 8px; border-radius: 6px; font: 600 12px var(--f-mono); color: var(--faint); border: 1px solid var(--line); }
-@media (hover: none) { .search kbd { display: none; } }
 
 .tabs { display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255, 244, 234, 0.05); border: 1px solid var(--line); }
 .tabs button { flex: 1; min-height: 38px; border-radius: 999px; font: 600 11px var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
@@ -100,12 +90,6 @@ html:has(.map-page) { height: 100%; overflow: hidden; scrollbar-gutter: auto; }
 .tabpane[hidden] { display: none; }
 
 .quick { display: grid; gap: 4px; margin-bottom: 14px; }
-.toggle { display: flex; align-items: center; gap: 12px; min-height: 40px; cursor: pointer; font-size: 14px; font-weight: 700; }
-.toggle input { appearance: none; -webkit-appearance: none; position: relative; flex: none; width: 40px; height: 24px; border-radius: 999px; background: rgba(255, 244, 234, 0.16); transition: background-color 0.2s; cursor: pointer; }
-.toggle input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--paper); transition: transform 0.25s var(--ease-out); }
-.toggle input:checked { background: var(--pink); }
-.toggle input:checked::after { transform: translateX(16px); }
-.toggle input:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
 
 .cats__head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .cats__head h2 { margin-right: auto; font: 600 11px var(--f-mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
@@ -189,3 +173,24 @@ html:has(.map-page) { height: 100%; overflow: hidden; scrollbar-gutter: auto; }
 @media (prefers-reduced-motion: reduce) {
   .panel, .toggle input::after { transition: none; }
 }
+
+/* segredos: easter eggs e carros raros (dados em guias-data.js) */
+.cats__link { font: 600 11px var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--pink); }
+.cats__link:hover { color: var(--paper); }
+.toggle small { font: 600 11px var(--f-mono); color: var(--faint); }
+.toggle--egg input:checked { background: #ff4f9a; }
+.toggle--car input:checked { background: #ff9a3c; }
+.msec { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font: 900 14px/1 var(--f-body); color: #120720; border: 2px solid #120720; box-shadow: 0 0 0 2px rgba(255, 244, 234, 0.85), 0 4px 14px rgba(0, 0, 0, 0.5); cursor: pointer; }
+.msec--egg { background: #ff4f9a; }
+.msec--car { background: #ff9a3c; font-size: 12px; }
+.msec.is-done { opacity: 0.55; }
+.msec.is-done::after { content: "✓"; position: absolute; right: -6px; top: -6px; width: 16px; height: 16px; border-radius: 50%; font-size: 10px; line-height: 16px; text-align: center; color: #120720; background: #45f0d1; }
+.leaflet-popup-content-wrapper { color: var(--paper); background: #1a0b2c; border: 1px solid rgba(255, 244, 234, 0.18); border-radius: 16px; box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7); }
+.leaflet-popup-tip { background: #1a0b2c; }
+.leaflet-container a.leaflet-popup-close-button { width: 32px; height: 32px; font-size: 22px; line-height: 30px; color: var(--muted); }
+.leaflet-popup-content { margin: 14px 16px; font: 14px/1.45 var(--f-body); }
+.spop__tag { font: 700 10px var(--f-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.spop h3 { margin: 4px 26px 6px 0; font: 900 20px/1.05 var(--f-display); text-transform: uppercase; }
+.spop p { margin: 0 0 6px; color: var(--muted); }
+.spop__area { font-size: 12px; color: var(--faint) !important; }
+.spop a { display: inline-block; margin-top: 4px; font-weight: 800; color: var(--pink); }

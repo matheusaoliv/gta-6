@@ -51,6 +51,7 @@ Também tem:
 - **Guia do lançamento:** a hora em que GTA VI libera em cada país (das 11 janelas da PlayStation Store), convertida para o relógio de quem visita e com contagem por linha; o passo a passo para jogar antes no Xbox pela Nova Zelândia; os fatos confirmados (pré-download, 212 GB, preço, 30 FPS, reviews, trilha) com links para as fontes; e perguntas frequentes com dados estruturados para o Google.
 - **Contagem no fuso certo:** no Brasil a contagem vai até a meia-noite de Brasília mesmo para quem está em Manaus ou Cuiabá, e nos EUA e Canadá até a meia-noite da costa leste, como a loja libera.
 - **Mapa de Leonida:** em [`mapa.html`](https://matheusaoliv.github.io/gta-6/mapa.html), 3.663 lugares do jogo sobre o mapa da GTA VI Mapping Community, com busca, filtros por categoria, lugares salvos e visitados, link direto para cada lugar e a foto do jogo comparada com a da vida real, com o endereço em Miami e na Flórida (veja abaixo).
+- **Segredos de Leonida:** em [`guias.html`](https://matheusaoliv.github.io/gta-6/guias.html), os easter eggs, os carros raros e as 61 trapaças, com busca, filtros, progresso salvo no aparelho e modo treino dos códigos (veja abaixo).
 - **Passagem para Vice City:** em [`passagem.html`](https://matheusaoliv.github.io/gta-6/passagem.html) cada fã emite o cartão de embarque do voo LA 1119 (veja abaixo).
 - **Agenda e compartilhamento:** o botão de agenda abre as opções Google Agenda, Calendário da Apple, Outlook e arquivo `.ics`, com o lançamento (19/11) e a liberação na Nova Zelândia (18/11, para jogar antes no Xbox). A opção do seu aparelho aparece primeiro. Outro botão compartilha a contagem.
 - **Detalhes:** player fixo da rádio, cursor personalizado, botões magnéticos e grão de filme.
@@ -87,6 +88,30 @@ python3 <este-repo>/tools/build-mapa.py /tmp/gtadb
 
 As fotos de cada lugar (jogo e vida real) são carregadas direto do repositório
 do gtadb no GitHub. O mapa usa o [Leaflet](https://leafletjs.com) 1.9.4 (BSD-2).
+
+---
+
+## Segredos de Leonida
+
+[`guias.html`](guias.html) junta três guias numa página só:
+
+- **Easter eggs (11) e carros raros (18):** onde fica, o que precisa, o passo a
+  passo, o que você ganha e as fontes. "Confirmado" quer dizer que mais de um
+  guia descreve o mesmo lugar; "Relatado" ainda tem uma fonte só.
+- **Trapaças (61):** efeito e desafio que libera cada uma; 18 já têm o código
+  publicado. O modo treino lê o direcional de um controle de verdade (Gamepad
+  API), as setas do teclado ou um direcional na tela, e cronometra a sequência.
+- **Progresso:** o botão ✓ de cada item fica salvo no aparelho (`localStorage`,
+  chave `vi-guias`) e o mapa usa a mesma marcação.
+- **No mapa:** [`mapa.html`](mapa.html) ganha a camada de segredos (rosa para
+  easter eggs, laranja para carros), com um círculo tracejado onde o ponto exato
+  ainda não foi publicado. `mapa.html#g=<id>` e `guias.html#g=<id>` abrem o item.
+
+Os fatos foram conferidos em guias publicados depois do lançamento (Screen Rant,
+Red Bull Gaming, KeenGamer, The Click, MapGenie, Sportskeeda, Game Rant e outros,
+com o link em cada item), e os textos são nossos. Tudo fica em
+[`assets/js/guias-data.js`](assets/js/guias-data.js): para atualizar, edite os
+itens ali; as coordenadas usam o sistema do gtadb.
 
 ---
 
@@ -224,7 +249,7 @@ git push origin HEAD:gh-pages
 
 O GitHub reconstrói o site em menos de um minuto. Como o GitHub Pages deixa
 o navegador guardar CSS e JS por 10 minutos, troque o `?v=` dos arquivos em
-`index.html` e `passagem.html` a cada publicação; assim ninguém fica com a
+`index.html`, `passagem.html`, `mapa.html` e `guias.html` (e o `V` do `mapa.js`) a cada publicação; assim ninguém fica com a
 página nova rodando um script antigo. As tags `og:url` e
 `og:image` do `index.html` apontam para `https://matheusaoliv.github.io/gta-6/`;
 se publicar em outro endereço, ajuste essas duas tags.
@@ -248,12 +273,15 @@ Quase todo o conteúdo editável está em [`assets/js/data.js`](assets/js/data.j
 ```
 index.html                 # estrutura e conteúdo das seções
 mapa.html                  # mapa de Leonida (Leaflet)
+guias.html                 # easter eggs, carros raros e trapaças
 tools/build-mapa.py        # gera os blocos e os dados do mapa a partir do gtadb.org
 passagem.html              # passagem para Vice City
 assets/
   css/main.css             # tokens de design, layout e componentes
   gta-vi.ics               # os dois eventos para o Calendário da Apple e outros apps
   js/data.js               # datas, rádios, vídeos e lugares
+  js/guias-data.js         # easter eggs, carros raros e trapaças (fichas e coordenadas)
+  js/guias.js              # guias: busca, filtros, progresso e modo treino
   js/main.js               # contagem, scroll (Lenis + ScrollTrigger), seções, modais, cursor
   js/passagem.js           # gerador do cartão de embarque (canvas, QR, exportação)
   js/player.js             # verificação de idade e player de vídeo

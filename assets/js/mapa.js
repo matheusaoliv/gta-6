@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  var V = '20261123a';
+  var V = '20261123b';
   // jsDelivr recusa parte das fotos (o repositório passa do limite de 50 MB dele); o raw do GitHub serve todas
   var PHOTO = 'https://raw.githubusercontent.com/rolux/gtadb.org/main/map/photos/6/L';
   var STORE = 'vi-mapa';
@@ -164,6 +164,55 @@
       });
     }
     map.on('zoomend moveend', syncRegions);
+
+    /* segredos: easter eggs e carros raros do guia (guias-data.js, progresso de guias.html) */
+    var SG = window.VI_GUIAS, secById = {};
+    if (!st.secrets) st.secrets = {};
+    if (SG) {
+      var guideDone = new Set();
+      try { guideDone = new Set(JSON.parse(localStorage.getItem('vi-guias') || '{}').done || []); } catch (e) {}
+      [['eggs', SG.eggs, '#ff4f9a', SG.EGG_KIND, 'kind'], ['cars', SG.cars, '#ff9a3c', SG.CAR_GRP, 'grp']].forEach(function (g) {
+        var group = L.layerGroup(), box = $('[data-secret="' + g[0] + '"]');
+        g[1].forEach(function (it, i) {
+          // sem ponto exato publicado: o círculo mostra a área onde procurar
+          if (!it.exact && it.r) {
+            L.circle([it.y, it.x], { radius: it.r, color: g[2], weight: 1.5, dashArray: '5 6', fillColor: g[2], fillOpacity: 0.1, interactive: false }).addTo(group);
+          }
+          var m = L.marker([it.y, it.x], {
+            title: it.t, riseOnHover: true, zIndexOffset: 1000,
+            icon: L.divIcon({ className: 'msec msec--' + g[0].slice(0, -1) + (guideDone.has(it.id) ? ' is-done' : ''), html: g[0] === 'eggs' ? '✦' : String(i + 1), iconSize: [30, 30] })
+          });
+          m.bindPopup(secretPopup(it, g[3][it[g[4]]], g[2]), {
+            maxWidth: 280,
+            autoPanPaddingTopLeft: L.point(window.innerWidth >= 900 ? 410 : 16, 76),
+            autoPanPaddingBottomRight: L.point(16, window.innerWidth >= 900 ? 16 : 170)
+          });
+          m.addTo(group);
+          secById[it.id] = { m: m, box: box };
+        });
+        $('[data-nsec="' + g[0] + '"]').textContent = g[1].length;
+        box.checked = st.secrets[g[0]] !== false;
+        if (box.checked) group.addTo(map);
+        box.addEventListener('change', function () {
+          st.secrets[g[0]] = box.checked;
+          persist();
+          if (box.checked) group.addTo(map); else group.remove();
+        });
+      });
+    }
+    function secretPopup(it, tag, color) {
+      var d = document.createElement('div');
+      d.className = 'spop';
+      d.innerHTML = '<span class="spop__tag"></span><h3></h3><p></p><p class="spop__area"></p><a></a>';
+      $('.spop__tag', d).textContent = tag + (it.ok ? ' · confirmado' : ' · relatado');
+      $('.spop__tag', d).style.color = color;
+      $('h3', d).textContent = it.t;
+      $('p', d).textContent = it.where;
+      $('.spop__area', d).textContent = it.exact ? 'Ponto exato.' : 'O círculo tracejado marca a área onde procurar.';
+      $('a', d).href = 'guias.html#g=' + it.id;
+      $('a', d).textContent = 'Passo a passo →';
+      return d;
+    }
 
     /* ---------------- filtros ---------------- */
     var counts = {};
@@ -425,6 +474,13 @@
     msg.hidden = true;
     var m = location.hash.match(/^#l=(\d+)/);
     if (m && byId[m[1]]) { open(byId[m[1]], false); focus(byId[m[1]], 5, false); }
-    else if (window.innerWidth < 900) setPanel('peek');
+    var g = location.hash.match(/^#g=([\w-]+)/);
+    if (g && secById[g[1]]) {
+      var sec = secById[g[1]];
+      if (!sec.box.checked) { sec.box.checked = true; sec.box.dispatchEvent(new Event('change')); }
+      map.setView(sec.m.getLatLng(), 4.5, { animate: false });
+      sec.m.openPopup();
+    }
+    if (!(m && byId[m[1]]) && window.innerWidth < 900) setPanel('peek');
   }
 })();

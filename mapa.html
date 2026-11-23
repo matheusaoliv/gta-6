@@ -16,11 +16,11 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" href="assets/img/brand/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/brand/apple-touch-icon.png">
-  <link rel="preload" href="assets/mapa/mapa.json?v=20261123a" as="fetch" crossorigin>
+  <link rel="preload" href="assets/mapa/mapa.json?v=20261123b" as="fetch" crossorigin>
   <link rel="preload" href="assets/fonts/big-shoulders-display-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/main.css?v=20261123a">
-  <link rel="stylesheet" href="assets/css/leaflet.css?v=20261123a">
-  <link rel="stylesheet" href="assets/css/mapa.css?v=20261123a">
+  <link rel="stylesheet" href="assets/css/main.css?v=20261123b">
+  <link rel="stylesheet" href="assets/css/leaflet.css?v=20261123b">
+  <link rel="stylesheet" href="assets/css/mapa.css?v=20261123b">
 </head>
 <body class="map-page">
   <a class="skip-link" href="#busca">Pular para a busca de lugares</a>
@@ -29,6 +29,7 @@
     <a class="mbar__back" href="./"><span aria-hidden="true">←</span> Contagem</a>
     <a class="mbar__brand" href="./" aria-label="GTA VI — voltar à contagem"><img src="assets/img/brand/vi.webp" alt="" width="1210" height="936"></a>
     <p class="mbar__title"><strong>Mapa de Leonida</strong><span data-total>3.663 lugares</span></p>
+    <a class="mbar__pass mbar__pass--alt" href="guias.html">Segredos</a>
     <a class="mbar__pass" href="passagem.html">Passagem ✈</a>
   </header>
 
@@ -58,6 +59,14 @@
             <label class="toggle"><input type="checkbox" data-only="enter"><span>Só onde dá para entrar</span></label>
             <label class="toggle"><input type="checkbox" data-only="photo"><span>Só com foto</span></label>
             <label class="toggle"><input type="checkbox" data-only="unvisited"><span>Esconder os que já visitei</span></label>
+          </div>
+          <div class="cats__head">
+            <h2>Segredos</h2>
+            <a class="cats__link" href="guias.html">Ver o guia →</a>
+          </div>
+          <div class="quick">
+            <label class="toggle toggle--egg"><input type="checkbox" data-secret="eggs"><span>Easter eggs <small data-nsec="eggs"></small></span></label>
+            <label class="toggle toggle--car"><input type="checkbox" data-secret="cars"><span>Carros raros <small data-nsec="cars"></small></span></label>
           </div>
           <div class="cats__head">
             <h2>Categorias</h2>
@@ -119,7 +128,8 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/vendor/leaflet.js?v=20261123a"></script>
-  <script src="assets/js/mapa.js?v=20261123a"></script>
+  <script src="assets/js/vendor/leaflet.js?v=20261123b"></script>
+  <script src="assets/js/guias-data.js?v=20261123b"></script>
+  <script src="assets/js/mapa.js?v=20261123b"></script>
 </body>
 </html>
